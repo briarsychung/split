@@ -11,7 +11,6 @@ class Game {
         this.camera = new Camera();
 
         this.players = [];
-        this.movers = [];
         this.objects = [];
 
         this.stage = 'game';
@@ -37,37 +36,39 @@ class Game {
 
     gameTick() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
         this.input.check();
 
-        for (let i = 0; i < this.movers.length; i++) {
-            this.movers[i].calcMove();
-        }
-
-        for (let i = 0; i < this.movers.length; i++) {
-            for (let j = 0; j < this.objects.length; j++) {
-                this.movers[i].detectObject(this.objects[j]);
-            }
-            for (let j = 0; j < this.movers.length; j++) {
-                this.movers[i].detectObject(this.movers[j]);
-            }
-        }
-
-        for (let i = 0; i < this.movers.length; i++) {
-            this.movers[i].execMove();
-            this.draw(this.movers[i]);
+        for (let i = 0; i < this.objects.length; i++) {
+            this.objects[i].iter();
         }
 
         for (let i = 0; i < this.objects.length; i++) {
-            this.objects[i].calcBox();
+            if (this.objects[i].detectObject) {
+                for (let j = 0; j < this.objects.length; j++) {
+                    this.objects[i].detectObject(this.objects[j]);
+                }
+            }
+            this.objects[i].move();
             this.draw(this.objects[i]);
         }
 
-        this.camera.pos.x = (this.players[0].pos.x + this.players[1].pos.x) / 2;
-        this.camera.pos.y = (this.players[0].pos.y + this.players[1].pos.y) / 2;
+        this.camera.pos.x = 0.75 * this.camera.pos.x + 0.25 * (this.players[0].pos.x + this.players[1].pos.x) / 2;
+        this.camera.pos.y = 0.75 * this.camera.pos.y + 0.25 * (this.players[0].pos.y + this.players[1].pos.y) / 2;
+
+        let tx = 0.75 * this.dim().w / Math.abs(this.players[0].pos.x - this.players[1].pos.x);
+        let ty = 0.75 * this.dim().h / Math.abs(this.players[0].pos.y - this.players[1].pos.y);
+        
+        if (tx < 2 || ty < 2) {
+            this.camera.pos.x = 0.75 * this.camera.pos.x + 0.25 * this.players[0].pos.x;
+            this.camera.pos.y = 0.75 * this.camera.pos.y + 0.25 * this.players[0].pos.y;
+            this.camera.zoom = 0.875 * this.camera.zoom + 0.125 * 2;
+            return;
+        }
 
         let xz = Math.max(Math.min(0.75 * this.dim().w / Math.abs(this.players[0].pos.x - this.players[1].pos.x), 4), 2);
         let yz = Math.max(Math.min(0.75 * this.dim().h / Math.abs(this.players[0].pos.y - this.players[1].pos.y), 4), 2);
-        this.camera.zoom = Math.min(xz, yz);
+        this.camera.zoom = 0.875 * this.camera.zoom + 0.125 * Math.min(xz, yz);
     }
 
     draw(object) {
