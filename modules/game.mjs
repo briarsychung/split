@@ -11,8 +11,7 @@ class Game {
         this.camera = new Camera();
 
         this.players = [new Player('../assets/player/player.png'), new Player('../assets/player/player.png', { x: 30, y: 0 })];
-        this.movers = this.players;
-        this.objects = [];
+        this.objects = this.players;
         this.objects.push(new Rectangle('../assets/player/player.png', { x: 0, y: 50 }, { w: 200, h: 1 }));
         this.objects.push(new Rectangle('../assets/player/player.png', { x: -20, y: -10 }, { w: 50, h: 1 }));
         this.objects.push(new Rectangle('../assets/player/player.png', { x: 50, y: 35 }, { w: 10, h: 70 }));
@@ -22,28 +21,20 @@ class Game {
 
     iter() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
         this.input.check();
 
-        for (let i = 0; i < this.movers.length; i++) {
-            this.movers[i].calcMove();
-        }
-
-        for (let i = 0; i < this.movers.length; i++) {
-            for (let j = 0; j < this.objects.length; j++) {
-                this.movers[i].detectObject(this.objects[j]);
-            }
-            for (let j = 0; j < this.movers.length; j++) {
-                this.movers[i].detectObject(this.movers[j]);
-            }
-        }
-
-        for (let i = 0; i < this.movers.length; i++) {
-            this.movers[i].execMove();
-            this.draw(this.movers[i]);
+        for (let i = 0; i < this.objects.length; i++) {
+            this.objects[i].iter();
         }
 
         for (let i = 0; i < this.objects.length; i++) {
-            this.objects[i].calcBox();
+            if (this.objects[i].detectObject) {
+                for (let j = 0; j < this.objects.length; j++) {
+                    this.objects[i].detectObject(this.objects[j]);
+                }
+            }
+            this.objects[i].move();
             this.draw(this.objects[i]);
         }
 

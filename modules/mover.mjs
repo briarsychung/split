@@ -3,32 +3,20 @@ import { Object } from './object.mjs';
 class Mover extends Object {
     constructor(url, pos, dim) {
         super(url, pos, dim);
-        this.vel = { x: 0, y: 0 };
-        this.next = { x: 0, y: 0 };
-        this.ground = false;
+        this.ground = null;
     }
 
-    calcBox() {
-        this.box = {
-            top: this.pos.y - this.dim.h / 2 + (this.vel.y < 0 ? this.vel.y : 0),
-            bottom: this.pos.y + this.dim.h / 2 + (this.vel.y > 0 ? this.vel.y : 0),
-            left: this.pos.x - this.dim.w / 2 + (this.vel.x < 0 ? this.vel.x : 0),
-            right: this.pos.x + this.dim.w / 2 + (this.vel.x > 0 ? this.vel.x : 0)
-        }
-    }
+    iter() {
+        this.vel.x += this.ground ? this.ground.vel.x : 0;
+        this.vel.y += this.ground ? this.ground.vel.y : 0;
 
-    calcMove() {
         this.vel.x *= this.ground ? 0.75 : 0.875;
         this.vel.y *= 0.9375;
         this.vel.y += 0.75;
-        this.ground = false;
 
-        this.next = {
-            x: this.pos.x + this.vel.x,
-            y: this.pos.y + this.vel.y
-        }
+        this.ground = null;
 
-        this.calcBox();
+        this.update();
     }
 
     detectObject(that) {
@@ -44,29 +32,38 @@ class Mover extends Object {
 
         if (this.vel.y >= 0) {
             if (collides.top) {
-                this.next.y = Math.min(this.next.y, that.box.top - this.dim.h / 2);
                 this.vel.y = 0;
-                this.ground = true;
+                let correct = that.box.top - this.dim.h / 2;
+                if (this.next.y > correct) {
+                    this.next.y = correct;
+                    this.ground = that;
+                }
                 return;
             }
         } else if (collides.bottom) {
-            this.next.y = Math.max(this.next.y, that.box.bottom + this.dim.h / 2);
             this.vel.y = 0;
+            let correct = that.box.bottom + this.dim.h / 2;
+            if (this.next.y < correct) {
+                this.next.y = correct;
+            }
             return;
         }
         if (this.vel.x >= 0) {
             if (collides.left) {
-                this.next.x = Math.min(this.next.x, that.box.left - this.dim.w / 2);
                 this.vel.x = 0;
+                let correct = that.box.left - this.dim.w / 2;
+                if (this.next.x > correct) {
+                    this.next.x = correct;
+                }
+                return;
             }
         } else if (collides.right) {
-            this.next.x = Math.max(this.next.x, that.box.right + this.dim.w / 2);
             this.vel.x = 0;
+            let correct = that.box.right + this.dim.w / 2;
+            if (this.next.x < correct) {
+                this.next.x = correct;
+            }
         }
-    }
-
-    execMove() {
-        this.pos = this.next;
     }
 }
 
