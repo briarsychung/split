@@ -55,7 +55,7 @@ class Game {
 
         let tx = 0.75 * this.canvas.width / Math.abs(this.players[0].pos.x - this.players[1].pos.x);
         let ty = 0.75 * this.canvas.height / Math.abs(this.players[0].pos.y - this.players[1].pos.y);
-        
+
         if (tx < 2 || ty < 2) {
             this.camera.pos.x = 0.75 * this.camera.pos.x + 0.25 * this.players[0].pos.x;
             this.camera.pos.y = 0.75 * this.camera.pos.y + 0.25 * this.players[0].pos.y;

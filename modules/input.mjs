@@ -3,7 +3,7 @@ class Input {
         this.player = player;
     }
 
-    check() {}
+    check() { }
 
     walk(dir) {
         this.player.vel.x += dir;

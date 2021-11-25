@@ -5,15 +5,21 @@ class KeyboardInput extends Input {
         super(player);
 
         this.keys = {
-            a: { down: false, event: () => {
-                this.walk(-1);
-            }},
-            d: { down: false, event: () => {
-                this.walk(1);
-            }},
-            w: { down: false, event: () => {
-                this.jump();
-            }},
+            a: {
+                down: false, event: () => {
+                    this.walk(-1);
+                }
+            },
+            d: {
+                down: false, event: () => {
+                    this.walk(1);
+                }
+            },
+            w: {
+                down: false, event: () => {
+                    this.jump();
+                }
+            },
         }
 
         document.addEventListener('keydown', e => {
