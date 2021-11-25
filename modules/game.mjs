@@ -47,12 +47,12 @@ class Game {
             this.draw(this.objects[i]);
         }
 
-        this.camera.pos.x = (this.players[0].pos.x + this.players[1].pos.x) / 2;
-        this.camera.pos.y = (this.players[0].pos.y + this.players[1].pos.y) / 2;
+        this.camera.pos.x = 0.75 * this.camera.pos.x + 0.25 * (this.players[0].pos.x + this.players[1].pos.x) / 2;
+        this.camera.pos.y = 0.75 * this.camera.pos.y + 0.25 * (this.players[0].pos.y + this.players[1].pos.y) / 2;
 
         let xz = Math.max(Math.min(0.75 * this.dim().w / Math.abs(this.players[0].pos.x - this.players[1].pos.x), 4), 2);
         let yz = Math.max(Math.min(0.75 * this.dim().h / Math.abs(this.players[0].pos.y - this.players[1].pos.y), 4), 2);
-        this.camera.zoom = Math.min(xz, yz);
+        this.camera.zoom = 0.875 * this.camera.zoom + 0.125 * Math.min(xz, yz);
     }
 
     draw(object) {
