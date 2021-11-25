@@ -1,12 +1,4 @@
 class Object {
-    // affected by gravity (also can stick to platforms) / is freemoving
-    // affected by objects: can be stopped by others
-    // has a vel?
-
-    // ground: false / false / false
-    // platform: false / false / true
-    // box: true / true / true
-
     constructor(url, pos, dim) {
         this.url = url;
         this.pos = pos;
