@@ -1,7 +1,5 @@
 import { Camera } from './camera.mjs';
 import { Player } from './player.mjs';
-import { KeyboardInput } from './keyboard-input.mjs';
-import { Rectangle } from './rectangle.mjs';
 
 class Game {
     constructor(canvas) {
@@ -71,16 +69,11 @@ class Game {
     }
 
     draw(object) {
-        this.context.drawImage(object.image, this.rel(object).x, this.rel(object).y, this.rel(object).w, this.rel(object).h);
-    }
-
-    rel(object) {
-        return {
-            x: this.canvas.width / 2 + (object.pos.x - object.dim.w / 2 - this.camera.pos.x) * this.camera.zoom,
-            y: this.canvas.height / 2 + (object.pos.y - object.dim.h / 2 - this.camera.pos.y) * this.camera.zoom,
-            w: object.dim.w * this.camera.zoom,
-            h: object.dim.h * this.camera.zoom
-        }
+        this.context.drawImage(object.image,
+            this.canvas.width / 2 + (object.pos.x - object.dim.w / 2 - this.camera.pos.x) * this.camera.zoom,
+            this.canvas.height / 2 + (object.pos.y - object.dim.h / 2 - this.camera.pos.y) * this.camera.zoom,
+            object.dim.w * this.camera.zoom,
+            object.dim.h * this.camera.zoom);
     }
 }
 

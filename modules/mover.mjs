@@ -20,18 +20,11 @@ class Mover extends Object {
     }
 
     detectObject(that) {
-        let collides = {
-            top: this.pos.y < that.box.top && that.box.top > this.box.top && that.box.top < this.box.bottom,
-            bottom: this.pos.y > that.box.bottom && that.box.bottom > this.box.top && that.box.bottom < this.box.bottom,
-            left: this.pos.x < that.box.left && that.box.left > this.box.left && that.box.left < this.box.right,
-            right: this.pos.x > that.box.right && that.box.right > this.box.left && that.box.right < this.box.right
-        };
-
         if (!(this.box.top < that.box.bottom && this.box.bottom > that.box.top &&
             this.box.left < that.box.right && this.box.right > that.box.left)) return;
 
         if (this.vel.y >= 0) {
-            if (collides.top) {
+            if (this.pos.y < that.box.top && that.box.top > this.box.top && that.box.top < this.box.bottom) {
                 this.vel.y = 0;
                 let correct = that.box.top - this.dim.h / 2;
                 if (this.next.y > correct) {
@@ -40,7 +33,7 @@ class Mover extends Object {
                 }
                 return;
             }
-        } else if (collides.bottom) {
+        } else if (this.pos.y > that.box.bottom && that.box.bottom > this.box.top && that.box.bottom < this.box.bottom) {
             this.vel.y = 0;
             let correct = that.box.bottom + this.dim.h / 2;
             if (this.next.y < correct) {
@@ -49,7 +42,7 @@ class Mover extends Object {
             return;
         }
         if (this.vel.x >= 0) {
-            if (collides.left) {
+            if (this.pos.x < that.box.left && that.box.left > this.box.left && that.box.left < this.box.right) {
                 this.vel.x = 0;
                 let correct = that.box.left - this.dim.w / 2;
                 if (this.next.x > correct) {
@@ -57,7 +50,7 @@ class Mover extends Object {
                 }
                 return;
             }
-        } else if (collides.right) {
+        } else if (this.pos.x > that.box.right && that.box.right > this.box.left && that.box.right < this.box.right) {
             this.vel.x = 0;
             let correct = that.box.right + this.dim.w / 2;
             if (this.next.x < correct) {
