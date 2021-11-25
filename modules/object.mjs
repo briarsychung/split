@@ -1,37 +1,57 @@
 class Object {
+    // affected by gravity (also can stick to platforms) / is freemoving
+    // affected by objects: can be stopped by others
+    // has a vel?
+
+    // ground: false / false / false
+    // platform: false / false / true
+    // box: true / true / true
+
     constructor(url, pos, dim) {
         this.url = url;
         this.pos = pos;
         this.dim = dim;
-        this.box = {
-            top: pos.y - dim.h / 2,
-            bottom: pos.y + dim.h / 2,
-            left: pos.x - dim.w / 2,
-            right: pos.x + dim.w / 2
-        };
+
+        this.vel = { x: 0, y: 0 };
+        this.next = {};
+        this.box = {};
+        this.update();
 
         this.image = document.createElement('canvas');
-        this.image.width = this.dim.w;
-        this.image.height = this.dim.h;
+        this.image.width = dim.w;
+        this.image.height = dim.h;
 
         let source = new Image();
         source.src = url;
         source.addEventListener('load', () => {
-            for (let x = 0; x < this.dim.w; x += source.width) {
-                for (let y = 0; y < this.dim.h; y += source.height) {
+            for (let x = 0; x < dim.w; x += source.width) {
+                for (let y = 0; y < dim.h; y += source.height) {
                     this.image.getContext('2d').drawImage(source, x, y);
                 }
             }
         });
     }
 
-    calcBox() {
-        this.box = {
-            top: this.pos.y - this.dim.h / 2,
-            bottom: this.pos.y + this.dim.h / 2,
-            left: this.pos.x - this.dim.w / 2,
-            right: this.pos.x + this.dim.w / 2
+    iter() {
+        this.update();
+    }
+
+    update() {
+        this.next = {
+            x: this.pos.x + this.vel.x,
+            y: this.pos.y + this.vel.y
         }
+
+        this.box = {
+            top: this.pos.y - this.dim.h / 2 + (this.vel.y < 0 ? this.vel.y : 0),
+            bottom: this.pos.y + this.dim.h / 2 + (this.vel.y > 0 ? this.vel.y : 0),
+            left: this.pos.x - this.dim.w / 2 + (this.vel.x < 0 ? this.vel.x : 0),
+            right: this.pos.x + this.dim.w / 2 + (this.vel.x > 0 ? this.vel.x : 0)
+        }
+    }
+
+    move() {
+        this.pos = this.next;
     }
 }
 
