@@ -10,17 +10,32 @@ class Game {
 
         this.camera = new Camera();
 
-        this.players = [new Player('../assets/player/player.png'), new Player('../assets/player/player.png', { x: 30, y: 0 })];
-        this.movers = this.players;
+        this.players = [];
+        this.movers = [];
         this.objects = [];
-        this.objects.push(new Rectangle('../assets/player/player.png', { x: 0, y: 50 }, { w: 200, h: 1 }));
-        this.objects.push(new Rectangle('../assets/player/player.png', { x: -20, y: -10 }, { w: 50, h: 1 }));
-        this.objects.push(new Rectangle('../assets/player/player.png', { x: 50, y: 35 }, { w: 10, h: 70 }));
 
-        this.input = new KeyboardInput(this.players[0]);
+        this.stage = 'game';
+    }
+
+    addObject(object) {
+        this.objects.push(object);
+    }
+
+    addPlayer(player) {
+        this.players.push(player);
+        this.movers.push(player);
+        this.addObject(player);
     }
 
     iter() {
+        switch (this.stage) {
+            case 'game':
+                this.gameTick();
+                break;
+        }
+    }
+
+    gameTick() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.input.check();
 
