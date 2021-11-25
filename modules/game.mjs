@@ -50,6 +50,16 @@ class Game {
         this.camera.pos.x = 0.75 * this.camera.pos.x + 0.25 * (this.players[0].pos.x + this.players[1].pos.x) / 2;
         this.camera.pos.y = 0.75 * this.camera.pos.y + 0.25 * (this.players[0].pos.y + this.players[1].pos.y) / 2;
 
+        let tx = 0.75 * this.dim().w / Math.abs(this.players[0].pos.x - this.players[1].pos.x);
+        let ty = 0.75 * this.dim().h / Math.abs(this.players[0].pos.y - this.players[1].pos.y);
+        
+        if (tx < 2 || ty < 2) {
+            this.camera.pos.x = 0.75 * this.camera.pos.x + 0.25 * this.players[0].pos.x;
+            this.camera.pos.y = 0.75 * this.camera.pos.y + 0.25 * this.players[0].pos.y;
+            this.camera.zoom = 0.875 * this.camera.zoom + 0.125 * 2;
+            return;
+        }
+
         let xz = Math.max(Math.min(0.75 * this.dim().w / Math.abs(this.players[0].pos.x - this.players[1].pos.x), 4), 2);
         let yz = Math.max(Math.min(0.75 * this.dim().h / Math.abs(this.players[0].pos.y - this.players[1].pos.y), 4), 2);
         this.camera.zoom = 0.875 * this.camera.zoom + 0.125 * Math.min(xz, yz);
