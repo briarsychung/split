@@ -37,7 +37,10 @@ class Game {
         this.input.check();
 
         for (let i = 0; i < this.objects.length; i++) {
-            this.objects[i].iter();
+            this.objects[i].update();
+        }
+        for (let i = 0; i < this.objects.length; i++) {
+            if (this.objects[i].iter) this.objects[i].iter();
         }
 
         for (let i = 0; i < this.objects.length; i++) {
