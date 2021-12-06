@@ -30,19 +30,21 @@ class Object {
             y: this.pos.y + this.vel.y
         }
 
-        this.nvel = this.vel;
+        this.cpos = {...this.npos};
+
+        this.nvel = {...this.vel};
 
         this.box = {
-            top: this.pos.y - this.dim.h / 2 + (this.vel.y < 0 ? this.vel.y : 0),
-            bottom: this.pos.y + this.dim.h / 2 + (this.vel.y > 0 ? this.vel.y : 0),
-            left: this.pos.x - this.dim.w / 2 + (this.vel.x < 0 ? this.vel.x : 0),
-            right: this.pos.x + this.dim.w / 2 + (this.vel.x > 0 ? this.vel.x : 0)
+            top: this.pos.y - this.dim.h / 2 + this.vel.y,
+            bottom: this.pos.y + this.dim.h / 2 + this.vel.y,
+            left: this.pos.x - this.dim.w / 2 + this.vel.x,
+            right: this.pos.x + this.dim.w / 2 + this.vel.x
         }
     }
 
     move() {
-        this.pos = this.npos;
-        this.vel = this.nvel;
+        this.pos = {...this.cpos};
+        this.vel = {...this.nvel};
     }
 }
 

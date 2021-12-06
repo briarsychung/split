@@ -10,7 +10,7 @@ class Input {
     }
 
     jump() {
-        if (this.player.ground) this.player.vel.y = -12;
+        if (this.player.touch.bottom) this.player.vel.y = -12;
     }
 }
 

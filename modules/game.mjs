@@ -32,15 +32,13 @@ class Game {
     }
 
     gameTick() {
+        this.players[0].tag = "P1";
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.input.check();
 
         for (let i = 0; i < this.objects.length; i++) {
             this.objects[i].update();
-        }
-        for (let i = 0; i < this.objects.length; i++) {
-            if (this.objects[i].iter) this.objects[i].iter();
         }
 
         for (let i = 0; i < this.objects.length; i++) {
@@ -49,6 +47,9 @@ class Game {
                     this.objects[i].detectObject(this.objects[j]);
                 }
             }
+        }
+
+        for (let i = 0; i < this.objects.length; i++) {
             this.objects[i].move();
             this.draw(this.objects[i]);
         }
