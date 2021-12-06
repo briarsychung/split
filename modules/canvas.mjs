@@ -1,18 +1,25 @@
 class Canvas {
-    constructor(element) {
+    constructor(element, margin = 20) {
         this.element = element;
+        this.margin = margin;
+
         this.width = 0;
         this.height = 0;
 
         let resize = () => {
             const DPR = window.devicePixelRatio;
 
-            if (window.innerWidth / 16 > window.innerHeight / 9) {
-                this.width = 16 * window.innerHeight / 9;
-                this.height = window.innerHeight;
+            let max = {
+                w: window.innerWidth - margin * 2,
+                h: window.innerHeight - margin * 2
+            }
+
+            if (max.w / 16 > max.h / 9) {
+                this.width = 16 * max.h / 9;
+                this.height = max.h;
             } else {
-                this.width = window.innerWidth;
-                this.height = 9 * window.innerWidth / 16;
+                this.width = max.w;
+                this.height = 9 * max.w / 16;
             }
 
             this.element.style.width = this.width + 'px';
