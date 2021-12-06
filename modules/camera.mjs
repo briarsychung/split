@@ -1,5 +1,5 @@
 class Camera {
-    constructor(pos = { x: 0, y: 0 }, range = { min: 2, max: 4 }, smooth = { pos: 0.75, zoom: 0.875 }) {
+    constructor(pos = { x: 0, y: 0 }, range = { min: 2, max: 3 }, smooth = { pos: 0.75, zoom: 0.875 }) {
         this.pos = pos;
         this.range = range;
         this.smooth = smooth;
@@ -7,10 +7,10 @@ class Camera {
         this.zoom = range.min;
     }
 
-    update(canvas, players) {
+    update(players) {
         let max = {
-            x: 0.75 * canvas.width / Math.abs(players[0].pos.x - players[1].pos.x),
-            y: 0.75 * canvas.height / Math.abs(players[0].pos.y - players[1].pos.y)
+            x: 750 / Math.abs(players[0].pos.x - players[1].pos.x),
+            y: 750 / Math.abs(players[0].pos.y - players[1].pos.y)
         };
         let target = {
             pos: { x: 0, y: 0 },
