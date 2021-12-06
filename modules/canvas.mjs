@@ -7,8 +7,13 @@ class Canvas {
         let resize = () => {
             const DPR = window.devicePixelRatio;
 
-            this.width = window.innerWidth;
-            this.height = window.innerHeight;
+            if (window.innerWidth / 16 > window.innerHeight / 9) {
+                this.width = 16 * window.innerHeight / 9;
+                this.height = window.innerHeight;
+            } else {
+                this.width = window.innerWidth;
+                this.height = 9 * window.innerWidth / 16;
+            }
 
             this.element.style.width = this.width + 'px';
             this.element.style.height = this.height + 'px';
