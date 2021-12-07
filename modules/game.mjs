@@ -50,16 +50,17 @@ class Game {
             this.draw(this.objects[i]);
         }
 
-        this.camera.update(this.canvas, this.players);
+        this.camera.update(this.players);
     }
 
     draw(object) {
+        let real = this.camera.zoom * this.canvas.width / 1000;
+        
         this.context.drawImage(object.image,
-            this.canvas.width / 2 + (object.pos.x - object.dim.w / 2 - this.camera.pos.x) * this.camera.zoom,
-            this.canvas.height / 2 + (object.pos.y - object.dim.h / 2 - this.camera.pos.y) * this.camera.zoom,
-            object.dim.w * this.camera.zoom,
-            object.dim.h * this.camera.zoom);
-            
+            this.canvas.width / 2 + (object.pos.x - object.dim.w / 2 - this.camera.pos.x) * real,
+            this.canvas.height / 2 + (object.pos.y - object.dim.h / 2 - this.camera.pos.y) * real,
+            object.dim.w * real,
+            object.dim.h * real);
         this.context.strokeStyle = object.touch && object.touch.bottom ? 'green' : 'red';
         let x1 = this.canvas.width / 2 + (object.box.left - this.camera.pos.x) * this.camera.zoom;
         let x2 = this.canvas.width / 2 + (object.box.right - this.camera.pos.x) * this.camera.zoom;
