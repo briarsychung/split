@@ -18,7 +18,7 @@ class Camera {
         };
 
         if (max.x < this.range.min || max.y < this.range.min) {
-            target.pos = {...players[0].pos};
+            target.pos = { ...players[0].pos };
             target.zoom = this.range.min;
         } else {
             target.pos = {
