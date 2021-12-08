@@ -9,21 +9,25 @@ class Game {
         this.camera = new Camera();
 
         this.players = [];
-        this.objects = [];
+        this.levels = [];
+        this.level = 0;
 
         this.stage = 'game';
     }
 
-    addObject(object) {
-        this.objects.push(object);
+    addLevel(level) {
+        this.levels.push(level);
+    }
+
+    nextLevel() {
+        this.level++;
     }
 
     addPlayer(player) {
         this.players.push(player);
-        this.addObject(player);
     }
 
-    iter() {
+    update() {
         switch (this.stage) {
             case 'game':
                 this.gameTick();
@@ -32,26 +36,28 @@ class Game {
     }
 
     gameTick() {
+        let objects = this.levels[this.level].objects.concat(this.players);
+
         this.players[0].tag = "P1";
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.input.check();
 
-        for (let i = 0; i < this.objects.length; i++) {
-            this.objects[i].update();
+        for (let i = 0; i < objects.length; i++) {
+            objects[i].update();
         }
 
-        for (let i = 0; i < this.objects.length; i++) {
-            if (this.objects[i].detectObject) {
-                for (let j = 0; j < this.objects.length; j++) {
-                    this.objects[i].detectObject(this.objects[j]);
+        for (let i = 0; i < objects.length; i++) {
+            if (objects[i].detectObject) {
+                for (let j = 0; j < objects.length; j++) {
+                    objects[i].detectObject(objects[j]);
                 }
             }
         }
 
-        for (let i = 0; i < this.objects.length; i++) {
-            this.objects[i].move();
-            this.draw(this.objects[i]);
+        for (let i = 0; i < objects.length; i++) {
+            objects[i].move();
+            this.draw(objects[i]);
         }
 
         this.camera.update(this.players);
