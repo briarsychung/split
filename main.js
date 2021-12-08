@@ -6,6 +6,7 @@ import { KeyboardInput } from './modules/keyboard-input.mjs';
 import { Platform } from './modules/platform.mjs';
 import { Level } from './modules/level.mjs';
 import { Spawn } from './modules/spawn.mjs';
+import { Goal } from './modules/goal.mjs';
 
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
 
@@ -27,6 +28,9 @@ testLevel.addObject(new Platform('../assets/player/player.png', [{ x: 0, y: 100 
 
 testLevel.addSpawn(new Spawn(players[0]));
 testLevel.addSpawn(new Spawn(players[1], { x: 0, y: 20 }));
+
+testLevel.addGoal(new Goal('../assets/player/player.png', { x: -100, y: 0 }, players[0]));
+testLevel.addGoal(new Goal('../assets/player/player.png', { x: -100, y: 100 }));
 
 GAME.addLevel(testLevel);
 GAME.nextLevel();

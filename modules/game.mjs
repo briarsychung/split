@@ -39,7 +39,9 @@ class Game {
     }
 
     gameTick() {
-        let objects = this.levels[this.level].objects.concat(this.players);
+        let level = this.levels[this.level];
+        let objects = level.objects.concat(this.players);
+        let goals = level.goals;
 
         this.players[0].tag = "P1";
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -61,6 +63,10 @@ class Game {
         for (let i = 0; i < objects.length; i++) {
             objects[i].move();
             this.draw(objects[i]);
+        }
+
+        if (level.goals[0].player && 1 || level.goals[1].player) {
+            console.log('a');
         }
 
         this.camera.update(this.players);
