@@ -3,60 +3,92 @@ import { Object } from './object.mjs';
 class Mover extends Object {
     constructor(url, pos, dim) {
         super(url, pos, dim);
+
+        this.touch = { top: null, bottom: null, left: null, right: null };
         this.ground = null;
     }
 
-    iter() {
-        this.vel.x += this.ground ? this.ground.vel.x : 0;
-        this.vel.y += this.ground ? this.ground.vel.y : 0;
+    update() {
+        this.rel = { x: 0, y: 0 };
+        this.inf = { x: 0, y: 0 };
 
-        this.vel.x *= this.ground ? 0.75 : 0.875;
-        this.vel.y *= 0.9375;
-        this.vel.y += 0.75;
+        this.ground = this.touch.bottom;
+        while(this.ground) {
+            if (!this.ground.touch) break;
+            this.ground = this.ground.touch.bottom;
+        }
 
-        this.ground = null;
+        if (this.ground) {
+            this.inf.x = this.ground.vel.x;
+            //this.inf.y = this.ground.vel.y;
+        }
+        
+        this.touch = { top: null, bottom: null, left: null, right: null };
 
-        this.update();
+        this.vel.x += this.inf.x;
+        this.vel.y += this.inf.y;
+
+        super.update();
     }
 
     detectObject(that) {
-        if (!(this.box.top < that.box.bottom && this.box.bottom > that.box.top &&
-            this.box.left < that.box.right && this.box.right > that.box.left)) return;
+        if (!(this.box.top <= that.box.bottom && this.box.bottom >= that.box.top &&
+            this.box.left <= that.box.right && this.box.right >= that.box.left)) return;
 
-        if (this.vel.y >= 0) {
-            if (this.pos.y < that.box.top && that.box.top > this.box.top && that.box.top < this.box.bottom) {
-                this.vel.y = 0;
-                let correct = that.box.top - this.dim.h / 2;
-                if (this.next.y > correct) {
-                    this.next.y = correct;
-                    this.ground = that;
-                }
-                return;
+        let y = false;
+
+        if (this.vel.y >= that.vel.y && this.pos.y < that.box.top && that.box.top > this.box.top && that.box.top <= this.box.bottom) {
+            if (!this.touch.bottom || (this.touch.bottom.npos.y - this.touch.bottom.dim.h / 2 > that.npos.y - that.dim.h / 2)) {
+                this.touch.bottom = that;
             }
-        } else if (this.pos.y > that.box.bottom && that.box.bottom > this.box.top && that.box.bottom < this.box.bottom) {
-            this.vel.y = 0;
-            let correct = that.box.bottom + this.dim.h / 2;
-            if (this.next.y < correct) {
-                this.next.y = correct;
+            y = true;
+        } 
+        if (this.vel.y <= that.vel.y && this.pos.y > that.box.bottom && that.box.bottom >= this.box.top && that.box.bottom < this.box.bottom) {
+            if (!this.touch.top || (this.touch.top.npos.y + this.touch.top.dim.h / 2 > that.npos.y + that.dim.h / 2)) {
+                this.touch.top = that;
             }
-            return;
+            y = true;
         }
-        if (this.vel.x >= 0) {
-            if (this.pos.x < that.box.left && that.box.left > this.box.left && that.box.left < this.box.right) {
-                this.vel.x = 0;
-                let correct = that.box.left - this.dim.w / 2;
-                if (this.next.x > correct) {
-                    this.next.x = correct;
-                }
-                return;
-            }
-        } else if (this.pos.x > that.box.right && that.box.right > this.box.left && that.box.right < this.box.right) {
-            this.vel.x = 0;
-            let correct = that.box.right + this.dim.w / 2;
-            if (this.next.x < correct) {
-                this.next.x = correct;
+        if (y) return;
+        if (this.vel.x >= that.vel.x && this.pos.x < that.box.left && that.box.left > this.box.left && that.box.left <= this.box.right) {
+            if (!this.touch.right || (this.touch.right.npos.x - this.touch.right.dim.h / 2 > that.npos.x - that.dim.w / 2)) {
+                this.touch.right = that;
             }
         }
+        if (this.vel.x <= that.vel.x && this.pos.x > that.box.right && that.box.right >= this.box.left && that.box.right < this.box.right) {
+            if (!this.touch.left || (this.touch.left.npos.x + this.touch.left.dim.h / 2 > that.npos.x + that.dim.w / 2)) {
+                this.touch.left = that;
+            }
+        }
+    }
+
+    correct(dir, axis, m) {
+        let da = axis === 'x' ? 'w' : 'h';
+        let obj = this.touch[dir];
+        if (obj) {
+            let xt = 0;
+            while(obj) {
+                xt += obj.dim[da];
+                if (!obj.touch || !obj.touch[dir]) break;
+                obj = obj.touch[dir];
+            }
+            this.nvel[axis] = m === 1 ? Math.min(obj.vel[axis], this.vel[axis]) : Math.max(obj.vel[axis], this.vel[axis]);
+            this.cpos[axis] = obj.npos[axis] + m * (obj.dim[da] / 2 - this.dim[da] / 2 - xt);
+        }
+    }
+
+    move() {
+        this.correct('left', 'x', -1);
+        this.correct('right', 'x', 1);
+        this.correct('top', 'y', -1);
+        this.correct('bottom', 'y', 1);
+        super.move();
+
+        if (this.ground) this.vel.x -= this.ground.vel.x;
+        //this.vel.y -= this.rel.y;
+        this.vel.x *= this.touch.bottom ? 0.75 : 0.875;
+        this.vel.y *= 0.9375;
+        this.vel.y += 0.75;
     }
 }
 

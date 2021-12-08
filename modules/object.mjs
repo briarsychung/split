@@ -5,9 +5,9 @@ class Object {
         this.dim = dim;
 
         this.vel = { x: 0, y: 0 };
-        this.next = {};
+        this.npos = {};
+        this.nvel = {};
         this.box = {};
-        this.update();
 
         this.image = document.createElement('canvas');
         this.image.width = dim.w;
@@ -24,26 +24,27 @@ class Object {
         });
     }
 
-    iter() {
-        this.update();
-    }
-
     update() {
-        this.next = {
+        this.npos = {
             x: this.pos.x + this.vel.x,
             y: this.pos.y + this.vel.y
         }
 
+        this.cpos = {...this.npos};
+
+        this.nvel = {...this.vel};
+
         this.box = {
-            top: this.pos.y - this.dim.h / 2 + (this.vel.y < 0 ? this.vel.y : 0),
-            bottom: this.pos.y + this.dim.h / 2 + (this.vel.y > 0 ? this.vel.y : 0),
-            left: this.pos.x - this.dim.w / 2 + (this.vel.x < 0 ? this.vel.x : 0),
-            right: this.pos.x + this.dim.w / 2 + (this.vel.x > 0 ? this.vel.x : 0)
+            top: this.pos.y - this.dim.h / 2 + this.vel.y,
+            bottom: this.pos.y + this.dim.h / 2 + this.vel.y,
+            left: this.pos.x - this.dim.w / 2 + this.vel.x,
+            right: this.pos.x + this.dim.w / 2 + this.vel.x
         }
     }
 
     move() {
-        this.pos = this.next;
+        this.pos = {...this.cpos};
+        this.vel = {...this.nvel};
     }
 }
 
