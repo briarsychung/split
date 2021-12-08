@@ -1,6 +1,7 @@
 class Level {
     constructor() {
         this.objects = [];
+        this.spawns = [];
     }
 
     addObject(object) {
@@ -8,7 +9,7 @@ class Level {
     }
 
     addSpawn(spawn) {
-
+        this.spawns.push(spawn);
     }
 }
 

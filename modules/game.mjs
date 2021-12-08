@@ -10,7 +10,7 @@ class Game {
 
         this.players = [];
         this.levels = [];
-        this.level = 0;
+        this.level = -1;
 
         this.stage = 'game';
     }
@@ -21,6 +21,9 @@ class Game {
 
     nextLevel() {
         this.level++;
+
+        this.players[0].pos = { ...this.levels[this.level].spawns[0].pos };
+        this.players[1].pos = { ...this.levels[this.level].spawns[1].pos };
     }
 
     addPlayer(player) {

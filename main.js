@@ -5,17 +5,18 @@ import { Rectangle } from './modules/Rectangle.mjs';
 import { KeyboardInput } from './modules/keyboard-input.mjs';
 import { Platform } from './modules/platform.mjs';
 import { Level } from './modules/level.mjs';
+import { Spawn } from './modules/spawn.mjs';
 
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
 
 let testLevel = new Level();
 
-let P1 = new Player('../assets/player/player.png');
+let players = [new Player('../assets/player/player.png'), new Player('../assets/player/player.png')];
 
-GAME.input = new KeyboardInput(P1);
+GAME.input = new KeyboardInput(players[0]);
 
-GAME.addPlayer(P1);
-GAME.addPlayer(new Player('../assets/player/player.png', { x: 0, y: 20 }));
+GAME.addPlayer(players[0]);
+GAME.addPlayer(players[1]);
 
 testLevel.addObject(new Rectangle('../assets/player/player.png', { x: 0, y: 50 }, { w: 200, h: 1 }));
 //testLevel.addObject(new Rectangle('../assets/player/player.png', { x: -20, y: -10 }, { w: 50, h: 1 }));
@@ -24,7 +25,11 @@ testLevel.addObject(new Rectangle('../assets/player/player.png', { x: 50, y: 35 
 testLevel.addObject(new Platform('../assets/player/player.png', [{ x: 0, y: 100 }, { x: 0, y: 0 }], { w: 50, h: 50 }, 3));
 //testLevel.addObject(new Platform('../assets/player/player.png', [{ x: 0, y: 50 }, { x: -100, y: 50 }], { w: 50, h: 50 }, 3));
 
+testLevel.addSpawn(new Spawn(players[0]));
+testLevel.addSpawn(new Spawn(players[1], { x: 0, y: 20 }));
+
 GAME.addLevel(testLevel);
+GAME.nextLevel();
 
 loop();
 
