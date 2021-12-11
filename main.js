@@ -41,21 +41,21 @@ function generateLevels() {
     stair.addSpawn(new Spawn(players[0], { x: 0, y: -25 }));
     stair.addSpawn(new Spawn(players[1], { x: 20, y: -25 }));
 
-    stair.addObject(new Ground('../assets/player/player.png', { x: 10, y: 25 }, { w: 40, h: 50 }));
-    stair.addObject(new Ground('../assets/player/player.png', { x: 60, y: -25 }, { w: 40, h: 50 }));
-    stair.addObject(new Ground('../assets/player/player.png', { x: 110, y: -75 }, { w: 40, h: 50 }));
+    stair.addObject(new Ground('../assets/ground/ground.png', { x: 10, y: 25 }, { w: 40, h: 50 }));
+    stair.addObject(new Ground('../assets/ground/ground.png', { x: 60, y: -25 }, { w: 40, h: 50 }));
+    stair.addObject(new Ground('../assets/ground/ground.png', { x: 110, y: -75 }, { w: 40, h: 50 }));
 
-    let stairP1 = new Platform('../assets/player/player.png', [{ x: 35, y: 25 }, { x: 35, y: -25 }], { w: 10, h: 50 }, 3, 'pause');
-    let stairP2 = new Platform('../assets/player/player.png', [{ x: 85, y: -25 }, { x: 85, y: -75 }], { w: 10, h: 50 }, 3, 'pause');
+    let stairP1 = new Platform('../assets/ground/platform.png', [{ x: 35, y: 25 }, { x: 35, y: -25 }], { w: 10, h: 50 }, 3, 'pause');
+    let stairP2 = new Platform('../assets/ground/platform.png', [{ x: 85, y: -25 }, { x: 85, y: -75 }], { w: 10, h: 50 }, 3, 'pause');
 
     stair.addObject(stairP1);
     stair.addObject(stairP2);
 
-    stair.addObject(new Door('../assets/player/player.png', { x: 60, y: -50 }, { w: 25, h: 2 }, stairP1));
-    stair.addObject(new Door('../assets/player/player.png', { x: 110, y: -100 }, { w: 25, h: 2 }, stairP2));
+    stair.addObject(new Door('../assets/ground/button.png', { x: 60, y: -50 }, { w: 25, h: 2 }, stairP1));
+    stair.addObject(new Door('../assets/ground/button.png', { x: 110, y: -100 }, { w: 25, h: 2 }, stairP2));
 
-    stair.addGoal(new Goal('../assets/player/player.png', { x: 170, y: -75 }));
-    stair.addGoal(new Goal('../assets/player/player.png', { x: 150, y: -75 }));
+    stair.addGoal(new Goal('../assets/ground/goal.png', { x: 170, y: -75 }));
+    stair.addGoal(new Goal('../assets/ground/goal.png', { x: 150, y: -75 }));
 
     GAME.addLevel(stair);
 }
