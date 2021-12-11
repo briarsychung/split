@@ -10,6 +10,7 @@ class Game {
 
         this.players = [];
         this.objects = [];
+        this.inputs = [];
 
         this.stage = 'game';
     }
@@ -21,6 +22,10 @@ class Game {
     addPlayer(player) {
         this.players.push(player);
         this.addObject(player);
+    }
+
+    addInput(input) {
+        this.inputs.push(input);
     }
 
     iter() {
@@ -35,7 +40,8 @@ class Game {
         this.players[0].tag = "P1";
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.input.check();
+        this.inputs[0].check();
+        this.inputs[1].check();
 
         for (let i = 0; i < this.objects.length; i++) {
             this.objects[i].update();

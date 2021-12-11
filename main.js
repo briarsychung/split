@@ -9,7 +9,8 @@ const GAME = new Game(new Canvas(document.getElementById('canvas')));
 
 let P1 = new Player('../assets/player/player.png');
 
-GAME.input = new KeyboardInput(P1);
+GAME.addInput(new KeyboardInput(P1));
+GAME.addInput(new KeyboardInput(P1, { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
 
 GAME.addPlayer(P1);
 GAME.addPlayer(new Player('../assets/player/player.png', { x: 0, y: 20 }));

@@ -1,39 +1,40 @@
 import { Input } from './input.mjs';
 
 class KeyboardInput extends Input {
-    constructor(player) {
+    constructor(player, keys = { left: 'a', right: 'd', up: 'w' }) {
         super(player);
+        this.keys = keys;
 
-        this.keys = {
-            a: {
-                down: false, event: () => {
-                    this.walk(-1);
-                }
-            },
-            d: {
-                down: false, event: () => {
-                    this.walk(1);
-                }
-            },
-            w: {
-                down: false, event: () => {
-                    this.jump();
-                }
-            },
-        }
+        this.events = {};
+
+        this.events[keys.left] = {
+            down: false, event: () => {
+                this.walk(-1);
+            }
+        };
+        this.events[keys.right] = {
+            down: false, event: () => {
+                this.walk(1);
+            }
+        };
+        this.events[keys.up] = {
+            down: false, event: () => {
+                this.jump();
+            }
+        };
 
         document.addEventListener('keydown', e => {
-            if (this.keys[e.key.toLowerCase()] !== undefined) this.keys[e.key.toLowerCase()].down = true;
+            if (this.events[e.key.toLowerCase()] !== undefined) this.events[e.key.toLowerCase()].down = true;
         });
 
         document.addEventListener('keyup', e => {
-            if (this.keys[e.key.toLowerCase()] !== undefined) this.keys[e.key.toLowerCase()].down = false;
+            if (this.events[e.key.toLowerCase()] !== undefined) this.events[e.key.toLowerCase()].down = false;
         });
     }
 
     check() {
-        for (const KEY in this.keys) {
-            if (this.keys[KEY].down) this.keys[KEY].event();
+        for (const KEY in this.events) {
+            if (this.events[KEY].down) this.events[KEY].event();
         }
     }
 }
