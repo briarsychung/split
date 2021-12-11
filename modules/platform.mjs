@@ -1,11 +1,11 @@
-import { Object } from './object.mjs';
+import { Rectangle } from './Rectangle.mjs';
 
-class Platform extends Object {
+class Platform extends Rectangle {
     constructor(url, range, dim, speed) {
         super(url, range[0], dim);
         this.range = range;
         this.speed = speed;
-        
+
         this.dir = 1;
         this.percent = 0;
     }
