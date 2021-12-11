@@ -10,6 +10,7 @@ class Game {
 
         this.players = [];
         this.objects = [];
+        this.inputs = [];
 
         this.stage = 'game';
     }
@@ -21,6 +22,10 @@ class Game {
     addPlayer(player) {
         this.players.push(player);
         this.addObject(player);
+    }
+
+    addInput(input) {
+        this.inputs.push(input);
     }
 
     iter() {
