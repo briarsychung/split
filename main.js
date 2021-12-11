@@ -8,6 +8,7 @@ import { Rectangle } from './modules/Rectangle.mjs';
 import { Platform } from './modules/platform.mjs';
 import { Door } from './modules/door.mjs';
 import { Portal } from './modules/portal.mjs';
+import { Boost } from './modules/boost.mjs';
 import { Box } from './modules/box.mjs';
 import { Goal } from './modules/goal.mjs';
 
@@ -43,6 +44,7 @@ function generateLevels() {
     level.addObject(platform);
     level.addGoal(new Door('../assets/player/player.png', { x: -120, y: 50 }, { w: 16, h: 2 }, platform));
     level.addGoal(new Portal('../assets/player/player.png', { x: 70, y: 50 }, { w: 16, h: 2 }, { x: -120, y: 20 }));
+    level.addGoal(new Boost('../assets/player/player.png', { x: 90, y: 50 }, { w: 16, h: 2 }, { x: 0, y: -20 }));
 
     level.addObject(new Box('../assets/player/player.png', { x: 20, y: 20 }, { w: 10, h: 10 }));
     

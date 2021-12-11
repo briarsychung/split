@@ -16,6 +16,10 @@ class Interactive extends Rectangle {
     press(object) {
         this.pressed.push(object);
     }
+
+    trigger() {
+        // idk lmao
+    }
 }
 
 export { Interactive };
