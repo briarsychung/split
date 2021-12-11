@@ -98,10 +98,10 @@ class Mover extends Object {
             if (this.ground.press) this.ground.press(this);
         }
 
-        this.vel.x *= this.touch.bottom ? 0.75 : 0.875;
-        this.vel.y *= 0.9375;
+        this.vel.x *= this.touch.bottom ? 0.5 : 0.75;
+        this.vel.y *= 0.875;
 
-        this.vel.y += 0.75;
+        this.vel.y += 0.5;
     }
 }
 

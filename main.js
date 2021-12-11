@@ -2,7 +2,7 @@ import { Game } from './modules/game.mjs';
 import { Canvas } from './modules/canvas.mjs';
 import { Level } from './modules/level.mjs';
 import { Player } from './modules/player.mjs';
-import { KeyboardInput } from './modules/keyboard-input.mjs';
+import { Input } from './modules/input.mjs';
 import { Spawn } from './modules/spawn.mjs';
 import { Box } from './modules/box.mjs';
 import { Ground } from './modules/ground.mjs';
@@ -22,8 +22,8 @@ let players = [new Player('../assets/player/player.png'), new Player('../assets/
 GAME.addPlayer(players[0]);
 GAME.addPlayer(players[1]);
 
-GAME.addInput(new KeyboardInput(players[0]));
-GAME.addInput(new KeyboardInput(players[1], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
+GAME.addInput(new Input(players[0]));
+GAME.addInput(new Input(players[1], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
 
 generateLevels();
 GAME.nextLevel();
