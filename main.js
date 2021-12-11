@@ -4,7 +4,8 @@ import { Level } from './modules/level.mjs';
 import { Player } from './modules/player.mjs';
 import { KeyboardInput } from './modules/keyboard-input.mjs';
 import { Spawn } from './modules/spawn.mjs';
-import { Rectangle } from './modules/rectangle.mjs';
+import { Ground } from './modules/ground.mjs';
+import { Spike } from './modules/spike.mjs';
 import { Platform } from './modules/platform.mjs';
 import { Cracked } from './modules/cracked.mjs';
 import { Door } from './modules/door.mjs';
@@ -36,9 +37,10 @@ function loop() {
 function generateLevels() {
     let level = new Level();
 
-    level.addObject(new Rectangle('../assets/player/player.png', { x: 0, y: 50 }, { w: 200, h: 1 }));
-    //level.addObject(new Rectangle('../assets/player/player.png', { x: -20, y: -10 }, { w: 50, h: 1 }));
-    level.addObject(new Rectangle('../assets/player/player.png', { x: 50, y: 35 }, { w: 10, h: 100 }));
+    level.addObject(new Ground('../assets/player/player.png', { x: 0, y: 50 }, { w: 200, h: 1 }));
+    level.addObject(new Spike('../assets/player/player.png', { x: 0, y: 100 }, { w: 400, h: 1 }));
+    //level.addObject(new Ground('../assets/player/player.png', { x: -20, y: -10 }, { w: 50, h: 1 }));
+    level.addObject(new Ground('../assets/player/player.png', { x: 50, y: 35 }, { w: 10, h: 100 }));
     
     //let platform = new Platform('../assets/player/player.png', [{ x: 0, y: 50 }, { x: -100, y: 50 }], { w: 50, h: 50 }, 3, 'pause');
     let platform = new Platform('../assets/player/player.png', [{ x: 0, y: 100 }, { x: 0, y: 0 }], { w: 50, h: 50 }, 3, 'pause');
