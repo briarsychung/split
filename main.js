@@ -26,13 +26,27 @@ GAME.addInput(new Input(players[0]));
 GAME.addInput(new Input(players[1], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
 
 generateLevels();
-GAME.nextLevel();
 
-loop();
+document.getElementById('start').addEventListener('click', () => {
+    document.getElementById('menu').style.visibility = 'hidden';
+    document.getElementById('game').style.visibility = 'visible';
+    GAME.start();
+    loop();
+});
+
+document.getElementById('reset').addEventListener('click', () => {
+    document.getElementById('end').style.visibility = 'hidden';
+    document.getElementById('menu').style.visibility = 'visible';
+});
 
 function loop() {
     GAME.update();
-    setTimeout(() => { window.requestAnimationFrame(loop) }, 0);
+    if (GAME.stage === 'win') {
+        document.getElementById('game').style.visibility = 'hidden';
+        document.getElementById('end').style.visibility = 'visible';
+    } else {
+        setTimeout(() => { window.requestAnimationFrame(loop) }, 0);
+    }
 }
 
 function generateLevels() {

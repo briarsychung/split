@@ -4,18 +4,21 @@ import { Player } from './player.mjs';
 class Game {
     constructor(canvas) {
         this.canvas = canvas;
+        
         this.context = canvas.element.getContext('2d');
-
         this.camera = new Camera();
-
         this.players = [];
-        this.objects = [];
         this.inputs = [];
 
+        this.stage = 'wait';
         this.levels = [];
         this.level = -1;
+    }
 
+    start() {
         this.stage = 'game';
+        this.level = -1;
+        this.nextLevel();
     }
 
     addLevel(level) {
