@@ -29,12 +29,13 @@ class Object {
         });
 
         this.dead = false;
+        this.waiting = false;
     }
 
     init() {
         this.pos = { ...this.base };
         this.vel = { x: 0, y: 0 };
-        this.dead = false;
+        this.dead = this.waiting;
     }
 
     update() {
@@ -61,7 +62,12 @@ class Object {
         this.vel = { ...this.cvel };
     }
 
-    die() {
+    die(state = true) {
+        this.dead = state;
+    }
+
+    wait() {
+        this.waiting = true;
         this.dead = true;
     }
 }

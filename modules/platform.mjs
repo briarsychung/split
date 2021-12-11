@@ -6,6 +6,7 @@ class Platform extends Rectangle {
 
         this.range = range;
         this.speed = speed;
+        this.start = mode;
         this.mode = mode;
 
         this.dir = 1;
@@ -15,6 +16,7 @@ class Platform extends Rectangle {
     init() {
         this.dir = 1;
         this.percent = 0;
+        this.mode = this.start;
 
         super.init();
     }
