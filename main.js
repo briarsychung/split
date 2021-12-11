@@ -30,9 +30,10 @@ testLevel.addObject(new Platform('../assets/player/player.png', [{ x: 0, y: 100 
 testLevel.addSpawn(new Spawn(players[0]));
 testLevel.addSpawn(new Spawn(players[1], { x: 0, y: 20 }));
 
-testLevel.addGoal(new Goal('../assets/player/player.png', { x: -100, y: 0 }, players[0]));
-testLevel.addGoal(new Goal('../assets/player/player.png', { x: -100, y: 100 }));
+testLevel.addGoal(new Goal('../assets/player/player.png', { x: -120, y: 0 }, players[0]));
+testLevel.addGoal(new Goal('../assets/player/player.png', { x: -120, y: 100 }));
 
+GAME.addLevel(testLevel);
 GAME.addLevel(testLevel);
 GAME.nextLevel();
 
