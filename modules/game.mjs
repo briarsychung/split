@@ -104,6 +104,8 @@ class Game {
             object.dim.w * real,
             object.dim.h * real);
 
+        return;
+
         this.context.strokeStyle = object.touch && object.touch.bottom ? 'green' : 'red';
         let x1 = this.canvas.width / 2 + (object.box.left - this.camera.pos.x) * real;
         let x2 = this.canvas.width / 2 + (object.box.right - this.camera.pos.x) * real;
@@ -111,7 +113,6 @@ class Game {
         let y2 = this.canvas.height / 2 + (object.box.bottom - this.camera.pos.y) * real;
         this.context.strokeRect(x1, y1, x2 - x1, y2 - y1);
         this.context.strokeStyle = 'blue';
-        return;
         this.context.strokeRect(
             this.canvas.width / 2 + (object.pos.x - object.dim.w / 2 - this.camera.pos.x) * real,
             this.canvas.height / 2 + (object.pos.y - object.dim.h / 2 - this.camera.pos.y) * real,

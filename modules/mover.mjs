@@ -73,11 +73,8 @@ class Mover extends Object {
                 if (!obj.touch || !obj.touch[dir]) break;
                 obj = obj.touch[dir];
             }
-            let correct = obj.npos[axis] + m * (obj.dim[da] / 2 - this.dim[da] / 2 - xt);
-            //if (correct * m < this.cpos[axis] * m) {
             this.cvel[axis] = m === 1 ? Math.min(obj.nvel[axis], this.nvel[axis]) : Math.max(obj.nvel[axis], this.nvel[axis]);
-            this.cpos[axis] = correct;
-            //}
+            this.cpos[axis] = obj.npos[axis] + m * (obj.dim[da] / 2 - this.dim[da] / 2 - xt);
         }
     }
 
@@ -101,10 +98,10 @@ class Mover extends Object {
             if (this.ground.press) this.ground.press(this);
         }
 
-        this.vel.y += 0.75;
-
         this.vel.x *= this.touch.bottom ? 0.75 : 0.875;
         this.vel.y *= 0.9375;
+
+        this.vel.y += 0.75;
     }
 }
 
