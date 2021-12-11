@@ -27,11 +27,14 @@ class Object {
                 }
             }
         });
+
+        this.dead = false;
     }
 
     init() {
         this.pos = { ...this.base };
         this.vel = { x: 0, y: 0 };
+        this.dead = false;
     }
 
     update() {
@@ -56,6 +59,10 @@ class Object {
     move() {
         this.pos = { ...this.cpos };
         this.vel = { ...this.cvel };
+    }
+
+    die() {
+        this.dead = true;
     }
 }
 

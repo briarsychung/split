@@ -6,6 +6,7 @@ import { KeyboardInput } from './modules/keyboard-input.mjs';
 import { Spawn } from './modules/spawn.mjs';
 import { Rectangle } from './modules/rectangle.mjs';
 import { Platform } from './modules/platform.mjs';
+import { Cracked } from './modules/cracked.mjs';
 import { Door } from './modules/door.mjs';
 import { Portal } from './modules/portal.mjs';
 import { Boost } from './modules/boost.mjs';
@@ -46,6 +47,7 @@ function generateLevels() {
     level.addObject(new Portal('../assets/player/player.png', { x: 70, y: 50 }, { w: 16, h: 2 }, { x: -120, y: 20 }));
     level.addObject(new Boost('../assets/player/player.png', { x: 90, y: 50 }, { w: 16, h: 2 }, { x: 0, y: -20 }));
     
+    level.addObject(new Cracked('../assets/player/player.png', { x: 0, y: 0 }, { w: 16, h: 2 }));
 
     level.addObject(new Box('../assets/player/player.png', { x: 20, y: 20 }, { w: 10, h: 10 }));
     

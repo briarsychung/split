@@ -59,7 +59,7 @@ class Game {
 
     gameTick() {
         let level = this.levels[this.level];
-        let objects = level.objects.concat(this.players);
+        let objects = level.objects.concat(this.players).filter(o => !o.dead);
 
         this.players[0].tag = "P1";
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
