@@ -5,10 +5,13 @@ class Object {
         this.dim = dim;
 
         this.vel = { x: 0, y: 0 };
-        this.npos = {};
-        this.nvel = {};
         this.box = {};
         this.player = null;
+
+        this.npos = { ...this.pos };
+        this.cpos = { ...this.pos };
+        this.nvel = { ...this.vel };
+        this.cvel = { ...this.vel };
 
         this.image = document.createElement('canvas');
         this.image.width = dim.w;
@@ -27,27 +30,26 @@ class Object {
 
     update() {
         this.npos = {
-            x: this.pos.x + this.vel.x,
-            y: this.pos.y + this.vel.y
+            x: this.pos.x + this.nvel.x,
+            y: this.pos.y + this.nvel.y
         }
 
-        this.cpos = {...this.npos};
-
-        this.nvel = {...this.vel};
+        this.cpos = { ...this.npos };
+        this.cvel = { ...this.nvel };
 
         this.box = {
-            top: this.pos.y - this.dim.h / 2 + this.vel.y,
-            bottom: this.pos.y + this.dim.h / 2 + this.vel.y,
-            left: this.pos.x - this.dim.w / 2 + this.vel.x,
-            right: this.pos.x + this.dim.w / 2 + this.vel.x
+            top: this.pos.y - this.dim.h / 2 + (this.nvel.y < 0 ? this.nvel.y : 0),
+            bottom: this.pos.y + this.dim.h / 2 + (this.nvel.y > 0 ? this.nvel.y : 0),
+            left: this.pos.x - this.dim.w / 2 + (this.nvel.x < 0 ? this.nvel.x : 0),
+            right: this.pos.x + this.dim.w / 2 + (this.nvel.x > 0 ? this.nvel.x : 0)
         }
 
         this.player = null;
     }
 
     move() {
-        this.pos = {...this.cpos};
-        this.vel = {...this.nvel};
+        this.pos = { ...this.cpos };
+        this.vel = { ...this.cvel };
     }
 }
 

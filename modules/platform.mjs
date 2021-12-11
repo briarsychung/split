@@ -11,6 +11,8 @@ class Platform extends Object {
     }
     
     update() {
+        this.nvel = {...this.vel};
+        
         let dx = this.range[1].x - this.range[0].x;
         let dy = this.range[1].y - this.range[0].y;
 
@@ -23,7 +25,7 @@ class Platform extends Object {
             this.dir = 1;
         }
         
-        this.vel = {
+        this.nvel = {
             x: this.dir * dx * this.speed / Math.hypot(dx, dy),
             y: this.dir * dy * this.speed / Math.hypot(dx, dy)
         }
