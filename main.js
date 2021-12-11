@@ -44,6 +44,6 @@ function generateLevels() {
     level.addGoal(new Goal('../assets/player/player.png', { x: -120, y: 0 }, players[0]));
     level.addGoal(new Goal('../assets/player/player.png', { x: -120, y: 100 }));
 
-    GAME.addLevel(testLevel);
-    GAME.addLevel(testLevel);
+    GAME.addLevel(level);
+    GAME.addLevel(level);
 }
