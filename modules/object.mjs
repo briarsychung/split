@@ -8,6 +8,7 @@ class Object {
         this.npos = {};
         this.nvel = {};
         this.box = {};
+        this.player = null;
 
         this.image = document.createElement('canvas');
         this.image.width = dim.w;
@@ -40,6 +41,8 @@ class Object {
             left: this.pos.x - this.dim.w / 2 + this.vel.x,
             right: this.pos.x + this.dim.w / 2 + this.vel.x
         }
+
+        this.player = null;
     }
 
     move() {
