@@ -14,7 +14,8 @@ let testLevel = new Level();
 
 let players = [new Player('../assets/player/player.png'), new Player('../assets/player/player.png')];
 
-GAME.input = new KeyboardInput(players[0]);
+GAME.addInput(new KeyboardInput(players[0]));
+GAME.addInput(new KeyboardInput(players[1], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
 
 GAME.addPlayer(players[0]);
 GAME.addPlayer(players[1]);

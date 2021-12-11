@@ -9,6 +9,9 @@ class Game {
         this.camera = new Camera();
 
         this.players = [];
+        this.objects = [];
+        this.inputs = [];
+      
         this.levels = [];
         this.level = -1;
 
@@ -30,6 +33,10 @@ class Game {
         this.players.push(player);
     }
 
+    addInput(input) {
+        this.inputs.push(input);
+    }
+
     update() {
         switch (this.stage) {
             case 'game':
@@ -46,7 +53,8 @@ class Game {
         this.players[0].tag = "P1";
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.input.check();
+        this.inputs[0].check();
+        this.inputs[1].check();
 
         for (let i = 0; i < objects.length; i++) {
             objects[i].update();
