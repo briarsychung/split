@@ -4,19 +4,17 @@ class Interactive extends Rectangle {
     constructor(url, pos, dim) {
         super(url, pos, dim);
 
-        this.pressed = null;
-        this.active = null;
+        this.pressed = [];
     }
 
     update() {
-        this.pressed = null;
-        this.active = null;
+        this.pressed = [];
 
         super.update();
     }
 
     press(object) {
-        this.pressed = object;
+        this.pressed.push(object);
     }
 }
 

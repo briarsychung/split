@@ -84,9 +84,13 @@ class Game {
             this.draw(objects[i]);
         }
 
+        for (let i = 0; i < objects.length; i++) {
+            if (objects[i].trigger) objects[i].trigger();
+        }
+
         this.camera.update(this.players);
 
-        if (level.goals[0].active && level.goals[1].active) {
+        if (level.goals[0].player && level.goals[1].player) {
             this.nextLevel();
         }
     }
