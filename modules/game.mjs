@@ -30,6 +30,13 @@ class Game {
             return;
         }
 
+        let level = this.levels[this.level];
+        let objects = level.objects.concat(this.players);
+
+        for (let i = 0; i < objects.length; i++) {
+            objects[i].init();
+        }
+
         this.players[0].pos = { ...this.levels[this.level].spawns[0].pos };
         this.players[1].pos = { ...this.levels[this.level].spawns[1].pos };
     }

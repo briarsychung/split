@@ -4,6 +4,7 @@ class Object {
         this.pos = pos;
         this.dim = dim;
 
+        this.base = pos;
         this.vel = { x: 0, y: 0 };
         this.box = {};
         this.player = null;
@@ -26,6 +27,11 @@ class Object {
                 }
             }
         });
+    }
+
+    init() {
+        this.pos = { ...this.base };
+        this.vel = { x: 0, y: 0 };
     }
 
     update() {

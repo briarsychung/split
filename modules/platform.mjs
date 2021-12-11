@@ -5,14 +5,21 @@ class Platform extends Object {
         super(url, range[0], dim);
         this.range = range;
         this.speed = speed;
-
+        
         this.dir = 1;
         this.percent = 0;
+    }
+
+    init() {
+        this.dir = 1;
+        this.percent = 0;
+
+        super.init();
     }
     
     update() {
         this.nvel = {...this.vel};
-        
+
         let dx = this.range[1].x - this.range[0].x;
         let dy = this.range[1].y - this.range[0].y;
 
