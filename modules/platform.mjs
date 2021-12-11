@@ -35,15 +35,23 @@ class Platform extends Rectangle {
                 this.percent = 1;
                 this.dir = -1;
                 this.mode = this.mode === 'play' ? 'stop' : this.mode;
+                this.nvel = {
+                    x: this.range[1].x - this.pos.x,
+                    y: this.range[1].y - this.pos.y
+                }
             } else if (this.percent <= 0) {
                 this.percent = 0;
                 this.dir = 1;
                 this.mode = this.mode === 'play' ? 'stop' : this.mode;
-            }
-
-            this.nvel = {
-                x: this.dir * dx * this.speed / Math.hypot(dx, dy),
-                y: this.dir * dy * this.speed / Math.hypot(dx, dy)
+                this.nvel = {
+                    x: this.range[0].x - this.pos.x,
+                    y: this.range[0].y - this.pos.y
+                }
+            } else {
+                this.nvel = {
+                    x: this.dir * dx * this.speed / Math.hypot(dx, dy),
+                    y: this.dir * dy * this.speed / Math.hypot(dx, dy)
+                }
             }
         }
 
