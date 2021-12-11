@@ -11,7 +11,7 @@ class Game {
         this.players = [];
         this.objects = [];
         this.inputs = [];
-      
+
         this.levels = [];
         this.level = -1;
 
@@ -28,6 +28,13 @@ class Game {
         if (this.level === this.levels.length) {
             this.stage = 'win';
             return;
+        }
+
+        let level = this.levels[this.level];
+        let objects = level.objects.concat(this.players);
+
+        for (let i = 0; i < objects.length; i++) {
+            objects[i].init();
         }
 
         this.players[0].pos = { ...this.levels[this.level].spawns[0].pos };
@@ -52,8 +59,7 @@ class Game {
 
     gameTick() {
         let level = this.levels[this.level];
-        let objects = level.objects.concat(this.players);
-        let goals = level.goals;
+        let objects = level.objects.concat(this.players).filter(o => !o.dead);
 
         this.players[0].tag = "P1";
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -78,6 +84,10 @@ class Game {
             this.draw(objects[i]);
         }
 
+        for (let i = 0; i < objects.length; i++) {
+            if (objects[i].trigger) objects[i].trigger();
+        }
+
         this.camera.update(this.players);
 
         if (level.goals[0].player && level.goals[1].player) {
@@ -93,6 +103,9 @@ class Game {
             this.canvas.height / 2 + (object.pos.y - object.dim.h / 2 - this.camera.pos.y) * real,
             object.dim.w * real,
             object.dim.h * real);
+
+        return;
+
         this.context.strokeStyle = object.touch && object.touch.bottom ? 'green' : 'red';
         let x1 = this.canvas.width / 2 + (object.box.left - this.camera.pos.x) * real;
         let x2 = this.canvas.width / 2 + (object.box.right - this.camera.pos.x) * real;
@@ -100,7 +113,6 @@ class Game {
         let y2 = this.canvas.height / 2 + (object.box.bottom - this.camera.pos.y) * real;
         this.context.strokeRect(x1, y1, x2 - x1, y2 - y1);
         this.context.strokeStyle = 'blue';
-        return;
         this.context.strokeRect(
             this.canvas.width / 2 + (object.pos.x - object.dim.w / 2 - this.camera.pos.x) * real,
             this.canvas.height / 2 + (object.pos.y - object.dim.h / 2 - this.camera.pos.y) * real,
