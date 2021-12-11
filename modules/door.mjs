@@ -8,7 +8,7 @@ class Door extends Button {
     }
 
     trigger() {
-        if (this.pressed) this.platform.play();
+        if (this.pressed.length) this.platform.play();
 
         super.trigger();
     }

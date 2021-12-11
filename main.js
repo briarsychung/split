@@ -6,6 +6,8 @@ import { KeyboardInput } from './modules/keyboard-input.mjs';
 import { Spawn } from './modules/spawn.mjs';
 import { Rectangle } from './modules/Rectangle.mjs';
 import { Platform } from './modules/platform.mjs';
+import { Door } from './modules/door.mjs';
+import { Portal } from './modules/portal.mjs';
 import { Box } from './modules/box.mjs';
 import { Goal } from './modules/goal.mjs';
 
@@ -36,8 +38,11 @@ function generateLevels() {
     //level.addObject(new Rectangle('../assets/player/player.png', { x: -20, y: -10 }, { w: 50, h: 1 }));
     level.addObject(new Rectangle('../assets/player/player.png', { x: 50, y: 35 }, { w: 10, h: 100 }));
     
-    //level.addObject(new Platform('../assets/player/player.png', [{ x: 0, y: 100 }, { x: 0, y: 0 }], { w: 50, h: 50 }, 3));
-    //level.addObject(new Platform('../assets/player/player.png', [{ x: 0, y: 50 }, { x: -100, y: 50 }], { w: 50, h: 50 }, 3));
+    //let platform = new Platform('../assets/player/player.png', [{ x: 0, y: 50 }, { x: -100, y: 50 }], { w: 50, h: 50 }, 3, 'pause');
+    let platform = new Platform('../assets/player/player.png', [{ x: 0, y: 100 }, { x: 0, y: 0 }], { w: 50, h: 50 }, 3, 'pause');
+    level.addObject(platform);
+    level.addGoal(new Door('../assets/player/player.png', { x: -120, y: 50 }, { w: 16, h: 2 }, platform));
+    level.addGoal(new Portal('../assets/player/player.png', { x: 70, y: 50 }, { w: 16, h: 2 }, { x: -120, y: 20 }));
 
     level.addObject(new Box('../assets/player/player.png', { x: 20, y: 20 }, { w: 10, h: 10 }));
     
