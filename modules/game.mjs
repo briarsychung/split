@@ -25,6 +25,11 @@ class Game {
     nextLevel() {
         this.level++;
 
+        if (this.level === this.levels.length) {
+            this.stage = 'win';
+            return;
+        }
+
         this.players[0].pos = { ...this.levels[this.level].spawns[0].pos };
         this.players[1].pos = { ...this.levels[this.level].spawns[1].pos };
     }
@@ -73,11 +78,11 @@ class Game {
             this.draw(objects[i]);
         }
 
-        if (level.goals[0].player && 1 || level.goals[1].player) {
-            console.log('a');
-        }
-
         this.camera.update(this.players);
+
+        if (level.goals[0].player && level.goals[1].player) {
+            this.nextLevel();
+        }
     }
 
     draw(object) {
