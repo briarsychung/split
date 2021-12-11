@@ -2,7 +2,7 @@ import { Game } from './modules/game.mjs';
 import { Canvas } from './modules/canvas.mjs';
 import { Level } from './modules/level.mjs';
 import { Player } from './modules/player.mjs';
-import { KeyboardInput } from './modules/keyboard-input.mjs';
+import { Input } from './modules/input.mjs';
 import { Spawn } from './modules/spawn.mjs';
 import { Box } from './modules/box.mjs';
 import { Ground } from './modules/ground.mjs';
@@ -22,47 +22,54 @@ let players = [new Player('../assets/player/player.png'), new Player('../assets/
 GAME.addPlayer(players[0]);
 GAME.addPlayer(players[1]);
 
-GAME.addInput(new KeyboardInput(players[0]));
-GAME.addInput(new KeyboardInput(players[1], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
+GAME.addInput(new Input(players[0]));
+GAME.addInput(new Input(players[1], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
 
 generateLevels();
-GAME.nextLevel();
 
-loop();
+document.getElementById('start').addEventListener('click', () => {
+    document.getElementById('menu').style.visibility = 'hidden';
+    document.getElementById('game').style.visibility = 'visible';
+    GAME.start();
+    loop();
+});
+
+document.getElementById('reset').addEventListener('click', () => {
+    document.getElementById('end').style.visibility = 'hidden';
+    document.getElementById('menu').style.visibility = 'visible';
+});
 
 function loop() {
     GAME.update();
-    setTimeout(() => { window.requestAnimationFrame(loop) }, 0);
+    if (GAME.stage === 'win') {
+        document.getElementById('game').style.visibility = 'hidden';
+        document.getElementById('end').style.visibility = 'visible';
+    } else {
+        setTimeout(() => { window.requestAnimationFrame(loop) }, 0);
+    }
 }
 
 function generateLevels() {
-    let level = new Level();
+    let stair = new Level();
 
-    level.addObject(new Ground('../assets/player/player.png', { x: 0, y: 50 }, { w: 200, h: 1 }));
-    level.addObject(new Spike('../assets/player/player.png', { x: 0, y: 100 }, { w: 400, h: 1 }));
-    //level.addObject(new Ground('../assets/player/player.png', { x: -20, y: -10 }, { w: 50, h: 1 }));
-    level.addObject(new Ground('../assets/player/player.png', { x: 50, y: 35 }, { w: 10, h: 100 }));
+    stair.addSpawn(new Spawn(players[0], { x: 0, y: -25 }));
+    stair.addSpawn(new Spawn(players[1], { x: 20, y: -25 }));
 
-    //let platform = new Platform('../assets/player/player.png', [{ x: 0, y: 50 }, { x: -100, y: 50 }], { w: 50, h: 50 }, 3, 'pause');
-    let platform = new Platform('../assets/player/player.png', [{ x: 0, y: 100 }, { x: 0, y: 0 }], { w: 50, h: 50 }, 3, 'pause');
-    level.addObject(platform);
-    level.addObject(new Door('../assets/player/player.png', { x: -100, y: 50 }, { w: 16, h: 2 }, platform));
-    level.addObject(new Portal('../assets/player/player.png', { x: 70, y: 50 }, { w: 16, h: 2 }, { x: -120, y: 20 }));
-    level.addObject(new Boost('../assets/player/player.png', { x: 90, y: 50 }, { w: 16, h: 2 }, { x: 0, y: -20 }));
+    stair.addObject(new Ground('../assets/ground/ground.png', { x: 10, y: 25 }, { w: 40, h: 50 }));
+    stair.addObject(new Ground('../assets/ground/ground.png', { x: 60, y: -25 }, { w: 40, h: 50 }));
+    stair.addObject(new Ground('../assets/ground/ground.png', { x: 110, y: -75 }, { w: 40, h: 50 }));
 
-    level.addObject(new Cracked('../assets/player/player.png', { x: 0, y: 0 }, { w: 16, h: 2 }));
+    let stairP1 = new Platform('../assets/ground/platform.png', [{ x: 35, y: 25 }, { x: 35, y: -25 }], { w: 10, h: 50 }, 3, 'pause');
+    let stairP2 = new Platform('../assets/ground/platform.png', [{ x: 85, y: -25 }, { x: 85, y: -75 }], { w: 10, h: 50 }, 3, 'pause');
 
-    let box = new Box('../assets/player/player.png', { x: 20, y: 20 }, { w: 10, h: 10 });
-    box.wait();
-    level.addObject(box);
-    level.addObject(new Link('../assets/player/player.png', { x: 50, y: 90 }, { w: 300, h: 1 }, box));
+    stair.addObject(stairP1);
+    stair.addObject(stairP2);
 
-    level.addSpawn(new Spawn(players[0], { x: 0, y: -20 }));
-    level.addSpawn(new Spawn(players[1], { x: 0, y: 20 }));
+    stair.addObject(new Door('../assets/ground/button.png', { x: 60, y: -50 }, { w: 25, h: 2 }, stairP1));
+    stair.addObject(new Door('../assets/ground/button.png', { x: 110, y: -100 }, { w: 25, h: 2 }, stairP2));
 
-    level.addGoal(new Goal('../assets/player/player.png', { x: -120, y: 0 }, players[0]));
-    level.addGoal(new Goal('../assets/player/player.png', { x: -120, y: 100 }));
+    stair.addGoal(new Goal('../assets/ground/goal.png', { x: 170, y: -75 }));
+    stair.addGoal(new Goal('../assets/ground/goal.png', { x: 150, y: -75 }));
 
-    GAME.addLevel(level);
-    GAME.addLevel(level);
+    GAME.addLevel(stair);
 }
