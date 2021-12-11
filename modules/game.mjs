@@ -11,7 +11,7 @@ class Game {
         this.players = [];
         this.objects = [];
         this.inputs = [];
-      
+
         this.levels = [];
         this.level = -1;
 
@@ -86,7 +86,7 @@ class Game {
 
         this.camera.update(this.players);
 
-        if (level.goals[0].player && level.goals[1].player) {
+        if (level.goals[0].active && level.goals[1].active) {
             this.nextLevel();
         }
     }
@@ -99,6 +99,7 @@ class Game {
             this.canvas.height / 2 + (object.pos.y - object.dim.h / 2 - this.camera.pos.y) * real,
             object.dim.w * real,
             object.dim.h * real);
+
         this.context.strokeStyle = object.touch && object.touch.bottom ? 'green' : 'red';
         let x1 = this.canvas.width / 2 + (object.box.left - this.camera.pos.x) * real;
         let x2 = this.canvas.width / 2 + (object.box.right - this.camera.pos.x) * real;
