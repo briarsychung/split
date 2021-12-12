@@ -55,6 +55,8 @@ function loop() {
 function generateLevels() {
     let stair = new Level();
 
+    stair.addBackground(new Texture('../assets/background/outside.png'));
+
     stair.addSpawn(new Spawn(players[0], { x: 0, y: -25 }));
     stair.addSpawn(new Spawn(players[1], { x: 20, y: -25 }));
 
