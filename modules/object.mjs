@@ -49,6 +49,10 @@ class Object {
     move() {
         this.pos = { ...this.cpos };
         this.vel = { ...this.cvel };
+
+        if (this.pos.y > 1024) {
+            this.die();
+        }
     }
 
     die(state = true) {
