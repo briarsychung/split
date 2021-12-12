@@ -1,8 +1,8 @@
 import { Button } from './button.mjs';
 
 class Portal extends Button {
-    constructor(url, pos, dim, destination, denied = []) {
-        super(url, pos, dim);
+    constructor(texture, pos, dim, destination, denied = []) {
+        super(texture, pos, dim);
 
         this.destination = destination;
         this.denied = denied;
