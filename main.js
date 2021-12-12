@@ -19,6 +19,9 @@ import { Box } from './modules/box.mjs';
 import { Goal } from './modules/goal.mjs';
 
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
+
+let speed = 0;
+
 generateLevels();
 
 document.getElementById('start').addEventListener('click', () => {
@@ -33,13 +36,37 @@ document.getElementById('reset').addEventListener('click', () => {
     document.getElementById('menu').style.visibility = 'visible';
 });
 
+document.addEventListener('keydown', e => {
+    switch (e.key.toLowerCase()) {
+        case 'p':
+            GAME.debug = !GAME.debug;
+            if (!GAME.debug) speed = 0;
+            break;
+        case '0':
+            if (GAME.debug) speed = 0;
+            break;
+        case '9':
+            if (GAME.debug) speed = 300;
+            break;
+        case '8':
+            if (GAME.debug) speed = 100;
+            break;
+        case ',':
+            if (GAME.debug) GAME.resetLevel();
+            break;
+        case '.':
+            if (GAME.debug) GAME.nextLevel();
+            break;
+    }
+});
+
 function loop() {
     GAME.update();
     if (GAME.stage === 'win') {
         document.getElementById('game').style.visibility = 'hidden';
         document.getElementById('end').style.visibility = 'visible';
     } else {
-        setTimeout(() => { window.requestAnimationFrame(loop) }, 0);
+        setTimeout(() => { window.requestAnimationFrame(loop) }, speed);
     }
 }
 
