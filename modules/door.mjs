@@ -1,14 +1,10 @@
 import { Button } from './button.mjs';
 
 class Door extends Button {
-    constructor(textures, pos, dim, platform) {
-        super(textures[0], pos, dim);
+    constructor(pos, dim, textures, offset, platform) {
+        super(pos, dim, textures[0], offset);
 
         this.textures = textures;
-
-        this.textures[1].dim = dim;
-        this.textures[1].load();
-
         this.platform = platform;
     }
 

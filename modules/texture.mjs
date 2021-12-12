@@ -1,13 +1,9 @@
 class Texture {
-    constructor(url, reverse = false) {
+    constructor(url, dim, reverse = false) {
         this.url = url;
+        this.dim = dim;
         this.reverse = reverse;
 
-        this.dim = { w: 0, h: 0 };
-        this.image = null;
-    }
-
-    load() {
         this.image = this.generate(this.url, this.reverse);
     }
 
