@@ -12,12 +12,13 @@ class Player extends Mover {
 
     move() {
         let nstate = 'idle';
+        let real = this.nvel.x - (this.ground ? this.ground.nvel.x : 0);
 
-        this.dir = this.vel.x === 0 ? this.dir : (this.vel.x > 0 ? 1 : 0);
+        this.dir = real === 0 ? this.dir : (real > 0 ? 1 : 0);
         if (!this.touch.bottom) {
             this.texture = this.sprite.data.jump[this.dir];
             nstate = 'jump';
-        } else if (Math.abs(this.vel.x) > 0.5) {
+        } else if (Math.abs(real) > 0.25) {
             this.texture = this.sprite.data.run[this.dir];
             nstate = 'run';
         } else {

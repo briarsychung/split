@@ -46,7 +46,7 @@ document.addEventListener('keydown', e => {
             if (GAME.debug) speed = 0;
             break;
         case '9':
-            if (GAME.debug) speed = 300;
+            if (GAME.debug) speed = 1000;
             break;
         case '8':
             if (GAME.debug) speed = 100;
@@ -86,6 +86,8 @@ function generateLevels() {
     stair.addSpawn(new Spawn({ x: 300, y: 475 }, players[0]));
     stair.addSpawn(new Spawn({ x: 325, y: 475 }, players[1]));
 
+    //stair.addObject(new Platform([{ x: 310, y: 625 }, { x: 550, y: 625 }], { w: 800, h: 60 }, new Texture('../assets/ground/brick-small-middle.png', { w: 800, h: 60 }), { x: 0, y: 0 }, 3));
+    stair.addObject(new Ground({ x: 310, y: 625-32 }, { w: 800, h: 50 }, new Texture('../assets/ground/brick-small-middle.png', { w: 800, h: 50 })));
     stair.addObject(new Ground({ x: 310, y: 525 }, { w: 40, h: 50 }, new Texture('../assets/ground/brick-small-middle.png', { w: 40, h: 50 })));
     stair.addObject(new Ground({ x: 360, y: 475 }, { w: 40, h: 50 }, new Texture('../assets/ground/brick-small-middle.png', { w: 40, h: 50 })));
     stair.addObject(new Ground({ x: 410, y: 425 }, { w: 40, h: 50 }, new Texture('../assets/ground/brick-small-middle.png', { w: 40, h: 50 })));
@@ -98,6 +100,8 @@ function generateLevels() {
 
     stair.addObject(new Door({ x: 360, y: 448.5 }, { w: 16, h: 3 }, [new Texture('../assets/interactive/button-up.png', { w: 16, h: 6 }), new Texture('../assets/interactive/button-down.png', { w: 16, h: 6 })], { x: 0, y: -1.5 }, stairP1));
     stair.addObject(new Door({ x: 410, y: 398.5 }, { w: 16, h: 3 }, [new Texture('../assets/interactive/button-up.png', { w: 16, h: 6 }), new Texture('../assets/interactive/button-down.png', { w: 16, h: 6 })], { x: 0, y: -1.5 }, stairP2));
+
+    stair.addObject(new Box({ x: 200, y: 500 }, { w: 16, h: 16 }, new Texture('../assets/interactive/box-small.png', { w: 16, h: 16 })));
 
     stair.addGoal(new Goal({ x: 470, y: 425 }, { w: 16, h: 6 }, new Texture('../assets/ground/brick-cracked-middle.png', { w: 16, h: 6 })));
     stair.addGoal(new Goal({ x: 450, y: 425 }, { w: 16, h: 6 }, new Texture('../assets/ground/brick-cracked-middle.png', { w: 16, h: 6 })));
