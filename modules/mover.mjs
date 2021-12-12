@@ -1,8 +1,8 @@
 import { Object } from './object.mjs';
 
 class Mover extends Object {
-    constructor(texture, pos, dim) {
-        super(texture, pos, dim);
+    constructor(pos, dim, texture, offset) {
+        super(pos, dim, texture, offset);
 
         this.touch = { top: null, bottom: null, left: null, right: null };
         this.ground = null;

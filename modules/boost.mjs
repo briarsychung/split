@@ -1,8 +1,8 @@
 import { Interactive } from './interactive.mjs';
 
 class Boost extends Interactive {
-    constructor(texture, pos, dim, acc) {
-        super(texture, pos, dim);
+    constructor(pos, dim, texture, offset, acc) {
+        super(pos, dim, texture, offset);
 
         this.acc = acc;
     }
