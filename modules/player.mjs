@@ -12,17 +12,29 @@ class Player extends Mover {
                 this.sprite.data[KEY][i].load();
             }
         }
+
+        this.dir = 1;
+        this.state = 'idle';
     }
 
     move() {
-        let dir = this.vel.x > 0 ? 1 : 0;
+        let nstate = 'idle';
+
+        this.dir = this.vel.x === 0 ? this.dir : (this.vel.x > 0 ? 1 : 0);
         if (!this.touch.bottom) {
-            this.texture = this.sprite.data.jump[dir];
+            this.texture = this.sprite.data.jump[this.dir];
+            nstate = 'jump';
         } else if (Math.abs(this.vel.x) > 0.5) {
-            this.texture = this.sprite.data.run[dir];
+            this.texture = this.sprite.data.run[this.dir];
+            nstate = 'run';
         } else {
-            this.texture = this.sprite.data.idle[dir];
+            this.texture = this.sprite.data.idle[this.dir];
         }
+
+        if (this.state !== nstate && this.texture.start) {
+            this.texture.start();
+        }
+        this.state = nstate;
 
         super.move();
     }
