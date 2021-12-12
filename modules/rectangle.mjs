@@ -1,8 +1,8 @@
 import { Object } from './object.mjs';
 
 class Rectangle extends Object {
-    constructor(url, pos, dim) {
-        super(url, pos, dim);
+    constructor(texture, pos, dim) {
+        super(texture, pos, dim);
     }
 }
 

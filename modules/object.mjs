@@ -1,8 +1,11 @@
 class Object {
-    constructor(url, pos, dim) {
-        this.url = url;
+    constructor(texture, pos, dim) {
+        this.texture = texture;
         this.pos = pos;
         this.dim = dim;
+
+        this.texture.dim = dim;
+        this.texture.load();
 
         this.base = pos;
         this.vel = { x: 0, y: 0 };
@@ -13,20 +16,6 @@ class Object {
         this.cpos = { ...this.pos };
         this.nvel = { ...this.vel };
         this.cvel = { ...this.vel };
-
-        this.image = document.createElement('canvas');
-        this.image.width = dim.w;
-        this.image.height = dim.h;
-
-        let source = new Image();
-        source.src = url;
-        source.addEventListener('load', () => {
-            for (let x = 0; x < dim.w; x += source.width) {
-                for (let y = 0; y < dim.h; y += source.height) {
-                    this.image.getContext('2d').drawImage(source, x, y);
-                }
-            }
-        });
 
         this.dead = false;
         this.waiting = false;
