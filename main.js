@@ -72,19 +72,19 @@ function loop() {
 
 function generateLevels() {
     let players = [new Player(new Sprite('../assets/player/player-blue-')), new Player(new Sprite('../assets/player/player-red-'))];
-    
+
     GAME.addPlayer(players[0]);
     GAME.addPlayer(players[1]);
-    
+
     GAME.addInput(new Input(players[0]));
     GAME.addInput(new Input(players[1], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
 
     let stair = new Level();
-  
+
     stair.addBackground(new Texture('../assets/background/outside.png', { w: 1024, h: 1024 }));
 
     stair.addSpawn(new Spawn({ x: 300, y: 475 }, players[0]));
-    stair.addSpawn(new Spawn({ x: 300, y: 475 }, players[1]));
+    stair.addSpawn(new Spawn({ x: 325, y: 475 }, players[1]));
 
     stair.addObject(new Ground({ x: 310, y: 525 }, { w: 40, h: 50 }, new Texture('../assets/ground/brick-small-middle.png', { w: 40, h: 50 })));
     stair.addObject(new Ground({ x: 360, y: 475 }, { w: 40, h: 50 }, new Texture('../assets/ground/brick-small-middle.png', { w: 40, h: 50 })));

@@ -46,7 +46,7 @@ class Game {
             this.stage = 'win';
             return;
         }
-        
+
         this.resetLevel();
     }
 
@@ -131,7 +131,7 @@ class Game {
         for (let i = 0; i < debugInfo.length; i++) {
             this.context.fillText(debugInfo[i], 50, i * 15 + 50);
         }
-        
+
         this.context.strokeStyle = 'black';
         this.context.strokeRect(this.canvas.width / 2 - 1, this.canvas.height / 2 - 1, 3, 3);
     }
