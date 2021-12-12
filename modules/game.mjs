@@ -4,7 +4,7 @@ import { Player } from './player.mjs';
 class Game {
     constructor(canvas) {
         this.canvas = canvas;
-        
+
         this.context = canvas.element.getContext('2d');
         this.camera = new Camera();
         this.players = [];
@@ -97,6 +97,31 @@ class Game {
 
         if (level.goals[0].player && level.goals[1].player) {
             this.nextLevel();
+        }
+
+        if (!this.debug) return;
+
+        let f = n => {
+            if (Math.abs(n) < 0.001) n = 0;
+            return n.toPrecision(4);
+        }
+
+        let debugInfo = [
+            `Canvas Dimensions: ${f(this.canvas.width)}, ${f(this.canvas.height)}`,
+            `Level: ${this.level + 1} / ${this.levels.length}`,
+            `Player 1`,
+            `    pos: ${f(this.players[0].pos.x)}, ${f(this.players[0].pos.y)}`,
+            `    vel: ${f(this.players[0].vel.x)}, ${f(this.players[0].vel.y)}`,
+            `    ground: ${this.players[0].touch.bottom ? 'true' : 'false'}`,
+            `Player 2`,
+            `    pos: ${f(this.players[1].pos.x)}, ${f(this.players[1].pos.y)}`,
+            `    vel: ${f(this.players[1].vel.x)}, ${f(this.players[1].vel.y)}`,
+            `    ground: ${this.players[1].touch.bottom ? 'true' : 'false'}`,
+            `Camera`,
+            `    pos: ${f(this.camera.pos.x)}, ${f(this.camera.pos.y)}`,
+            `    zoom: ${f(this.camera.zoom)}`];
+        for (let i = 0; i < debugInfo.length; i++) {
+            this.context.fillText(debugInfo[i], 50, i * 15 + 50);
         }
     }
 
