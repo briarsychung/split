@@ -84,11 +84,11 @@ class Game {
 
         for (let i = 0; i < objects.length; i++) {
             objects[i].move();
-            this.draw(objects[i]);
         }
 
         for (let i = 0; i < objects.length; i++) {
             if (objects[i].trigger) objects[i].trigger();
+            this.draw(objects[i]);
         }
 
         this.camera.update(this.players);

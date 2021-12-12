@@ -68,8 +68,8 @@ function generateLevels() {
     stair.addObject(stairP1);
     stair.addObject(stairP2);
 
-    stair.addObject(new Door(new Texture('../assets/interactive/button-up.png'), { x: 60, y: -50 }, { w: 16, h: 6 }, stairP1));
-    stair.addObject(new Door(new Texture('../assets/interactive/button-up.png'), { x: 110, y: -100 }, { w: 16, h: 6 }, stairP2));
+    stair.addObject(new Door([new Texture('../assets/interactive/button-up.png'), new Texture('../assets/interactive/button-down.png')], { x: 60, y: -50 }, { w: 16, h: 6 }, stairP1));
+    stair.addObject(new Door([new Texture('../assets/interactive/button-up.png'), new Texture('../assets/interactive/button-down.png')], { x: 110, y: -100 }, { w: 16, h: 6 }, stairP2));
 
     stair.addGoal(new Goal(new Texture('../assets/ground/brick-cracked-middle.png'), { x: 170, y: -75 }));
     stair.addGoal(new Goal(new Texture('../assets/ground/brick-cracked-middle.png'), { x: 150, y: -75 }));
