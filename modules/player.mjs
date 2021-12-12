@@ -2,7 +2,7 @@ import { Mover } from './mover.mjs';
 
 class Player extends Mover {
     constructor(sprite) {
-        super({ x: 0, y: 0 }, { w: 26, h: 33 }, sprite.data.idle[0], { x: 0, y: 0 });
+        super({ x: 0, y: 0 }, { w: 22, h: 30 }, sprite.data.idle[0], { x: 0, y: -1.5 });
 
         this.sprite = sprite;
 
