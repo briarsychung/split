@@ -1,16 +1,17 @@
 class Texture {
-    constructor(url) {
+    constructor(url, reverse = false) {
         this.url = url;
+        this.reverse = reverse;
 
         this.dim = { w: 0, h: 0 };
         this.image = null;
     }
 
     load() {
-        this.image = this.generate(this.url);
+        this.image = this.generate(this.url, this.reverse);
     }
 
-    generate(url) {
+    generate(url, dir = false) {
         let canvas = document.createElement('canvas');
         canvas.width = this.dim.w;
         canvas.height = this.dim.h;
@@ -18,6 +19,10 @@ class Texture {
         let source = new Image();
         source.src = url;
         source.addEventListener('load', () => {
+            if (dir) {
+                canvas.getContext('2d').translate(source.width, 0);
+                canvas.getContext('2d').scale(-1, 1);
+            }
             for (let x = 0; x < this.dim.w; x += source.width) {
                 for (let y = 0; y < this.dim.h; y += source.height) {
                     canvas.getContext('2d').drawImage(source, x, y);

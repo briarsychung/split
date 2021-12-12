@@ -16,16 +16,11 @@ import { Link } from './modules/link.mjs';
 import { Goal } from './modules/goal.mjs';
 import { Texture } from './modules/texture.mjs';
 import { Animated } from './modules/animated.mjs';
+import { Sprite } from './modules/sprite.mjs';
 
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
 
-let players =
-    [new Player(new Animated(
-        ['../assets/player/player-blue-run1.png',
-            '../assets/player/player-blue-run2.png',
-            '../assets/player/player-blue-run3.png',
-            '../assets/player/player-blue-run2.png'], 10)),
-    new Player(new Texture('../assets/player/player-red-idle1.png'))];
+let players = [new Player(new Sprite('../assets/player/player-blue-')), new Player(new Sprite('../assets/player/player-red-'))];
 
 GAME.addPlayer(players[0]);
 GAME.addPlayer(players[1]);

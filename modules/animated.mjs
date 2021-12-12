@@ -1,8 +1,8 @@
 import { Texture } from "./texture.mjs";
 
 class Animated extends Texture {
-    constructor(urls, length) {
-        super(urls[0]);
+    constructor(urls, reverse = false, length = 20) {
+        super(urls[0], reverse);
 
         this.urls = urls;
         this.length = length;
@@ -13,8 +13,12 @@ class Animated extends Texture {
 
     load() {
         for (let i = 0; i < this.urls.length; i++) {
-            this.images[i] = this.generate(this.urls[i]);
+            this.images[i] = this.generate(this.urls[i], this.reverse);
         }
+    }
+
+    start() {
+        this.frame = 0;
     }
 
     draw() {
