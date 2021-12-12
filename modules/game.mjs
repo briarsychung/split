@@ -119,7 +119,7 @@ class Game {
             object.texture.dim.w * real,
             object.texture.dim.h * real);
 
-        //return;
+        return;
 
         this.context.strokeStyle = object.touch && object.touch.bottom ? 'green' : 'red';
         let x1 = this.canvas.width / 2 + (object.box.left - this.camera.pos.x) * real;

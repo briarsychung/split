@@ -21,8 +21,6 @@ class Level {
 
     addBackground(background) {
         this.background = background;
-        this.background.dim = { w: 1024, h: 1024 };
-        this.background.load();
     }
 }
 

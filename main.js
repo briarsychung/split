@@ -1,22 +1,22 @@
 import { Game } from './modules/game.mjs';
 import { Canvas } from './modules/canvas.mjs';
-import { Level } from './modules/level.mjs';
-import { Player } from './modules/player.mjs';
-import { Input } from './modules/input.mjs';
-import { Spawn } from './modules/spawn.mjs';
-import { Box } from './modules/box.mjs';
-import { Ground } from './modules/ground.mjs';
-import { Spike } from './modules/spike.mjs';
-import { Platform } from './modules/platform.mjs';
-import { Cracked } from './modules/cracked.mjs';
-import { Door } from './modules/door.mjs';
-import { Portal } from './modules/portal.mjs';
-import { Boost } from './modules/boost.mjs';
-import { Link } from './modules/link.mjs';
-import { Goal } from './modules/goal.mjs';
 import { Texture } from './modules/texture.mjs';
 import { Animated } from './modules/animated.mjs';
+import { Player } from './modules/player.mjs';
 import { Sprite } from './modules/sprite.mjs';
+import { Input } from './modules/input.mjs';
+import { Level } from './modules/level.mjs';
+import { Spawn } from './modules/spawn.mjs';
+import { Ground } from './modules/ground.mjs';
+import { Cracked } from './modules/cracked.mjs';
+import { Platform } from './modules/platform.mjs';
+import { Spike } from './modules/spike.mjs';
+import { Boost } from './modules/boost.mjs';
+import { Door } from './modules/door.mjs';
+import { Link } from './modules/link.mjs';
+import { Portal } from './modules/portal.mjs';
+import { Box } from './modules/box.mjs';
+import { Goal } from './modules/goal.mjs';
 
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
 generateLevels();
@@ -54,7 +54,7 @@ function generateLevels() {
 
     let stair = new Level();
   
-    stair.addBackground(new Texture('../assets/background/outside.png'));
+    stair.addBackground(new Texture('../assets/background/outside.png', { w: 1024, h: 1024 }));
 
     stair.addSpawn(new Spawn({ x: 0, y: -25 }, players[0]));
     stair.addSpawn(new Spawn({ x: 20, y: -25 }, players[1]));
