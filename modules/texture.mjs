@@ -1,23 +1,31 @@
 class Texture {
     constructor(url) {
         this.url = url;
+
         this.dim = { w: 0, h: 0 };
+        this.image = null;
     }
 
     load() {
-        this.image = document.createElement('canvas');
-        this.image.width = this.dim.w;
-        this.image.height = this.dim.h;
+        this.image = this.generate(this.url);
+    }
+
+    generate(url) {
+        let canvas = document.createElement('canvas');
+        canvas.width = this.dim.w;
+        canvas.height = this.dim.h;
 
         let source = new Image();
-        source.src = this.url;
+        source.src = url;
         source.addEventListener('load', () => {
             for (let x = 0; x < this.dim.w; x += source.width) {
                 for (let y = 0; y < this.dim.h; y += source.height) {
-                    this.image.getContext('2d').drawImage(source, x, y);
+                    canvas.getContext('2d').drawImage(source, x, y);
                 }
             }
         });
+
+        return canvas;
     }
 
     draw() {
