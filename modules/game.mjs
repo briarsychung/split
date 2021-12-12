@@ -27,14 +27,7 @@ class Game {
         this.levels.push(level);
     }
 
-    nextLevel() {
-        this.level++;
-
-        if (this.level === this.levels.length) {
-            this.stage = 'win';
-            return;
-        }
-
+    resetLevel() {
         let level = this.levels[this.level];
         let objects = level.objects.concat(this.players);
 
@@ -44,6 +37,17 @@ class Game {
 
         this.players[0].pos = { ...this.levels[this.level].spawns[0].pos };
         this.players[1].pos = { ...this.levels[this.level].spawns[1].pos };
+    }
+
+    nextLevel() {
+        this.level++;
+
+        if (this.level === this.levels.length) {
+            this.stage = 'win';
+            return;
+        }
+        
+        this.resetLevel();
     }
 
     addPlayer(player) {
@@ -113,16 +117,21 @@ class Game {
             `    pos: ${f(this.players[0].pos.x)}, ${f(this.players[0].pos.y)}`,
             `    vel: ${f(this.players[0].vel.x)}, ${f(this.players[0].vel.y)}`,
             `    ground: ${this.players[0].touch.bottom ? 'true' : 'false'}`,
+            `    state: ${this.players[0].state}`,
             `Player 2`,
             `    pos: ${f(this.players[1].pos.x)}, ${f(this.players[1].pos.y)}`,
             `    vel: ${f(this.players[1].vel.x)}, ${f(this.players[1].vel.y)}`,
             `    ground: ${this.players[1].touch.bottom ? 'true' : 'false'}`,
+            `    state: ${this.players[1].state}`,
             `Camera`,
             `    pos: ${f(this.camera.pos.x)}, ${f(this.camera.pos.y)}`,
             `    zoom: ${f(this.camera.zoom)}`];
         for (let i = 0; i < debugInfo.length; i++) {
             this.context.fillText(debugInfo[i], 50, i * 15 + 50);
         }
+        
+        this.context.strokeStyle = 'black';
+        this.context.strokeRect(this.canvas.width / 2 - 1, this.canvas.height / 2 - 1, 3, 3);
     }
 
     draw(object) {
@@ -142,6 +151,7 @@ class Game {
         let y1 = this.canvas.height / 2 + (object.box.top - this.camera.pos.y) * real;
         let y2 = this.canvas.height / 2 + (object.box.bottom - this.camera.pos.y) * real;
         this.context.strokeRect(x1, y1, x2 - x1, y2 - y1);
+
         this.context.strokeStyle = 'blue';
         this.context.strokeRect(
             this.canvas.width / 2 + (object.pos.x - object.dim.w / 2 - this.camera.pos.x) * real,

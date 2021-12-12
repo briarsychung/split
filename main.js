@@ -59,6 +59,12 @@ document.addEventListener('keydown', e => {
         case '8':
             if (GAME.debug) speed = 100;
             break;
+        case ',':
+            if (GAME.debug) GAME.resetLevel();
+            break;
+        case '.':
+            if (GAME.debug) GAME.nextLevel();
+            break;
     }
 });
 
