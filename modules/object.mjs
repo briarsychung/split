@@ -1,11 +1,9 @@
 class Object {
-    constructor(texture, pos, dim) {
-        this.texture = texture;
+    constructor(pos, dim, texture, offset = { x: 0, y: 0 }) {
         this.pos = pos;
         this.dim = dim;
-
-        this.texture.dim = dim;
-        this.texture.load();
+        this.texture = texture;
+        this.offset = offset;
 
         this.base = pos;
         this.vel = { x: 0, y: 0 };

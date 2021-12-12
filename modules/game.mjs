@@ -86,6 +86,8 @@ class Game {
             objects[i].move();
         }
 
+        this.background(level);
+
         for (let i = 0; i < objects.length; i++) {
             if (objects[i].trigger) objects[i].trigger();
             this.draw(objects[i]);
@@ -98,14 +100,24 @@ class Game {
         }
     }
 
+    background(level) {
+        let real = this.camera.zoom * this.canvas.width / 1000;
+
+        this.context.drawImage(level.background.draw(),
+            this.canvas.width / 2 - this.camera.pos.x * real,
+            this.canvas.height / 2 - this.camera.pos.y * real,
+            1024 * real,
+            1024 * real);
+    }
+
     draw(object) {
         let real = this.camera.zoom * this.canvas.width / 1000;
 
-        this.context.drawImage(object.texture.draw(), 0, 0, object.dim.w, object.dim.h,
-            this.canvas.width / 2 + (object.pos.x - object.dim.w / 2 - this.camera.pos.x) * real,
-            this.canvas.height / 2 + (object.pos.y - object.dim.h / 2 - this.camera.pos.y) * real,
-            object.dim.w * real,
-            object.dim.h * real);
+        this.context.drawImage(object.texture.draw(), 0, 0, object.texture.dim.w, object.texture.dim.h,
+            this.canvas.width / 2 + (object.pos.x + object.offset.x - object.texture.dim.w / 2 - this.camera.pos.x) * real,
+            this.canvas.height / 2 + (object.pos.y + object.offset.y - object.texture.dim.h / 2 - this.camera.pos.y) * real,
+            object.texture.dim.w * real,
+            object.texture.dim.h * real);
 
         return;
 
@@ -115,6 +127,7 @@ class Game {
         let y1 = this.canvas.height / 2 + (object.box.top - this.camera.pos.y) * real;
         let y2 = this.canvas.height / 2 + (object.box.bottom - this.camera.pos.y) * real;
         this.context.strokeRect(x1, y1, x2 - x1, y2 - y1);
+        
         this.context.strokeStyle = 'blue';
         this.context.strokeRect(
             this.canvas.width / 2 + (object.pos.x - object.dim.w / 2 - this.camera.pos.x) * real,

@@ -2,16 +2,9 @@ import { Mover } from './mover.mjs';
 
 class Player extends Mover {
     constructor(sprite) {
-        super(sprite.data.idle[0], { x: 0, y: 0 }, { w: 26, h: 33 });
+        super({ x: 0, y: 0 }, { w: 22, h: 30 }, sprite.data.idle[0], { x: 0, y: -1.5 });
 
         this.sprite = sprite;
-
-        for (const KEY in this.sprite.data) {
-            for (let i = 0; i < 2; i++) {
-                this.sprite.data[KEY][i].dim = this.dim;
-                this.sprite.data[KEY][i].load();
-            }
-        }
 
         this.dir = 1;
         this.state = 'idle';

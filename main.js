@@ -1,33 +1,24 @@
 import { Game } from './modules/game.mjs';
 import { Canvas } from './modules/canvas.mjs';
-import { Level } from './modules/level.mjs';
-import { Player } from './modules/player.mjs';
-import { Input } from './modules/input.mjs';
-import { Spawn } from './modules/spawn.mjs';
-import { Box } from './modules/box.mjs';
-import { Ground } from './modules/ground.mjs';
-import { Spike } from './modules/spike.mjs';
-import { Platform } from './modules/platform.mjs';
-import { Cracked } from './modules/cracked.mjs';
-import { Door } from './modules/door.mjs';
-import { Portal } from './modules/portal.mjs';
-import { Boost } from './modules/boost.mjs';
-import { Link } from './modules/link.mjs';
-import { Goal } from './modules/goal.mjs';
 import { Texture } from './modules/texture.mjs';
 import { Animated } from './modules/animated.mjs';
+import { Player } from './modules/player.mjs';
 import { Sprite } from './modules/sprite.mjs';
+import { Input } from './modules/input.mjs';
+import { Level } from './modules/level.mjs';
+import { Spawn } from './modules/spawn.mjs';
+import { Ground } from './modules/ground.mjs';
+import { Cracked } from './modules/cracked.mjs';
+import { Platform } from './modules/platform.mjs';
+import { Spike } from './modules/spike.mjs';
+import { Boost } from './modules/boost.mjs';
+import { Door } from './modules/door.mjs';
+import { Link } from './modules/link.mjs';
+import { Portal } from './modules/portal.mjs';
+import { Box } from './modules/box.mjs';
+import { Goal } from './modules/goal.mjs';
 
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
-
-let players = [new Player(new Sprite('../assets/player/player-blue-')), new Player(new Sprite('../assets/player/player-red-'))];
-
-GAME.addPlayer(players[0]);
-GAME.addPlayer(players[1]);
-
-GAME.addInput(new Input(players[0]));
-GAME.addInput(new Input(players[1], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
-
 generateLevels();
 
 document.getElementById('start').addEventListener('click', () => {
@@ -53,26 +44,36 @@ function loop() {
 }
 
 function generateLevels() {
+    let players = [new Player(new Sprite('../assets/player/player-blue-')), new Player(new Sprite('../assets/player/player-red-'))];
+    
+    GAME.addPlayer(players[0]);
+    GAME.addPlayer(players[1]);
+    
+    GAME.addInput(new Input(players[0]));
+    GAME.addInput(new Input(players[1], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
+
     let stair = new Level();
+  
+    stair.addBackground(new Texture('../assets/background/outside.png', { w: 1024, h: 1024 }));
 
-    stair.addSpawn(new Spawn(players[0], { x: 0, y: -25 }));
-    stair.addSpawn(new Spawn(players[1], { x: 20, y: -25 }));
+    stair.addSpawn(new Spawn({ x: 300, y: 475 }, players[0]));
+    stair.addSpawn(new Spawn({ x: 300, y: 475 }, players[1]));
 
-    stair.addObject(new Ground(new Texture('../assets/ground/brick-small-middle.png'), { x: 10, y: 25 }, { w: 40, h: 50 }));
-    stair.addObject(new Ground(new Texture('../assets/ground/brick-small-middle.png'), { x: 60, y: -25 }, { w: 40, h: 50 }));
-    stair.addObject(new Ground(new Texture('../assets/ground/brick-small-middle.png'), { x: 110, y: -75 }, { w: 40, h: 50 }));
+    stair.addObject(new Ground({ x: 310, y: 525 }, { w: 40, h: 50 }, new Texture('../assets/ground/brick-small-middle.png', { w: 40, h: 50 })));
+    stair.addObject(new Ground({ x: 360, y: 475 }, { w: 40, h: 50 }, new Texture('../assets/ground/brick-small-middle.png', { w: 40, h: 50 })));
+    stair.addObject(new Ground({ x: 410, y: 425 }, { w: 40, h: 50 }, new Texture('../assets/ground/brick-small-middle.png', { w: 40, h: 50 })));
 
-    let stairP1 = new Platform(new Texture('../assets/ground/brick-cracked-middle.png'), [{ x: 35, y: 25 }, { x: 35, y: -25 }], { w: 10, h: 50 }, 3, 'pause');
-    let stairP2 = new Platform(new Texture('../assets/ground/brick-cracked-middle.png'), [{ x: 85, y: -25 }, { x: 85, y: -75 }], { w: 10, h: 50 }, 3, 'pause');
+    let stairP1 = new Platform([{ x: 335, y: 525 }, { x: 335, y: 475 }], { w: 10, h: 50 }, new Texture('../assets/ground/brick-cracked-middle.png', { w: 10, h: 50 }), { x: 0, y: 0 }, 3, 'pause');
+    let stairP2 = new Platform([{ x: 385, y: 475 }, { x: 385, y: 425 }], { w: 10, h: 50 }, new Texture('../assets/ground/brick-cracked-middle.png', { w: 10, h: 50 }), { x: 0, y: 0 }, 3, 'pause');
 
     stair.addObject(stairP1);
     stair.addObject(stairP2);
 
-    stair.addObject(new Door([new Texture('../assets/interactive/button-up.png'), new Texture('../assets/interactive/button-down.png')], { x: 60, y: -50 }, { w: 16, h: 6 }, stairP1));
-    stair.addObject(new Door([new Texture('../assets/interactive/button-up.png'), new Texture('../assets/interactive/button-down.png')], { x: 110, y: -100 }, { w: 16, h: 6 }, stairP2));
+    stair.addObject(new Door({ x: 360, y: 448.5 }, { w: 16, h: 3 }, [new Texture('../assets/interactive/button-up.png', { w: 16, h: 6 }), new Texture('../assets/interactive/button-down.png', { w: 16, h: 6 })], { x: 0, y: -1.5 }, stairP1));
+    stair.addObject(new Door({ x: 410, y: 398.5 }, { w: 16, h: 3 }, [new Texture('../assets/interactive/button-up.png', { w: 16, h: 6 }), new Texture('../assets/interactive/button-down.png', { w: 16, h: 6 })], { x: 0, y: -1.5 }, stairP2));
 
-    stair.addGoal(new Goal(new Texture('../assets/ground/brick-cracked-middle.png'), { x: 170, y: -75 }));
-    stair.addGoal(new Goal(new Texture('../assets/ground/brick-cracked-middle.png'), { x: 150, y: -75 }));
+    stair.addGoal(new Goal({ x: 470, y: 425 }, { w: 16, h: 6 }, new Texture('../assets/ground/brick-cracked-middle.png', { w: 16, h: 6 })));
+    stair.addGoal(new Goal({ x: 450, y: 425 }, { w: 16, h: 6 }, new Texture('../assets/ground/brick-cracked-middle.png', { w: 16, h: 6 })));
 
     GAME.addLevel(stair);
 }
