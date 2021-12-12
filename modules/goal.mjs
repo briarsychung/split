@@ -2,8 +2,8 @@ import { Interactive } from './interactive.mjs';
 import { Player } from './player.mjs';
 
 class Goal extends Interactive {
-    constructor(url, pos) {
-        super(url, pos, { w: 16, h: 2 });
+    constructor(pos, dim, texture, offset) {
+        super(pos, dim, texture, offset);
 
         this.player = false;
     }

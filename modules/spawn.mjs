@@ -1,7 +1,7 @@
 class Spawn {
-    constructor(player, pos = { x: 0, y: 0 }) {
-        this.player = player;
+    constructor(pos = { x: 0, y: 0 }, player) {
         this.pos = pos;
+        this.player = player;
     }
 }
 

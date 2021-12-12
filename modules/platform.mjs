@@ -1,8 +1,8 @@
 import { Rectangle } from './Rectangle.mjs';
 
 class Platform extends Rectangle {
-    constructor(url, range, dim, speed, mode = 'loop') {
-        super(url, range[0], dim);
+    constructor(range, dim, texture, offset, speed, mode = 'loop') {
+        super(range[0], dim, texture, offset);
 
         this.range = range;
         this.speed = speed;

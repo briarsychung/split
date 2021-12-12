@@ -1,8 +1,8 @@
 import { Interactive } from './interactive.mjs';
 
 class Spike extends Interactive {
-    constructor(url, pos, dim) {
-        super(url, pos, dim);
+    constructor(pos, dim, texture, offset) {
+        super(pos, dim, texture, offset);
     }
 
     init() {

@@ -1,8 +1,8 @@
 import { Interactive } from './interactive.mjs';
 
 class Link extends Interactive {
-    constructor(url, pos, dim, object) {
-        super(url, pos, dim);
+    constructor(pos, dim, texture, offset, object) {
+        super(pos, dim, texture, offset);
 
         this.object = object;
     }

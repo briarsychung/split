@@ -1,11 +1,11 @@
 import { Interactive } from './interactive.mjs';
 
 class Cracked extends Interactive {
-    constructor(url, pos, dim, life = 60) {
-        super(url, pos, dim);
+    constructor(pos, dim, texture, offset, life = 60) {
+        super(pos, dim, texture, offset);
 
-        this.max = life;
         this.life = life;
+        this.max = life;
     }
 
     init() {

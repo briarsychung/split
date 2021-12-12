@@ -1,8 +1,8 @@
 import { Rectangle } from './rectangle.mjs';
 
 class Ground extends Rectangle {
-    constructor(url, pos, dim) {
-        super(url, pos, dim);
+    constructor(pos, dim, texture, offset) {
+        super(pos, dim, texture, offset);
     }
 
     die() { }

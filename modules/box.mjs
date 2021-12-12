@@ -1,8 +1,8 @@
 import { Mover } from './mover.mjs';
 
 class Box extends Mover {
-    constructor(url, pos, dim) {
-        super(url, pos, dim);
+    constructor(pos, dim, texture, offset) {
+        super(pos, dim, texture, offset);
     }
 }
 

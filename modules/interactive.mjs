@@ -1,8 +1,8 @@
 import { Rectangle } from './rectangle.mjs';
 
 class Interactive extends Rectangle {
-    constructor(url, pos, dim) {
-        super(url, pos, dim);
+    constructor(pos, dim, texture, offset) {
+        super(pos, dim, texture, offset);
 
         this.pressed = [];
     }
