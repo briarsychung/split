@@ -104,8 +104,8 @@ class Game {
         let real = this.camera.zoom * this.canvas.width / 1000;
 
         this.context.drawImage(level.background.draw(),
-            this.canvas.width / 2 + (-512 - this.camera.pos.x) * real,
-            this.canvas.height / 2 + (-512 - this.camera.pos.y) * real,
+            this.canvas.width / 2 - this.camera.pos.x * real,
+            this.canvas.height / 2 - this.camera.pos.y * real,
             1024 * real,
             1024 * real);
     }
