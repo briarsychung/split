@@ -46,7 +46,7 @@ document.addEventListener('keydown', e => {
             if (GAME.debug) speed = 0;
             break;
         case '9':
-            if (GAME.debug) speed = 300;
+            if (GAME.debug) speed = 1000;
             break;
         case '8':
             if (GAME.debug) speed = 100;

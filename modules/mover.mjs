@@ -38,25 +38,29 @@ class Mover extends Object {
 
         let y = false;
 
-        if (this.vel.y >= that.nvel.y && this.pos.y < that.box.top && that.box.top > this.box.top && that.box.top <= this.box.bottom) {
+        if (this.pos.y < that.box.top && that.box.top > this.box.top && that.box.top <= this.box.bottom) {
+            if (this.pos.y < that.pos.y && this.nvel.y < that.nvel.y) return;
             if (!this.touch.bottom || (this.touch.bottom.npos.y - this.touch.bottom.dim.h / 2 > that.npos.y - that.dim.h / 2)) {
                 this.touch.bottom = that;
             }
             y = true;
         }
-        if (this.vel.y <= that.nvel.y && this.pos.y > that.box.bottom && that.box.bottom >= this.box.top && that.box.bottom < this.box.bottom) {
+        if (this.pos.y > that.box.bottom && that.box.bottom >= this.box.top && that.box.bottom < this.box.bottom) {
+            if (this.pos.y > that.pos.y && this.nvel.y > that.nvel.y) return;
             if (!this.touch.top || (this.touch.top.npos.y + this.touch.top.dim.h / 2 > that.npos.y + that.dim.h / 2)) {
                 this.touch.top = that;
             }
             y = true;
         }
         if (y) return;
-        if (this.vel.x >= that.nvel.x && this.pos.x < that.box.left && that.box.left > this.box.left && that.box.left <= this.box.right) {
+        if (this.pos.x < that.box.left && that.box.left > this.box.left && that.box.left <= this.box.right) {
+            if (this.pos.x < that.pos.x && this.nvel.x < that.nvel.x) return;
             if (!this.touch.right || (this.touch.right.npos.x - this.touch.right.dim.h / 2 > that.npos.x - that.dim.w / 2)) {
                 this.touch.right = that;
             }
         }
-        if (this.vel.x <= that.nvel.x && this.pos.x > that.box.right && that.box.right >= this.box.left && that.box.right < this.box.right) {
+        if (this.pos.x > that.box.right && that.box.right >= this.box.left && that.box.right < this.box.right) {
+            if (this.pos.x > that.pos.x && this.nvel.x > that.nvel.x) return;
             if (!this.touch.left || (this.touch.left.npos.x + this.touch.left.dim.h / 2 > that.npos.x + that.dim.w / 2)) {
                 this.touch.left = that;
             }
