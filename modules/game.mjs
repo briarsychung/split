@@ -13,6 +13,8 @@ class Game {
         this.stage = 'wait';
         this.levels = [];
         this.level = -1;
+
+        this.debug = false;
     }
 
     start() {
@@ -107,7 +109,7 @@ class Game {
             object.dim.w * real,
             object.dim.h * real);
 
-        return;
+        if (!this.debug) return;
 
         this.context.strokeStyle = object.touch && object.touch.bottom ? 'green' : 'red';
         let x1 = this.canvas.width / 2 + (object.box.left - this.camera.pos.x) * real;

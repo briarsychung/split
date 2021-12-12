@@ -20,6 +20,8 @@ import { Sprite } from './modules/sprite.mjs';
 
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
 
+let speed = 0;
+
 let players = [new Player(new Sprite('../assets/player/player-blue-')), new Player(new Sprite('../assets/player/player-red-'))];
 
 GAME.addPlayer(players[0]);
@@ -42,13 +44,31 @@ document.getElementById('reset').addEventListener('click', () => {
     document.getElementById('menu').style.visibility = 'visible';
 });
 
+document.addEventListener('keydown', e => {
+    switch (e.key.toLowerCase()) {
+        case 'p':
+            GAME.debug = !GAME.debug;
+            if (!GAME.debug) speed = 0;
+            break;
+        case '0':
+            if (GAME.debug) speed = 0;
+            break;
+        case '9':
+            if (GAME.debug) speed = 300;
+            break;
+        case '8':
+            if (GAME.debug) speed = 100;
+            break;
+    }
+});
+
 function loop() {
     GAME.update();
     if (GAME.stage === 'win') {
         document.getElementById('game').style.visibility = 'hidden';
         document.getElementById('end').style.visibility = 'visible';
     } else {
-        setTimeout(() => { window.requestAnimationFrame(loop) }, 0);
+        setTimeout(() => { window.requestAnimationFrame(loop) }, speed);
     }
 }
 
