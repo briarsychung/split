@@ -53,6 +53,8 @@ function generateLevels() {
     GAME.addInput(new Input(players[1], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
 
     let stair = new Level();
+  
+    stair.addBackground(new Texture('../assets/background/outside.png'));
 
     stair.addSpawn(new Spawn({ x: 0, y: -25 }, players[0]));
     stair.addSpawn(new Spawn({ x: 20, y: -25 }, players[1]));

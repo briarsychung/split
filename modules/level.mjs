@@ -3,6 +3,7 @@ class Level {
         this.objects = [];
         this.spawns = [];
         this.goals = [];
+        this.background = null;
     }
 
     addObject(object) {
@@ -16,6 +17,12 @@ class Level {
     addGoal(goal) {
         this.objects.push(goal);
         this.goals.push(goal);
+    }
+
+    addBackground(background) {
+        this.background = background;
+        this.background.dim = { w: 1024, h: 1024 };
+        this.background.load();
     }
 }
 

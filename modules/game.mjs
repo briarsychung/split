@@ -86,6 +86,8 @@ class Game {
             objects[i].move();
         }
 
+        this.background(level);
+
         for (let i = 0; i < objects.length; i++) {
             if (objects[i].trigger) objects[i].trigger();
             this.draw(objects[i]);
@@ -96,6 +98,16 @@ class Game {
         if (level.goals[0].player && level.goals[1].player) {
             this.nextLevel();
         }
+    }
+
+    background(level) {
+        let real = this.camera.zoom * this.canvas.width / 1000;
+
+        this.context.drawImage(level.background.draw(),
+            this.canvas.width / 2 + (-512 - this.camera.pos.x) * real,
+            this.canvas.height / 2 + (-512 - this.camera.pos.y) * real,
+            1024 * real,
+            1024 * real);
     }
 
     draw(object) {
