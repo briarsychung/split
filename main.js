@@ -132,7 +132,7 @@ function generateLevels() {
     links.addGoal(new Goal({ x: 1176, y: 440 }));
     links.addObject(new Ground({ x: 1176, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
 
-    //GAME.addLevel(links);
+    GAME.addLevel(links);
 
     let stair = new Level();
     stair.setBackground(outside);

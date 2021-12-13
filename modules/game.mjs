@@ -48,6 +48,7 @@ class Game {
         }
 
         this.resetLevel();
+        this.camera.snap(this.players);
     }
 
     addPlayer(player) {
