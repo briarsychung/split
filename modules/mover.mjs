@@ -43,7 +43,6 @@ class Mover extends Object {
                 (this.touch.bottom.npos.y - this.touch.bottom.dim.h / 2 === that.npos.y - that.dim.h / 2 &&
                     Math.abs(this.touch.bottom.npos.x - this.npos.x) > Math.abs(that.npos.x - this.npos.x))) {
                 this.touch.bottom = that;
-                if (this.vel.y > 7.25) this.die();
             }
         }
         if (this.pos.y > that.box.bottom && that.box.bottom >= this.box.top && that.box.bottom < this.box.bottom && this.nvel.y <= that.nvel.y &&
