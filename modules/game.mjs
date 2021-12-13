@@ -13,6 +13,7 @@ class Game {
         this.stage = 'wait';
         this.levels = [];
         this.level = -1;
+        this.animate = 15;
 
         this.debug = false;
     }
@@ -28,6 +29,7 @@ class Game {
     }
 
     resetLevel() {
+        this.stage = 'game';
         let level = this.levels[this.level];
         let objects = level.objects.concat(this.players);
 
@@ -37,6 +39,11 @@ class Game {
 
         this.players[0].pos = { ...this.levels[this.level].spawns[0].pos };
         this.players[1].pos = { ...this.levels[this.level].spawns[1].pos };
+    }
+
+    queueLevel() {
+        this.stage = 'transition';
+        this.animate = 30;
     }
 
     nextLevel() {
@@ -62,7 +69,15 @@ class Game {
     update() {
         switch (this.stage) {
             case 'game':
+                this.animate = this.animate === 0 ? 0 : this.animate - 1;
                 this.gameTick();
+                break;
+            case 'transition':
+                this.animate--;
+                this.refresh(1 - (this.animate - 15) / 15);
+                if (this.animate === 15) {
+                    this.nextLevel();
+                }
                 break;
         }
     }
@@ -70,7 +85,6 @@ class Game {
     gameTick() {
         let level = this.levels[this.level];
         let objects = level.objects.concat(this.players).filter(o => !o.dead);
-        let ghosts = level.objects.concat(this.players).filter(o => o.dead);
 
         this.players[0].tag = "P1";
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -94,23 +108,18 @@ class Game {
             objects[i].move();
         }
 
-        this.background(level);
-
         for (let i = 0; i < objects.length; i++) {
             if (objects[i].trigger) objects[i].trigger();
-            this.draw(objects[i]);
-        }
-
-        for (let i = 0; i < ghosts.length; i++) {
-            this.draw(ghosts[i], ghosts[i].dying());
         }
 
         this.camera.update(this.players);
 
+        this.refresh(this.animate / 15);
+
         if (this.players[0].fade === 0 || this.players[1].fade === 0) {
             this.resetLevel();
         } else if (level.goals[0].player && level.goals[1].player) {
-            this.nextLevel();
+            this.queueLevel();
         }
 
         if (!this.debug) return;
@@ -121,6 +130,8 @@ class Game {
         }
 
         let debugInfo = [
+            `SpLit Version 0.4`,
+            ``,
             `Canvas Dimensions: ${f(this.canvas.width)}, ${f(this.canvas.height)}`,
             `Level: ${this.level + 1} / ${this.levels.length}`,
             `Player 1`,
@@ -135,13 +146,46 @@ class Game {
             `    state: ${this.players[1].state}`,
             `Camera`,
             `    pos: ${f(this.camera.pos.x)}, ${f(this.camera.pos.y)}`,
-            `    zoom: ${f(this.camera.zoom)}`];
+            `    zoom: ${f(this.camera.zoom)}`,
+            ``,
+            `Debug Controls`,
+            `    [P]: Toggle debug mode`,
+            `    [8], [9], [0]: Throttle speed`,
+            `    [,]: Restart level`,
+            `    [.]: Skip level`
+        ];
+
+        this.context.fillStyle = 'black';
         for (let i = 0; i < debugInfo.length; i++) {
             this.context.fillText(debugInfo[i], 50, i * 15 + 50);
         }
 
         this.context.strokeStyle = 'black';
         this.context.strokeRect(this.canvas.width / 2 - 1, this.canvas.height / 2 - 1, 3, 3);
+    }
+
+    refresh(screen = 0) {
+        let level = this.levels[this.level];
+        let objects = level.objects.concat(this.players).filter(o => !o.dead);
+        let ghosts = level.objects.concat(this.players).filter(o => o.dead);
+
+        this.background(level);
+
+        for (let i = 0; i < objects.length; i++) {
+            this.draw(objects[i]);
+        }
+
+        for (let i = 0; i < ghosts.length; i++) {
+            this.draw(ghosts[i], ghosts[i].dying());
+        }
+
+        if (screen) {
+            this.context.save();
+            this.context.globalAlpha = screen;
+            this.context.fillStyle = 'black';
+            this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            this.context.restore();
+        }
     }
 
     background(level) {
