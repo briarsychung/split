@@ -57,7 +57,7 @@ document.addEventListener('keydown', e => {
             if (GAME.debug) GAME.resetLevel();
             break;
         case '.':
-            if (GAME.debug) GAME.nextLevel();
+            if (GAME.debug) GAME.queueLevel();
             break;
     }
 });
