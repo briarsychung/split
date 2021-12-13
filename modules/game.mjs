@@ -155,8 +155,10 @@ class Game {
             `    [.]: Skip level`
         ];
 
-        this.context.fillStyle = 'black';
         for (let i = 0; i < debugInfo.length; i++) {
+            this.context.fillStyle = '#999';
+            this.context.fillText(debugInfo[i], 51, i * 15 + 51);
+            this.context.fillStyle = 'white';
             this.context.fillText(debugInfo[i], 50, i * 15 + 50);
         }
 
