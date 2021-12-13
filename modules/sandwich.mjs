@@ -20,21 +20,28 @@ class Sandwich extends Texture {
         source.addEventListener('load', () => {
             switch (part) {
                 case 0:
-                    for (let y = 0; y < this.dim.h; y += source.height) {
+                    this.image.getContext('2d').drawImage(source, 0, this.dim.h - source.height);
+                    for (let y = 0; y < this.dim.h - source.height; y += source.height) {
                         this.image.getContext('2d').drawImage(source, 0, y);
                     }
 
                     this.image.getContext('2d').save();
                     this.image.getContext('2d').translate(source.width, 0);
                     this.image.getContext('2d').scale(-1, 1);
-                    for (let y = 0; y < this.dim.h; y += source.height) {
+
+                    this.image.getContext('2d').drawImage(source, source.width - this.dim.w, this.dim.h - source.height);
+                    for (let y = 0; y < this.dim.h - source.height; y += source.height) {
                         this.image.getContext('2d').drawImage(source, source.width - this.dim.w, y);
                     }
+                    
                     this.image.getContext('2d').restore();
                     break;
                 case 1:
                     for (let x = source.width; x < this.dim.w - source.width; x += source.width) {
-                        for (let y = 0; y < this.dim.h; y += source.height) {
+                        this.image.getContext('2d').drawImage(source, x - (this.dim.w % source.width) / 2, this.dim.h - source.height);
+                    }
+                    for (let x = source.width; x < this.dim.w - source.width; x += source.width) {
+                        for (let y = 0; y < this.dim.h - source.height; y += source.height) {
                             this.image.getContext('2d').drawImage(source, x - (this.dim.w % source.width) / 2, y);
                         }
                     }
