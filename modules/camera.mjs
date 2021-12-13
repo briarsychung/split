@@ -29,8 +29,8 @@ class Camera {
                 x: (players[0].pos.x + players[1].pos.x) / 2,
                 y: (players[0].pos.y + players[1].pos.y) / 2
             },
-            zoom: Math.min(500 / Math.abs(players[0].pos.x - players[1].pos.x),
-                500 / Math.abs(players[0].pos.y - players[1].pos.y), this.limit)
+            zoom: Math.min(375 / Math.abs(players[0].pos.x - players[1].pos.x),
+                375 / Math.abs(players[0].pos.y - players[1].pos.y), this.limit)
         };
     }
 }

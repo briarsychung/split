@@ -2,7 +2,6 @@ import { Game } from './modules/game.mjs';
 import { Canvas } from './modules/canvas.mjs';
 import { Texture } from './modules/texture.mjs';
 import { Sandwich } from './modules/sandwich.mjs';
-import { Animated } from './modules/animated.mjs';
 import { Player } from './modules/player.mjs';
 import { Sprite } from './modules/sprite.mjs';
 import { Input } from './modules/input.mjs';
@@ -13,11 +12,11 @@ import { Ground } from './modules/ground.mjs';
 import { Cracked } from './modules/cracked.mjs';
 import { Platform } from './modules/platform.mjs';
 import { Spike } from './modules/spike.mjs';
-import { Boost } from './modules/boost.mjs';
 import { Door } from './modules/door.mjs';
 import { Link } from './modules/link.mjs';
 import { Portal } from './modules/portal.mjs';
 import { Box } from './modules/box.mjs';
+import { Boss } from './modules/boss.mjs';
 import { Goal } from './modules/goal.mjs';
 
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
@@ -102,7 +101,7 @@ function generateLevels() {
     let ground = ['../assets/ground/ground-side.png', '../assets/ground/ground-middle.png'];
     let cracked = ['../assets/ground/brick-cracked-side.png', '../assets/ground/brick-cracked-middle.png'];
     let spike = {
-        big: '../assets/interactive/spike-small.png',
+        big: '../assets/interactive/spike-big.png',
         small: '../assets/interactive/spike-small.png'
     };
     let box = {
@@ -211,6 +210,75 @@ function generateLevels() {
 
     GAME.addLevel(push);
 
+    let telly = new Level();
+    telly.setBackground(inside);
+
+    telly.addSpawn(new Spawn({ x: 400, y: 240 }, players[0]));
+    telly.addSpawn(new Spawn({ x: 400, y: 400 }, players[1]));
+    telly.addObject(new Ground({ x: 440, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    telly.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    telly.addObject(new Ground({ x: 603, y: 536 }, { w: 166, h: 32 }, new Sandwich(brick.big, { w: 166, h: 32 })));
+    telly.addObject(new Box({ x: 568, y: 512 }, { w: 16, h: 16 }, new Texture(box.small, { w: 16, h: 16 })));
+    telly.addObject(new Box({ x: 600, y: 512 }, { w: 16, h: 16 }, new Texture(box.small, { w: 16, h: 16 })));
+    telly.addObject(new Box({ x: 632, y: 512 }, { w: 16, h: 16 }, new Texture(box.small, { w: 16, h: 16 })));
+
+    telly.addObject(new Ground({ x: 757, y: 536 }, { w: 102, h: 32 }, new Sandwich(brick.big, { w: 102, h: 32 })));
+    telly.addObject(new Portal([{ x: 696, y: 600 }, { x: 696, y: 152 }]));
+    
+    let tellyP1 = new Platform([{ x: 696, y: 424 }, { x: 696, y: 360 }], { w: 96, h: 192 }, new Sandwich(brick.big, { w: 96, h: 192 }));
+    telly.addObject(tellyP1);
+    telly.addObject(new Door({ x: 632, y: 262.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, tellyP1));
+    
+    telly.addObject(new Ground({ x: 600, y: 280 }, { w: 96, h: 32 }, new Sandwich(brick.big, { w: 96, h: 32 })));
+    telly.addObject(new Ground({ x: 760, y: 280 }, { w: 32, h: 32 }, new Sandwich(brick.big, { w: 32, h: 32 })));
+
+    let tellyP2 = new Platform([{ x: 664, y: 216 }, { x: 664, y: 120 }], { w: 32, h: 96 }, new Sandwich(brick.small, { w: 32, h: 96 }));
+    telly.addObject(tellyP2);
+    telly.addObject(new Door({ x: 760, y: 518.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, tellyP2));
+    
+    telly.addObject(new Ground({ x: 888, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    telly.addObject(new Ground({ x: 888, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    telly.addGoal(new Goal({ x: 984, y: 280 }));
+    telly.addGoal(new Goal({ x: 984, y: 440 }));
+    telly.addObject(new Ground({ x: 984, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+    telly.addObject(new Ground({ x: 984, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+
+    GAME.addLevel(telly);
+
+    let carry = new Level();
+    carry.setBackground(inside);
+
+    carry.addSpawn(new Spawn({ x: 400, y: 240 }, players[0]));
+    carry.addSpawn(new Spawn({ x: 400, y: 400 }, players[1]));
+    carry.addObject(new Ground({ x: 440, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    carry.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    let carryP1 = new Platform([{ x: 568, y: 280 }, { x: 568, y: 440 }], { w: 96, h: 32 }, new Sandwich(brick.big, { w: 96, h: 32 }));
+    carry.addObject(carryP1);
+    carry.addObject(new Door({ x: 504, y: 422.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, carryP1));
+    carry.addObject(new Ground({ x: 568, y: 200 }, { w: 32, h: 128 }, new Sandwich(brick.small, { w: 32, h: 128 })));
+
+    carry.addObject(new Ground({ x: 696, y: 344 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    carry.addObject(new Platform([{ x: 656, y: 432 }, { x: 736, y: 432 }], { w: 80, h: 16 }, new Sandwich(brick.small, { w: 80, h: 16 }), { x: 0, y: 0 }, 'loop'));
+    carry.addObject(new Spike({ x: 696, y: 448 }, { w: 160, h: 16 }, new Texture(spike.small, { w: 160, h: 16 })));
+    carry.addObject(new Ground({ x: 696, y: 464 }, { w: 160, h: 16 }, new Sandwich(brick.small, { w: 160, h: 16 })));
+    
+    let carryP2 = new Platform([{ x: 792, y: 280 }, { x: 792, y: 376 }], { w: 32, h: 160 }, new Sandwich(brick.small, { w: 32, h: 160 }));
+    carry.addObject(carryP2);
+    carry.addObject(new Door({ x: 696, y: 326.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, carryP2));
+
+    carry.addObject(new Ground({ x: 888, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    carry.addObject(new Ground({ x: 888, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    carry.addGoal(new Goal({ x: 984, y: 280 }));
+    carry.addGoal(new Goal({ x: 984, y: 440 }));
+    carry.addObject(new Ground({ x: 984, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+    carry.addObject(new Ground({ x: 984, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+
+    GAME.addLevel(carry);
+
     let stair = new Level();
     stair.setBackground(outside);
 
@@ -241,4 +309,51 @@ function generateLevels() {
     stair.addObject(new Ground({ x: 1016, y: 152 }, { w: 32, h: 32 }, new Texture(brick.big[1], { w: 32, h: 32 }), { x: 0, y: 0 }));
 
     GAME.addLevel(stair);
+
+    let boss = new Level();
+    boss.setBackground(outside);
+
+    boss.addSpawn(new Spawn({ x: 400, y: 400 }, players[0]));
+    boss.addSpawn(new Spawn({ x: 440, y: 400 }, players[1]));
+    boss.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+
+    boss.addObject(new Ground({ x: 632, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+    boss.addObject(new Ground({ x: 824, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+    boss.addObject(new Ground({ x: 1208, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+    boss.addObject(new Ground({ x: 1400, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+    boss.addObject(new Ground({ x: 1592, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+    
+    let bossP3 = new Platform([{ x: 1208, y: 472 }, { x: 1016, y: 472 }], { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 }));
+    boss.addObject(bossP3);
+    boss.addObject(new Door({ x: 1112, y: 134.5 }, { w: 16, h: 6 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, bossP3));
+    boss.addObject(new Spike({ x: 1208, y: 152 }, { w: 160, h: 32 }, new Texture(spike.big, { w: 160, h: 32 })));
+    boss.addObject(new Ground({ x: 1208, y: 184 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    boss.addObject(new Ground({ x: 824, y: 344 }, { w: 96, h: 32 }, new Sandwich(brick.big, { w: 96, h: 32 })));
+    boss.addObject(new Ground({ x: 824, y: 280 }, { w: 32, h: 96 }, new Sandwich(brick.small, { w: 32, h: 96 })));
+    
+    boss.addObject(new Ground({ x: 1016, y: 280 }, { w: 224, h: 32 }, new Sandwich(brick.big, { w: 224, h: 32 })));
+    boss.addObject(new Ground({ x: 1112, y: 200 }, { w: 32, h: 128 }, new Sandwich(brick.small, { w: 32, h: 128 })));
+    boss.addObject(new Box({ x: 984, y: 248 }, { w: 32, h: 32 }, new Texture(box.big, { w: 32, h: 32 })));
+    boss.addObject(new Box({ x: 1048, y: 248 }, { w: 32, h: 32 }, new Texture(box.big, { w: 32, h: 32 })));
+    
+    let bossP1 = new Platform([{ x: 1016, y: 432 }, { x: 1016, y: 560 }], { w: 160, h: 16 }, new Sandwich(cracked, { w: 160, h: 16 }), { x: 0, y: 0 }, 'pause', 6);
+    boss.addObject(bossP1);
+    boss.addObject(new Door({ x: 792, y: 326.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, bossP1));
+
+    let bossP2 = new Platform([{ x: 1016, y: 448 }, { x: 1016, y: 576 }], { w: 160, h: 16 }, new Sandwich(cracked, { w: 160, h: 16 }), { x: 0, y: 0 }, 'pause', 6);
+    boss.addObject(bossP2);
+    boss.addObject(new Door({ x: 856, y: 326.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, bossP2));
+
+    boss.addObject(new Spike({ x: 1016, y: 504 }, { w: 160, h: 32 }, new Texture(spike.big, { w: 160, h: 32 })));
+    boss.addObject(new Ground({ x: 1016, y: 536 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    boss.addObject(new Boss({ x: 1016, y: 364.5 }));
+
+    boss.addGoal(new Goal({ x: 1688, y: 440 }));
+    boss.addGoal(new Goal({ x: 1752, y: 440 }));
+    boss.addObject(new Ground({ x: 1720, y: 448 }, { w: 96, h: 16 }, new Sandwich(brick.big, { w: 96, h: 32 }), { x: 0, y: -8 }));
+    boss.addObject(new Ground({ x: 1720, y: 440 }, { w: 32, h: 32 }, new Texture(brick.big[1], { w: 32, h: 32 }), { x: 0, y: 0 }));
+    
+    GAME.addLevel(boss);
 }
