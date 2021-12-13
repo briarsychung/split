@@ -21,9 +21,6 @@ import { Box } from './modules/box.mjs';
 import { Goal } from './modules/goal.mjs';
 
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
-
-let speed = 0;
-
 generateLevels();
 
 document.getElementById('start').addEventListener('click', () => {
@@ -38,20 +35,21 @@ document.getElementById('reset').addEventListener('click', () => {
     document.getElementById('menu').style.visibility = 'visible';
 });
 
+let delay = 0;
 document.addEventListener('keydown', e => {
     switch (e.key.toLowerCase()) {
         case 'p':
             GAME.debug = !GAME.debug;
-            if (!GAME.debug) speed = 0;
+            if (!GAME.debug) delay = 0;
             break;
         case '0':
-            if (GAME.debug) speed = 0;
+            if (GAME.debug) delay = 0;
             break;
         case '9':
-            if (GAME.debug) speed = 1000;
+            if (GAME.debug) delay = 1000;
             break;
         case '8':
-            if (GAME.debug) speed = 100;
+            if (GAME.debug) delay = 100;
             break;
         case ',':
             if (GAME.debug) GAME.resetLevel();
@@ -74,7 +72,7 @@ function loop() {
         document.getElementById('game').style.visibility = 'hidden';
         document.getElementById('end').style.visibility = 'visible';
     } else {
-        setTimeout(() => { window.requestAnimationFrame(loop) }, speed);
+        setTimeout(() => { window.requestAnimationFrame(loop) }, delay);
     }
 }
 
@@ -142,7 +140,7 @@ function generateLevels() {
 
     let stair = new Level();
     stair.setBackground(outside);
-    
+
     stair.addSpawn(new Spawn({ x: 400, y: 400 }, players[0]));
     stair.addSpawn(new Spawn({ x: 440, y: 400 }, players[1]));
 
@@ -152,17 +150,17 @@ function generateLevels() {
     stair.addObject(stairP1);
     stair.addObject(new Ground({ x: 584, y: 376 }, { w: 64, h: 96 }, new Sandwich(brick.big, { w: 64, h: 96 })));
     stair.addObject(new Door({ x: 584, y: 326.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, stairP1));
-    
+
     let stairP2 = new Platform([{ x: 632, y: 376 }, { x: 632, y: 280 }], { w: 32, h: 96 }, new Sandwich(cracked, { w: 32, h: 96 }), { x: 0, y: 0 }, 2, 'pause');
     stair.addObject(stairP2);
     stair.addObject(new Ground({ x: 680, y: 280 }, { w: 64, h: 96 }, new Sandwich(brick.big, { w: 64, h: 96 })));
     stair.addObject(new Door({ x: 680, y: 230.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, stairP2));
-    
+
     let stairP3 = new Platform([{ x: 728, y: 280 }, { x: 728, y: 184 }], { w: 32, h: 96 }, new Sandwich(cracked, { w: 32, h: 96 }), { x: 0, y: 0 }, 2, 'pause');
     stair.addObject(stairP3);
     stair.addObject(new Ground({ x: 776, y: 184 }, { w: 64, h: 96 }, new Sandwich(brick.big, { w: 64, h: 96 })));
     stair.addObject(new Door({ x: 776, y: 134.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, stairP3));
-    
+
     stair.addObject(new Ground({ x: 888, y: 152 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
 
     stair.addGoal(new Goal({ x: 984, y: 152 }));
