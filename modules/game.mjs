@@ -130,7 +130,7 @@ class Game {
         }
 
         let debugInfo = [
-            `SpLit Version 0.4`,
+            `SpLit Version 0.5`,
             ``,
             `Canvas Dimensions: ${f(this.canvas.width)}, ${f(this.canvas.height)}`,
             `Level: ${this.level + 1} / ${this.levels.length}`,
@@ -155,8 +155,10 @@ class Game {
             `    [.]: Skip level`
         ];
 
-        this.context.fillStyle = 'black';
         for (let i = 0; i < debugInfo.length; i++) {
+            this.context.fillStyle = '#999';
+            this.context.fillText(debugInfo[i], 51, i * 15 + 51);
+            this.context.fillStyle = 'white';
             this.context.fillText(debugInfo[i], 50, i * 15 + 50);
         }
 

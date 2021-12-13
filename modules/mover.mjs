@@ -80,6 +80,7 @@ class Mover extends Object {
         if (obj) {
             let xt = 0;
             while (obj) {
+                if (obj.boss) this.die();
                 xt += obj.dim[da];
                 if (!obj.touch || !obj.touch[dir]) break;
                 obj = obj.touch[dir];
