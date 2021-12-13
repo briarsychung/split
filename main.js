@@ -20,6 +20,7 @@ import { Portal } from './modules/portal.mjs';
 import { Box } from './modules/box.mjs';
 import { Goal } from './modules/goal.mjs';
 
+let start;
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
 generateLevels();
 
@@ -28,6 +29,7 @@ document.getElementById('start').addEventListener('click', () => {
     document.getElementById('menu').style.opacity = 0;
     document.getElementById('game').style.visibility = 'visible';
     document.getElementById('game').style.opacity = 1;
+    start = Date.now();
     GAME.start();
     loop();
 });
@@ -77,6 +79,12 @@ function loop() {
         document.getElementById('game').style.opacity = 0;
         document.getElementById('end').style.visibility = 'visible';
         document.getElementById('end').style.opacity = 1;
+        let time = Date.now() - start;
+        let f = t => {
+            return ((t + '').length === 1 ? '0' : '') + t;
+        };
+        document.getElementById('time').innerHTML = 'Total Time: ' +
+            f(Math.floor(Math.floor(time / 1000) / 60)) + ':' + f((Math.floor(time / 1000) % 60)) + '.' + f(Math.floor((time % 1000) / 100));
     } else {
         setTimeout(() => { window.requestAnimationFrame(loop) }, delay);
     }
