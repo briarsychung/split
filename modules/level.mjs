@@ -19,7 +19,7 @@ class Level {
         this.goals.push(goal);
     }
 
-    addBackground(background) {
+    setBackground(background) {
         this.background = background;
     }
 }
