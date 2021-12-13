@@ -6,6 +6,10 @@ class Sandwich extends Texture {
 
         this.urls = urls;
 
+        this.image = document.createElement('canvas');
+        this.image.width = this.dim.w;
+        this.image.height = this.dim.h;
+
         this.load(this.urls, 0);
         this.load(this.urls, 1);
     }
