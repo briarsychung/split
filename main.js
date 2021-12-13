@@ -17,6 +17,7 @@ import { Link } from './modules/link.mjs';
 import { Portal } from './modules/portal.mjs';
 import { Box } from './modules/box.mjs';
 import { Goal } from './modules/goal.mjs';
+import { Sandwich } from './modules/sandwich.mjs';
 
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
 
@@ -128,7 +129,7 @@ function generateLevels() {
 
     //stair.addObject(new Platform([{ x: 310, y: 625 }, { x: 550, y: 625 }], { w: 800, h: 60 }, new Texture('../assets/ground/brick-small-middle.png', { w: 800, h: 60 }), { x: 0, y: 0 }, 3));
 
-    stair.addObject(new Ground({ x: 310, y: 625 - 32 }, { w: 800, h: 50 }, new Texture('../assets/ground/brick-small-middle.png', { w: 800, h: 50 })));
+    stair.addObject(new Ground({ x: 310, y: 625-32 }, { w: 800, h: 50 }, new Sandwich(['../assets/ground/brick-small-side.png', '../assets/ground/brick-small-middle.png'], { w: 800, h: 50 })));
 
     stair.addObject(new Ground({ x: 310, y: 525 }, { w: 40, h: 50 }, new Texture('../assets/ground/brick-small-middle.png', { w: 40, h: 50 })));
     stair.addObject(new Ground({ x: 360, y: 475 }, { w: 40, h: 50 }, new Texture('../assets/ground/brick-small-middle.png', { w: 40, h: 50 })));
