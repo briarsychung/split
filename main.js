@@ -211,6 +211,43 @@ function generateLevels() {
 
     GAME.addLevel(push);
 
+    let telly = new Level();
+    telly.setBackground(inside);
+
+    telly.addSpawn(new Spawn({ x: 400, y: 240 }, players[0]));
+    telly.addSpawn(new Spawn({ x: 400, y: 400 }, players[1]));
+    telly.addObject(new Ground({ x: 440, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    telly.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    telly.addObject(new Ground({ x: 603, y: 536 }, { w: 166, h: 32 }, new Sandwich(brick.big, { w: 166, h: 32 })));
+    telly.addObject(new Box({ x: 568, y: 512 }, { w: 16, h: 16 }, new Texture(box.small, { w: 16, h: 16 })));
+    telly.addObject(new Box({ x: 600, y: 512 }, { w: 16, h: 16 }, new Texture(box.small, { w: 16, h: 16 })));
+    telly.addObject(new Box({ x: 632, y: 512 }, { w: 16, h: 16 }, new Texture(box.small, { w: 16, h: 16 })));
+
+    telly.addObject(new Ground({ x: 757, y: 536 }, { w: 102, h: 32 }, new Sandwich(brick.big, { w: 102, h: 32 })));
+    telly.addObject(new Portal([{ x: 696, y: 600 }, { x: 696, y: 152 }]));
+    
+    let tellyP1 = new Platform([{ x: 696, y: 424 }, { x: 696, y: 360 }], { w: 96, h: 192 }, new Sandwich(brick.big, { w: 96, h: 192 }));
+    telly.addObject(tellyP1);
+    telly.addObject(new Door({ x: 632, y: 262.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, tellyP1));
+    
+    telly.addObject(new Ground({ x: 600, y: 280 }, { w: 96, h: 32 }, new Sandwich(brick.big, { w: 96, h: 32 })));
+    telly.addObject(new Ground({ x: 760, y: 280 }, { w: 32, h: 32 }, new Sandwich(brick.big, { w: 32, h: 32 })));
+
+    let tellyP2 = new Platform([{ x: 664, y: 216 }, { x: 664, y: 120 }], { w: 32, h: 96 }, new Sandwich(brick.small, { w: 32, h: 96 }));
+    telly.addObject(tellyP2);
+    telly.addObject(new Door({ x: 760, y: 518.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, tellyP2));
+    
+    telly.addObject(new Ground({ x: 888, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    telly.addObject(new Ground({ x: 888, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    telly.addGoal(new Goal({ x: 984, y: 280 }));
+    telly.addGoal(new Goal({ x: 984, y: 440 }));
+    telly.addObject(new Ground({ x: 984, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+    telly.addObject(new Ground({ x: 984, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+
+    GAME.addLevel(telly);
+
     let carry = new Level();
     carry.setBackground(inside);
 
