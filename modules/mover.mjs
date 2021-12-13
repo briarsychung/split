@@ -13,7 +13,7 @@ class Mover extends Object {
 
         this.ground = this.touch.bottom;
         while (this.ground) {
-            if (!this.ground.touch) break;
+            if (!this.ground.touch || !this.ground.touch.bottom) break;
             this.ground = this.ground.touch.bottom;
         }
 
@@ -43,6 +43,7 @@ class Mover extends Object {
                 (this.touch.bottom.npos.y - this.touch.bottom.dim.h / 2 === that.npos.y - that.dim.h / 2 &&
                     Math.abs(this.touch.bottom.npos.x - this.npos.x) > Math.abs(that.npos.x - this.npos.x))) {
                 this.touch.bottom = that;
+                if (this.vel.y > 7.25) this.die();
             }
         }
         if (this.pos.y > that.box.bottom && that.box.bottom >= this.box.top && that.box.bottom < this.box.bottom && this.nvel.y <= that.nvel.y &&
@@ -99,7 +100,7 @@ class Mover extends Object {
 
         this.ground = this.touch.bottom;
         while (this.ground) {
-            if (!this.ground.touch) break;
+            if (!this.ground.touch || !this.ground.touch.bottom) break;
             this.ground = this.ground.touch.bottom;
         }
 
@@ -110,7 +111,7 @@ class Mover extends Object {
         }
 
         this.vel.x *= this.touch.bottom ? 0.5 : 0.75;
-        this.vel.y *= 0.875;
+        this.vel.y *= 0.9375;
 
         this.vel.y += 0.5;
     }
