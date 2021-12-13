@@ -9,6 +9,7 @@
     overflow: hidden;
     padding: 0;
     text-align: center;
+    transition: 0.25s;
 }
 
 html,
@@ -23,6 +24,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    opacity: 0;
     position: fixed;
     top: 20px; bottom: 20px; left: 20px; right: 20px;
     visibility: hidden;
@@ -40,14 +42,16 @@ h1 {
 
 button {
     background: none;
-    border: 2.5px solid #ccc;
+    border: 2.5px solid white;
     padding: 10px;
 }
 
 button:hover {
-    background: none;
-    border: 2.5px solid white;
-    padding: 10px;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
 }
 
 p {

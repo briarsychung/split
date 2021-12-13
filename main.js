@@ -28,14 +28,18 @@ generateLevels();
 
 document.getElementById('start').addEventListener('click', () => {
     document.getElementById('menu').style.visibility = 'hidden';
+    document.getElementById('menu').style.opacity = 0;
     document.getElementById('game').style.visibility = 'visible';
+    document.getElementById('game').style.opacity = 1;
     GAME.start();
     loop();
 });
 
 document.getElementById('reset').addEventListener('click', () => {
     document.getElementById('end').style.visibility = 'hidden';
+    document.getElementById('end').style.opacity = 0;
     document.getElementById('menu').style.visibility = 'visible';
+    document.getElementById('menu').style.opacity = 1;
 });
 
 document.addEventListener('keydown', e => {
@@ -57,7 +61,7 @@ document.addEventListener('keydown', e => {
             if (GAME.debug) GAME.resetLevel();
             break;
         case '.':
-            if (GAME.debug) GAME.nextLevel();
+            if (GAME.debug) GAME.queueLevel();
             break;
     }
 });
@@ -66,7 +70,9 @@ function loop() {
     GAME.update();
     if (GAME.stage === 'win') {
         document.getElementById('game').style.visibility = 'hidden';
+        document.getElementById('game').style.opacity = 0;
         document.getElementById('end').style.visibility = 'visible';
+        document.getElementById('end').style.opacity = 1;
     } else {
         setTimeout(() => { window.requestAnimationFrame(loop) }, speed);
     }
@@ -81,7 +87,8 @@ function generateLevels() {
     GAME.addInput(new Input(players[0]));
     GAME.addInput(new Input(players[1], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
 
-    let outside = new Background(new Texture('../assets/background/outside.png', { w: 1024, h: 1024 }), ['#89c9e4', '#477553'])
+    let outside = new Background(new Texture('../assets/background/outside.png', { w: 1024, h: 1024 }), ['#89c9e4', '#477553']);
+    let inside = new Background(new Texture('../assets/background/inside.png', { w: 1024, h: 1024 }), ['#89c9e4', '#252b2d']);
 
     let buttonTextures = {
         up: new Texture('../assets/interactive/button-up.png', { w: 16, h: 6 }),
@@ -94,6 +101,10 @@ function generateLevels() {
         big: '../assets/interactive/spike-small.png',
         small: '../assets/interactive/spike-small.png'
     };
+    let box = {
+        big: '../assets/interactive/box-small.png',
+        small: '../assets/interactive/box-small.png'
+    };
     let brick = {
         big: ['../assets/ground/brick-big-side.png', '../assets/ground/brick-big-middle.png'],
         small: ['../assets/ground/brick-small-side.png', '../assets/ground/brick-small-middle.png']
@@ -104,7 +115,6 @@ function generateLevels() {
 
     links.addSpawn(new Spawn({ x: 400, y: 240 }, players[0]));
     links.addSpawn(new Spawn({ x: 400, y: 400 }, players[1]));
-
     links.addObject(new Ground({ x: 440, y: 280 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
     links.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
 
@@ -128,35 +138,97 @@ function generateLevels() {
     links.addObject(new Ground({ x: 1080, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
 
     links.addGoal(new Goal({ x: 1176, y: 280 }));
-    links.addObject(new Ground({ x: 1176, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
     links.addGoal(new Goal({ x: 1176, y: 440 }));
+    links.addObject(new Ground({ x: 1176, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
     links.addObject(new Ground({ x: 1176, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
 
     GAME.addLevel(links);
 
+    let belt = new Level();
+    belt.setBackground(outside);
+
+    belt.addSpawn(new Spawn({ x: 400, y: 240 }, players[0]));
+    belt.addSpawn(new Spawn({ x: 400, y: 400 }, players[1]));
+    belt.addObject(new Ground({ x: 440, y: 280 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+    belt.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+
+    let beltP1 = new Platform([{ x: 560, y: 272 }, { x: 720, y: 272 }], { w: 80, h: 16 }, new Sandwich(brick.small, { w: 80, h: 16 }));
+    belt.addObject(beltP1);
+    belt.addObject(new Door({ x: 504, y: 422.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, beltP1));
+
+    belt.addObject(new Platform([{ x: 800, y: 272 }, { x: 960, y: 272 }], { w: 80, h: 16 }, new Sandwich(brick.small, { w: 80, h: 16 }), { x: 0, y: 0 }, 'loop'));
+    belt.addObject(new Platform([{ x: 560, y: 432 }, { x: 720, y: 432 }], { w: 80, h: 16 }, new Sandwich(brick.small, { w: 80, h: 16 }), { x: 0, y: 0 }, 'loop'));
+
+    belt.addObject(new Spike({ x: 760, y: 288 }, { w: 480, h: 16 }, new Texture(spike.small, { w: 480, h: 16 })));
+    belt.addObject(new Ground({ x: 760, y: 304 }, { w: 480, h: 16 }, new Sandwich(brick.small, { w: 480, h: 16 })));
+
+    belt.addObject(new Ground({ x: 1080, y: 280 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+    belt.addObject(new Ground({ x: 1080, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+
+    let beltP2 = new Platform([{ x: 800, y: 432 }, { x: 960, y: 432 }], { w: 80, h: 16 }, new Sandwich(brick.small, { w: 80, h: 16 }));
+    belt.addObject(beltP2);
+    belt.addObject(new Door({ x: 1016, y: 262.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, beltP2));
+
+    belt.addGoal(new Goal({ x: 1176, y: 280 }));
+    belt.addGoal(new Goal({ x: 1176, y: 440 }));
+    belt.addObject(new Ground({ x: 1176, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+    belt.addObject(new Ground({ x: 1176, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+
+    GAME.addLevel(belt);
+
+    let push = new Level();
+    push.setBackground(inside);
+
+    push.addSpawn(new Spawn({ x: 400, y: 240 }, players[0]));
+    push.addSpawn(new Spawn({ x: 400, y: 400 }, players[1]));
+    push.addObject(new Ground({ x: 440, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    push.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    let pushP1 = new Platform([{ x: 536, y: 360 }, { x: 536, y: 520 }], { w: 32, h: 192 }, new Sandwich(cracked, { w: 32, h: 192 }), { x: 0, y: 0 }, 'pause', 1);
+    push.addObject(pushP1);
+    push.addObject(new Door({ x: 600, y: 422.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, pushP1));
+
+    push.addObject(new Ground({ x: 571, y: 280 }, { w: 38, h: 32 }, new Sandwich(brick.small, { w: 38, h: 32 })));
+    push.addObject(new Ground({ x: 661, y: 280 }, { w: 102, h: 32 }, new Sandwich(brick.small, { w: 102, h: 32 })));
+    push.addObject(new Ground({ x: 632, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    push.addObject(new Box({ x: 536, y: 256 }, { w: 16, h: 16 }, new Texture(box.small, { w: 16, h: 16 })));
+
+    let pushP2 = new Platform([{ x: 728, y: 200 }, { x: 728, y: 360 }], { w: 32, h: 192 }, new Sandwich(cracked, { w: 32, h: 192 }), { x: 0, y: 0 }, 'pause', 1);
+    push.addObject(pushP2);
+    push.addObject(new Door({ x: 664, y: 422.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, pushP2));
+
+    push.addObject(new Ground({ x: 824, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    push.addObject(new Ground({ x: 824, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    push.addGoal(new Goal({ x: 920, y: 280 }));
+    push.addGoal(new Goal({ x: 920, y: 440 }));
+    push.addObject(new Ground({ x: 920, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+    push.addObject(new Ground({ x: 920, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+
+    GAME.addLevel(push);
+
     let stair = new Level();
     stair.setBackground(outside);
-    
+
     stair.addSpawn(new Spawn({ x: 400, y: 400 }, players[0]));
     stair.addSpawn(new Spawn({ x: 440, y: 400 }, players[1]));
-
     stair.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
 
-    let stairP1 = new Platform([{ x: 536, y: 472 }, { x: 536, y: 376 }], { w: 32, h: 96 }, new Sandwich(cracked, { w: 32, h: 96 }), { x: 0, y: 0 }, 2, 'pause');
+    let stairP1 = new Platform([{ x: 536, y: 472 }, { x: 536, y: 376 }], { w: 32, h: 96 }, new Sandwich(cracked, { w: 32, h: 96 }));
     stair.addObject(stairP1);
     stair.addObject(new Ground({ x: 584, y: 376 }, { w: 64, h: 96 }, new Sandwich(brick.big, { w: 64, h: 96 })));
     stair.addObject(new Door({ x: 584, y: 326.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, stairP1));
-    
-    let stairP2 = new Platform([{ x: 632, y: 376 }, { x: 632, y: 280 }], { w: 32, h: 96 }, new Sandwich(cracked, { w: 32, h: 96 }), { x: 0, y: 0 }, 2, 'pause');
+
+    let stairP2 = new Platform([{ x: 632, y: 376 }, { x: 632, y: 280 }], { w: 32, h: 96 }, new Sandwich(cracked, { w: 32, h: 96 }));
     stair.addObject(stairP2);
     stair.addObject(new Ground({ x: 680, y: 280 }, { w: 64, h: 96 }, new Sandwich(brick.big, { w: 64, h: 96 })));
     stair.addObject(new Door({ x: 680, y: 230.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, stairP2));
-    
-    let stairP3 = new Platform([{ x: 728, y: 280 }, { x: 728, y: 184 }], { w: 32, h: 96 }, new Sandwich(cracked, { w: 32, h: 96 }), { x: 0, y: 0 }, 2, 'pause');
+
+    let stairP3 = new Platform([{ x: 728, y: 280 }, { x: 728, y: 184 }], { w: 32, h: 96 }, new Sandwich(cracked, { w: 32, h: 96 }));
     stair.addObject(stairP3);
     stair.addObject(new Ground({ x: 776, y: 184 }, { w: 64, h: 96 }, new Sandwich(brick.big, { w: 64, h: 96 })));
     stair.addObject(new Door({ x: 776, y: 134.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, stairP3));
-    
+
     stair.addObject(new Ground({ x: 888, y: 152 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
 
     stair.addGoal(new Goal({ x: 984, y: 152 }));
