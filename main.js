@@ -21,9 +21,6 @@ import { Box } from './modules/box.mjs';
 import { Goal } from './modules/goal.mjs';
 
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
-
-let speed = 0;
-
 generateLevels();
 
 document.getElementById('start').addEventListener('click', () => {
@@ -42,20 +39,21 @@ document.getElementById('reset').addEventListener('click', () => {
     document.getElementById('menu').style.opacity = 1;
 });
 
+let delay = 0;
 document.addEventListener('keydown', e => {
     switch (e.key.toLowerCase()) {
         case 'p':
             GAME.debug = !GAME.debug;
-            if (!GAME.debug) speed = 0;
+            if (!GAME.debug) delay = 0;
             break;
         case '0':
-            if (GAME.debug) speed = 0;
+            if (GAME.debug) delay = 0;
             break;
         case '9':
-            if (GAME.debug) speed = 1000;
+            if (GAME.debug) delay = 1000;
             break;
         case '8':
-            if (GAME.debug) speed = 100;
+            if (GAME.debug) delay = 100;
             break;
         case ',':
             if (GAME.debug) GAME.resetLevel();
@@ -66,15 +64,21 @@ document.addEventListener('keydown', e => {
     }
 });
 
+const FPS = 60;
+let next = Date.now();
+
 function loop() {
-    GAME.update();
+    if (Date.now() > next) {
+        next += 1000 / FPS;
+        GAME.update();
+    }
     if (GAME.stage === 'win') {
         document.getElementById('game').style.visibility = 'hidden';
         document.getElementById('game').style.opacity = 0;
         document.getElementById('end').style.visibility = 'visible';
         document.getElementById('end').style.opacity = 1;
     } else {
-        setTimeout(() => { window.requestAnimationFrame(loop) }, speed);
+        setTimeout(() => { window.requestAnimationFrame(loop) }, delay);
     }
 }
 
