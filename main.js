@@ -62,8 +62,14 @@ document.addEventListener('keydown', e => {
     }
 });
 
+const FPS = 60;
+let next = Date.now();
+
 function loop() {
-    GAME.update();
+    if (Date.now() > next) {
+        next += 1000 / FPS;
+        GAME.update();
+    }
     if (GAME.stage === 'win') {
         document.getElementById('game').style.visibility = 'hidden';
         document.getElementById('end').style.visibility = 'visible';
