@@ -1,11 +1,13 @@
 import { Game } from './modules/game.mjs';
 import { Canvas } from './modules/canvas.mjs';
 import { Texture } from './modules/texture.mjs';
+import { Sandwich } from './modules/sandwich.mjs';
 import { Animated } from './modules/animated.mjs';
 import { Player } from './modules/player.mjs';
 import { Sprite } from './modules/sprite.mjs';
 import { Input } from './modules/input.mjs';
 import { Level } from './modules/level.mjs';
+import { Background } from './modules/background.mjs';
 import { Spawn } from './modules/spawn.mjs';
 import { Ground } from './modules/ground.mjs';
 import { Cracked } from './modules/cracked.mjs';
@@ -17,7 +19,6 @@ import { Link } from './modules/link.mjs';
 import { Portal } from './modules/portal.mjs';
 import { Box } from './modules/box.mjs';
 import { Goal } from './modules/goal.mjs';
-import { Sandwich } from './modules/sandwich.mjs';
 
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
 
@@ -80,10 +81,7 @@ function generateLevels() {
     GAME.addInput(new Input(players[0]));
     GAME.addInput(new Input(players[1], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
 
-    let backgroundTextures = {
-        outside: new Texture('../assets/background/outside.png', { w: 1024, h: 1024 }),
-        inside: new Texture('../assets/background/inside.png', { w: 1024, h: 1024 })
-    };
+    let outside = new Background(new Texture('../assets/background/outside.png', { w: 1024, h: 1024 }), ['#89c9e4', '#477553'])
 
     let buttonTextures = {
         up: new Texture('../assets/interactive/button-up.png', { w: 16, h: 6 }),
@@ -102,7 +100,7 @@ function generateLevels() {
     };
 
     let links = new Level();
-    links.addBackground(backgroundTextures.outside);
+    links.setBackground(outside);
 
     links.addSpawn(new Spawn({ x: 400, y: 240 }, players[0]));
     links.addSpawn(new Spawn({ x: 400, y: 400 }, players[1]));
@@ -137,7 +135,7 @@ function generateLevels() {
     //GAME.addLevel(links);
 
     let stair = new Level();
-    stair.addBackground(backgroundTextures.outside);
+    stair.setBackground(outside);
     
     stair.addSpawn(new Spawn({ x: 400, y: 400 }, players[0]));
     stair.addSpawn(new Spawn({ x: 440, y: 400 }, players[1]));
@@ -163,7 +161,8 @@ function generateLevels() {
 
     stair.addGoal(new Goal({ x: 984, y: 152 }));
     stair.addGoal(new Goal({ x: 1048, y: 152 }));
-    stair.addObject(new Ground({ x: 1016, y: 160 }, { w: 96, h: 16 }, new Sandwich(brick.small, { w: 96, h: 32 }), { x: 0, y: -8 }));
+    stair.addObject(new Ground({ x: 1016, y: 160 }, { w: 96, h: 16 }, new Sandwich(brick.big, { w: 96, h: 32 }), { x: 0, y: -8 }));
+    stair.addObject(new Ground({ x: 1016, y: 152 }, { w: 32, h: 32 }, new Texture(brick.big[1], { w: 32, h: 32 }), { x: 0, y: 0 }));
 
     GAME.addLevel(stair);
 }
