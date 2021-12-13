@@ -114,13 +114,13 @@ class Game {
 
         this.camera.update(this.players);
 
+        this.refresh(this.animate / 15);
+
         if (this.players[0].fade === 0 || this.players[1].fade === 0) {
             this.resetLevel();
         } else if (level.goals[0].player && level.goals[1].player) {
             this.queueLevel();
         }
-
-        this.refresh(this.animate / 15);
 
         if (!this.debug) return;
 
