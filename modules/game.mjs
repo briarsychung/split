@@ -144,6 +144,18 @@ class Game {
             this.canvas.height / 2 - this.camera.pos.y * real,
             1024 * real,
             1024 * real);
+
+        this.context.drawImage(level.background.draw(),
+            this.canvas.width / 2 - this.camera.pos.x * real + 1024 * real,
+            this.canvas.height / 2 - this.camera.pos.y * real,
+            1024 * real,
+            1024 * real);
+
+        this.context.drawImage(level.background.draw(),
+            this.canvas.width / 2 - this.camera.pos.x * real - 1024 * real,
+            this.canvas.height / 2 - this.camera.pos.y * real,
+            1024 * real,
+            1024 * real);
     }
 
     draw(object) {

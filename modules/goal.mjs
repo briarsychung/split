@@ -1,9 +1,10 @@
 import { Interactive } from './interactive.mjs';
 import { Player } from './player.mjs';
+import { Texture } from './texture.mjs';
 
 class Goal extends Interactive {
-    constructor(pos, dim, texture, offset) {
-        super(pos, dim, texture, offset);
+    constructor(pos) {
+        super(pos, { w: 32, h: 32 }, new Texture('../assets/ground/brick-door.png', { w: 32, h: 32 }), { x: 0, y: -32 });
 
         this.player = false;
     }
