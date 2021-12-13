@@ -130,7 +130,7 @@ class Game {
         }
 
         let debugInfo = [
-            `SpLit Version 0.4`,
+            `SpLit Version 0.5`,
             ``,
             `Canvas Dimensions: ${f(this.canvas.width)}, ${f(this.canvas.height)}`,
             `Level: ${this.level + 1} / ${this.levels.length}`,

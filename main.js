@@ -241,7 +241,7 @@ function generateLevels() {
     telly.addObject(new Ground({ x: 600, y: 280 }, { w: 96, h: 32 }, new Sandwich(brick.big, { w: 96, h: 32 })));
     telly.addObject(new Ground({ x: 760, y: 280 }, { w: 32, h: 32 }, new Sandwich(brick.big, { w: 32, h: 32 })));
 
-    let tellyP2 = new Platform([{ x: 664, y: 216 }, { x: 664, y: 120 }], { w: 32, h: 96 }, new Sandwich(brick.small, { w: 32, h: 96 }));
+    let tellyP2 = new Platform([{ x: 664, y: 216 }, { x: 664, y: 120 }], { w: 32, h: 96 }, new Sandwich(cracked, { w: 32, h: 96 }));
     telly.addObject(tellyP2);
     telly.addObject(new Door({ x: 760, y: 518.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, tellyP2));
     
@@ -273,7 +273,7 @@ function generateLevels() {
     carry.addObject(new Spike({ x: 696, y: 448 }, { w: 160, h: 16 }, new Texture(spike.small, { w: 160, h: 16 })));
     carry.addObject(new Ground({ x: 696, y: 464 }, { w: 160, h: 16 }, new Sandwich(brick.small, { w: 160, h: 16 })));
     
-    let carryP2 = new Platform([{ x: 792, y: 280 }, { x: 792, y: 376 }], { w: 32, h: 160 }, new Sandwich(brick.small, { w: 32, h: 160 }));
+    let carryP2 = new Platform([{ x: 792, y: 280 }, { x: 792, y: 376 }], { w: 32, h: 160 }, new Sandwich(cracked, { w: 32, h: 160 }));
     carry.addObject(carryP2);
     carry.addObject(new Door({ x: 696, y: 326.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, carryP2));
 
