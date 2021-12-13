@@ -104,37 +104,6 @@ function generateLevels() {
         small: ['../assets/ground/brick-small-side.png', '../assets/ground/brick-small-middle.png']
     };
 
-    let push = new Level();
-    push.setBackground(inside);
-
-    push.addSpawn(new Spawn({ x: 400, y: 240 }, players[0]));
-    push.addSpawn(new Spawn({ x: 400, y: 400 }, players[1]));
-    push.addObject(new Ground({ x: 440, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
-    push.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
-
-    let pushP1 = new Platform([{ x: 536, y: 360 }, { x: 536, y: 520 }], { w: 32, h: 192 }, new Sandwich(cracked, { w: 32, h: 192 }), { x: 0, y: 0 }, 'pause', 1);
-    push.addObject(pushP1);
-    push.addObject(new Door({ x: 600, y: 422.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, pushP1));
-
-    push.addObject(new Ground({ x: 571, y: 280 }, { w: 38, h: 32 }, new Sandwich(brick.small, { w: 38, h: 32 })));
-    push.addObject(new Ground({ x: 661, y: 280 }, { w: 102, h: 32 }, new Sandwich(brick.small, { w: 102, h: 32 })));
-    push.addObject(new Ground({ x: 632, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
-    push.addObject(new Box({ x: 536, y: 256 }, { w: 16, h: 16 }, new Texture(box.small, { w: 16, h: 16 })));
-
-    let pushP2 = new Platform([{ x: 728, y: 200 }, { x: 728, y: 360 }], { w: 32, h: 192 }, new Sandwich(cracked, { w: 32, h: 192 }), { x: 0, y: 0 }, 'pause', 1);
-    push.addObject(pushP2);
-    push.addObject(new Door({ x: 664, y: 422.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, pushP2));
-    
-    push.addObject(new Ground({ x: 824, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
-    push.addObject(new Ground({ x: 824, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
-
-    push.addGoal(new Goal({ x: 920, y: 280 }));
-    push.addGoal(new Goal({ x: 920, y: 440 }));
-    push.addObject(new Ground({ x: 920, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
-    push.addObject(new Ground({ x: 920, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
-
-    GAME.addLevel(push);
-
     let links = new Level();
     links.setBackground(outside);
 
@@ -168,7 +137,7 @@ function generateLevels() {
     links.addObject(new Ground({ x: 1176, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
 
     GAME.addLevel(links);
-    
+
     let belt = new Level();
     belt.setBackground(outside);
 
@@ -200,6 +169,37 @@ function generateLevels() {
     belt.addObject(new Ground({ x: 1176, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
 
     GAME.addLevel(belt);
+
+    let push = new Level();
+    push.setBackground(inside);
+
+    push.addSpawn(new Spawn({ x: 400, y: 240 }, players[0]));
+    push.addSpawn(new Spawn({ x: 400, y: 400 }, players[1]));
+    push.addObject(new Ground({ x: 440, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    push.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    let pushP1 = new Platform([{ x: 536, y: 360 }, { x: 536, y: 520 }], { w: 32, h: 192 }, new Sandwich(cracked, { w: 32, h: 192 }), { x: 0, y: 0 }, 'pause', 1);
+    push.addObject(pushP1);
+    push.addObject(new Door({ x: 600, y: 422.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, pushP1));
+
+    push.addObject(new Ground({ x: 571, y: 280 }, { w: 38, h: 32 }, new Sandwich(brick.small, { w: 38, h: 32 })));
+    push.addObject(new Ground({ x: 661, y: 280 }, { w: 102, h: 32 }, new Sandwich(brick.small, { w: 102, h: 32 })));
+    push.addObject(new Ground({ x: 632, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    push.addObject(new Box({ x: 536, y: 256 }, { w: 16, h: 16 }, new Texture(box.small, { w: 16, h: 16 })));
+
+    let pushP2 = new Platform([{ x: 728, y: 200 }, { x: 728, y: 360 }], { w: 32, h: 192 }, new Sandwich(cracked, { w: 32, h: 192 }), { x: 0, y: 0 }, 'pause', 1);
+    push.addObject(pushP2);
+    push.addObject(new Door({ x: 664, y: 422.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, pushP2));
+
+    push.addObject(new Ground({ x: 824, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    push.addObject(new Ground({ x: 824, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    push.addGoal(new Goal({ x: 920, y: 280 }));
+    push.addGoal(new Goal({ x: 920, y: 440 }));
+    push.addObject(new Ground({ x: 920, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+    push.addObject(new Ground({ x: 920, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+
+    GAME.addLevel(push);
 
     let stair = new Level();
     stair.setBackground(outside);

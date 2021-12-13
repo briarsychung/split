@@ -33,7 +33,7 @@ class Sandwich extends Texture {
                     for (let y = 0; y < this.dim.h - source.height; y += source.height) {
                         this.image.getContext('2d').drawImage(source, source.width - this.dim.w, y);
                     }
-                    
+
                     this.image.getContext('2d').restore();
                     break;
                 case 1:
