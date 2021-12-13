@@ -28,14 +28,18 @@ generateLevels();
 
 document.getElementById('start').addEventListener('click', () => {
     document.getElementById('menu').style.visibility = 'hidden';
+    document.getElementById('menu').style.opacity = 0;
     document.getElementById('game').style.visibility = 'visible';
+    document.getElementById('game').style.opacity = 1;
     GAME.start();
     loop();
 });
 
 document.getElementById('reset').addEventListener('click', () => {
     document.getElementById('end').style.visibility = 'hidden';
+    document.getElementById('end').style.opacity = 0;
     document.getElementById('menu').style.visibility = 'visible';
+    document.getElementById('menu').style.opacity = 1;
 });
 
 document.addEventListener('keydown', e => {
@@ -57,7 +61,7 @@ document.addEventListener('keydown', e => {
             if (GAME.debug) GAME.resetLevel();
             break;
         case '.':
-            if (GAME.debug) GAME.nextLevel();
+            if (GAME.debug) GAME.queueLevel();
             break;
     }
 });
@@ -66,7 +70,9 @@ function loop() {
     GAME.update();
     if (GAME.stage === 'win') {
         document.getElementById('game').style.visibility = 'hidden';
+        document.getElementById('game').style.opacity = 0;
         document.getElementById('end').style.visibility = 'visible';
+        document.getElementById('end').style.opacity = 1;
     } else {
         setTimeout(() => { window.requestAnimationFrame(loop) }, speed);
     }
