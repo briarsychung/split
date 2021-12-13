@@ -135,7 +135,16 @@ class Game {
             `    state: ${this.players[1].state}`,
             `Camera`,
             `    pos: ${f(this.camera.pos.x)}, ${f(this.camera.pos.y)}`,
-            `    zoom: ${f(this.camera.zoom)}`];
+            `    zoom: ${f(this.camera.zoom)}`,
+            ``,
+            `Debug Controls`,
+            `    [P]: Toggle debug mode`,
+            `    [8], [9], [0]: Throttle speed`,
+            `    [,]: Restart level`,
+            `    [.]: Skip level`
+        ];
+
+        this.context.fillStyle = 'black';
         for (let i = 0; i < debugInfo.length; i++) {
             this.context.fillText(debugInfo[i], 50, i * 15 + 50);
         }
