@@ -139,11 +139,14 @@ class Game {
     background(level) {
         let real = this.camera.zoom * this.canvas.width / 1000;
 
-        this.context.drawImage(level.background.draw(),
-            this.canvas.width / 2 - this.camera.pos.x * real,
-            this.canvas.height / 2 - this.camera.pos.y * real,
-            1024 * real,
-            1024 * real);
+        for (let x = 1024 * Math.floor(Math.min(this.players[0].pos.x, this.players[1].pos.x) / 1024 - 1);
+            x < 1024 * Math.ceil(Math.max(this.players[0].pos.x, this.players[1].pos.x) / 1024 + 1); x += 1024) {
+            this.context.drawImage(level.background.draw(),
+                this.canvas.width / 2 - this.camera.pos.x * real + x * real,
+                this.canvas.height / 2 - this.camera.pos.y * real,
+                1024 * real,
+                1024 * real);
+        }
     }
 
     draw(object) {
