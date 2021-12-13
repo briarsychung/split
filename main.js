@@ -211,6 +211,38 @@ function generateLevels() {
 
     GAME.addLevel(push);
 
+    let carry = new Level();
+    carry.setBackground(inside);
+
+    carry.addSpawn(new Spawn({ x: 400, y: 240 }, players[0]));
+    carry.addSpawn(new Spawn({ x: 400, y: 400 }, players[1]));
+    carry.addObject(new Ground({ x: 440, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    carry.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    let carryP1 = new Platform([{ x: 568, y: 280 }, { x: 568, y: 440 }], { w: 96, h: 32 }, new Sandwich(brick.big, { w: 96, h: 32 }));
+    carry.addObject(carryP1);
+    carry.addObject(new Door({ x: 504, y: 422.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, carryP1));
+    carry.addObject(new Ground({ x: 568, y: 200 }, { w: 32, h: 128 }, new Sandwich(brick.small, { w: 32, h: 128 })));
+
+    carry.addObject(new Ground({ x: 696, y: 344 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    carry.addObject(new Platform([{ x: 656, y: 432 }, { x: 736, y: 432 }], { w: 80, h: 16 }, new Sandwich(brick.small, { w: 80, h: 16 }), { x: 0, y: 0 }, 'loop'));
+    carry.addObject(new Spike({ x: 696, y: 448 }, { w: 160, h: 16 }, new Texture(spike.small, { w: 160, h: 16 })));
+    carry.addObject(new Ground({ x: 696, y: 464 }, { w: 160, h: 16 }, new Sandwich(brick.small, { w: 160, h: 16 })));
+    
+    let carryP2 = new Platform([{ x: 792, y: 280 }, { x: 792, y: 376 }], { w: 32, h: 160 }, new Sandwich(brick.small, { w: 32, h: 160 }));
+    carry.addObject(carryP2);
+    carry.addObject(new Door({ x: 696, y: 326.5 }, { w: 16, h: 3 }, [buttonTextures.up, buttonTextures.down], { x: 0, y: -1.5 }, carryP2));
+
+    carry.addObject(new Ground({ x: 888, y: 280 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+    carry.addObject(new Ground({ x: 888, y: 440 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
+
+    carry.addGoal(new Goal({ x: 984, y: 280 }));
+    carry.addGoal(new Goal({ x: 984, y: 440 }));
+    carry.addObject(new Ground({ x: 984, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+    carry.addObject(new Ground({ x: 984, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+
+    GAME.addLevel(carry);
+
     let stair = new Level();
     stair.setBackground(outside);
 
