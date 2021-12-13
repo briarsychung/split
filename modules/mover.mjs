@@ -13,7 +13,7 @@ class Mover extends Object {
 
         this.ground = this.touch.bottom;
         while (this.ground) {
-            if (!this.ground.touch) break;
+            if (!this.ground.touch || !this.ground.touch.bottom) break;
             this.ground = this.ground.touch.bottom;
         }
 
@@ -99,7 +99,7 @@ class Mover extends Object {
 
         this.ground = this.touch.bottom;
         while (this.ground) {
-            if (!this.ground.touch) break;
+            if (!this.ground.touch || !this.ground.touch.bottom) break;
             this.ground = this.ground.touch.bottom;
         }
 
@@ -110,7 +110,7 @@ class Mover extends Object {
         }
 
         this.vel.x *= this.touch.bottom ? 0.5 : 0.75;
-        this.vel.y *= 0.875;
+        this.vel.y *= 0.9375;
 
         this.vel.y += 0.5;
     }

@@ -17,12 +17,14 @@ class Object {
 
         this.dead = false;
         this.waiting = false;
+        this.fade = 100;
     }
 
     init() {
         this.pos = { ...this.base };
         this.vel = { x: 0, y: 0 };
         this.dead = this.waiting;
+        this.fade = this.waiting ? 0 : 50;
     }
 
     update() {
@@ -47,6 +49,10 @@ class Object {
     move() {
         this.pos = { ...this.cpos };
         this.vel = { ...this.cvel };
+
+        if (this.pos.y > 1024) {
+            this.die();
+        }
     }
 
     die(state = true) {
@@ -56,6 +62,12 @@ class Object {
     wait() {
         this.waiting = true;
         this.dead = true;
+        this.fade = 0;
+    }
+
+    dying() {
+        this.fade = this.fade === 0 ? 0 : this.fade - 1;
+        return this.fade / 100;
     }
 }
 
