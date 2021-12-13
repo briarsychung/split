@@ -9,6 +9,7 @@
     overflow: hidden;
     padding: 0;
     text-align: center;
+    text-decoration: none;
     transition: 0.25s;
 }
 
@@ -56,4 +57,8 @@ button:active {
 
 p {
     margin-top: 50px;
+}
+
+a:hover {
+    color: #ff0;
 }
