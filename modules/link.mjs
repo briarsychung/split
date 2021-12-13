@@ -7,8 +7,13 @@ class Link extends Interactive {
         this.object = object;
 
         this.object.wait();
-
         this.played = false;
+    }
+
+    init() {
+        this.played = false;
+
+        super.init();
     }
 
     trigger() {

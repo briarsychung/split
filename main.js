@@ -92,6 +92,10 @@ function generateLevels() {
 
     let ground = ['../assets/ground/ground-side.png', '../assets/ground/ground-middle.png'];
     let cracked = ['../assets/ground/brick-cracked-side.png', '../assets/ground/brick-cracked-middle.png'];
+    let spike = {
+        small: '../assets/interactive/spike-small.png',
+        big: '../assets/interactive/spike-small.png'
+    };
     let bricks = {
         big: ['../assets/ground/brick-big-side.png', '../assets/ground/brick-big-middle.png'],
         small: ['../assets/ground/brick-small-side.png', '../assets/ground/brick-small-middle.png']
@@ -106,19 +110,21 @@ function generateLevels() {
     links.addObject(new Ground({ x: 440, y: 280 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
     links.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
 
-    let cracked1 = new Cracked({ x: 600, y: 280 }, { w: 80, h: 16 }, new Sandwich(cracked, { w: 80, h: 16 }));
+    let cracked1 = new Cracked({ x: 600, y: 272 }, { w: 80, h: 16 }, new Sandwich(cracked, { w: 80, h: 16 }));
     links.addObject(cracked1);
-    links.addObject(new Spike({ x: 600, y: 296 }, { w: 80, h: 16 }, new Texture('../assets/interactive/spike-small.png', { w: 80, h: 16 })));
-    links.addObject(new Link({ x: 600, y: 440 }, { w: 80, h: 16 }, new Sandwich(bricks.small, { w: 80, h: 16 }), { x: 0, y: 0 }, cracked1));
+    links.addObject(new Spike({ x: 600, y: 288 }, { w: 80, h: 16 }, new Texture(spike.small, { w: 80, h: 16 })));
+    links.addObject(new Ground({ x: 600, y: 304 }, { w: 80, h: 16 }, new Sandwich(bricks.small, { w: 80, h: 16 })));
+    links.addObject(new Link({ x: 600, y: 432 }, { w: 80, h: 16 }, new Sandwich(bricks.small, { w: 80, h: 16 }), { x: 0, y: 0 }, cracked1));
 
-    let cracked2 = new Cracked({ x: 760, y: 440 }, { w: 80, h: 16 }, new Sandwich(cracked, { w: 80, h: 16 }));
+    let cracked2 = new Cracked({ x: 760, y: 432 }, { w: 80, h: 16 }, new Sandwich(cracked, { w: 80, h: 16 }));
     links.addObject(cracked2);
-    links.addObject(new Link({ x: 760, y: 280 }, { w: 80, h: 16 }, new Sandwich(bricks.small, { w: 80, h: 16 }), { x: 0, y: 0 }, cracked2));
+    links.addObject(new Link({ x: 760, y: 272 }, { w: 80, h: 16 }, new Sandwich(bricks.small, { w: 80, h: 16 }), { x: 0, y: 0 }, cracked2));
 
-    let cracked3 = new Cracked({ x: 920, y: 280 }, { w: 80, h: 16 }, new Sandwich(cracked, { w: 80, h: 16 }));
+    let cracked3 = new Cracked({ x: 920, y: 272 }, { w: 80, h: 16 }, new Sandwich(cracked, { w: 80, h: 16 }));
     links.addObject(cracked3);
-    links.addObject(new Spike({ x: 920, y: 296 }, { w: 80, h: 16 }, new Texture('../assets/interactive/spike-small.png', { w: 80, h: 16 })));
-    links.addObject(new Link({ x: 920, y: 440 }, { w: 80, h: 16 }, new Sandwich(bricks.small, { w: 80, h: 16 }), { x: 0, y: 0 }, cracked3));
+    links.addObject(new Spike({ x: 920, y: 288 }, { w: 80, h: 16 }, new Texture(spike.small, { w: 80, h: 16 })));
+    links.addObject(new Ground({ x: 920, y: 304 }, { w: 80, h: 16 }, new Sandwich(bricks.small, { w: 80, h: 16 })));
+    links.addObject(new Link({ x: 920, y: 432 }, { w: 80, h: 16 }, new Sandwich(bricks.small, { w: 80, h: 16 }), { x: 0, y: 0 }, cracked3));
 
     links.addObject(new Ground({ x: 1080, y: 280 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
     links.addObject(new Ground({ x: 1080, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
