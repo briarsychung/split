@@ -48,6 +48,7 @@ class Game {
         }
 
         this.resetLevel();
+        this.camera.snap(this.players);
     }
 
     addPlayer(player) {
@@ -69,6 +70,7 @@ class Game {
     gameTick() {
         let level = this.levels[this.level];
         let objects = level.objects.concat(this.players).filter(o => !o.dead);
+        let ghosts = level.objects.concat(this.players).filter(o => o.dead);
 
         this.players[0].tag = "P1";
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -99,9 +101,15 @@ class Game {
             this.draw(objects[i]);
         }
 
+        for (let i = 0; i < ghosts.length; i++) {
+            this.draw(ghosts[i], ghosts[i].dying());
+        }
+
         this.camera.update(this.players);
 
-        if (level.goals[0].player && level.goals[1].player) {
+        if (this.players[0].fade === 0 || this.players[1].fade === 0) {
+            this.resetLevel();
+        } else if (level.goals[0].player && level.goals[1].player) {
             this.nextLevel();
         }
 
@@ -139,21 +147,41 @@ class Game {
     background(level) {
         let real = this.camera.zoom * this.canvas.width / 1000;
 
-        this.context.drawImage(level.background.draw(),
-            this.canvas.width / 2 - this.camera.pos.x * real,
-            this.canvas.height / 2 - this.camera.pos.y * real,
-            1024 * real,
-            1024 * real);
+        for (let x = 1024 * Math.floor(Math.min(this.players[0].pos.x, this.players[1].pos.x) / 1024 - 1);
+            x < 1024 * Math.ceil(Math.max(this.players[0].pos.x, this.players[1].pos.x) / 1024 + 1); x += 1024) {
+            this.context.drawImage(level.background.texture.draw(),
+                this.canvas.width / 2 - this.camera.pos.x * real + x * real,
+                this.canvas.height / 2 - this.camera.pos.y * real,
+                1024 * real,
+                1024 * real);
+            this.context.fillStyle = level.background.colors[0];
+            this.context.fillRect(
+                this.canvas.width / 2 - this.camera.pos.x * real + x * real - 1,
+                this.canvas.height / 2 - this.camera.pos.y * real - 1024 * real - 1,
+                1024 * real + 3,
+                1024 * real + 3);
+            this.context.fillStyle = level.background.colors[1];
+            this.context.fillRect(
+                this.canvas.width / 2 - this.camera.pos.x * real + x * real - 1,
+                this.canvas.height / 2 - this.camera.pos.y * real + 1024 * real - 1,
+                1024 * real + 3,
+                1024 * real + 3);
+        }
     }
 
-    draw(object) {
+    draw(object, opacity = 1) {
         let real = this.camera.zoom * this.canvas.width / 1000;
+
+        this.context.save();
+        this.context.globalAlpha = opacity;
 
         this.context.drawImage(object.texture.draw(), 0, 0, object.texture.dim.w, object.texture.dim.h,
             this.canvas.width / 2 + (object.pos.x + object.offset.x - object.texture.dim.w / 2 - this.camera.pos.x) * real,
             this.canvas.height / 2 + (object.pos.y + object.offset.y - object.texture.dim.h / 2 - this.camera.pos.y) * real,
             object.texture.dim.w * real,
             object.texture.dim.h * real);
+
+        this.context.restore();
 
         if (!this.debug) return;
 

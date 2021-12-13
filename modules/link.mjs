@@ -5,11 +5,21 @@ class Link extends Interactive {
         super(pos, dim, texture, offset);
 
         this.object = object;
+
+        this.object.wait();
+        this.played = false;
+    }
+
+    init() {
+        this.played = false;
+
+        super.init();
     }
 
     trigger() {
-        if (this.pressed.length) {
+        if (this.pressed.length && !this.played) {
             this.object.die(false);
+            this.played = true;
         }
 
         super.trigger();

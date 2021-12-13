@@ -13,7 +13,7 @@ class Mover extends Object {
 
         this.ground = this.touch.bottom;
         while (this.ground) {
-            if (!this.ground.touch) break;
+            if (!this.ground.touch || !this.ground.touch.bottom) break;
             this.ground = this.ground.touch.bottom;
         }
 
@@ -36,28 +36,39 @@ class Mover extends Object {
             (this.pos.x + this.dim.w / 2 < that.pos.x - that.dim.w / 2 && this.npos.x + this.dim.w / 2 < that.npos.x - that.dim.w / 2) ||
             (this.pos.x - this.dim.w / 2 > that.pos.x + that.dim.w / 2 && this.npos.x - this.dim.w / 2 > that.npos.x + that.dim.w / 2)) return;
 
-        let y = false;
-
-        if (this.vel.y >= that.nvel.y && this.pos.y < that.box.top && that.box.top > this.box.top && that.box.top <= this.box.bottom) {
-            if (!this.touch.bottom || (this.touch.bottom.npos.y - this.touch.bottom.dim.h / 2 > that.npos.y - that.dim.h / 2)) {
+        if (this.pos.y < that.box.top && that.box.top > this.box.top && that.box.top <= this.box.bottom && this.nvel.y >= that.nvel.y &&
+            this.pos.x + this.dim.w / 2 > that.pos.x - that.dim.w / 2 && this.pos.x - this.dim.w / 2 < that.pos.x + that.dim.w / 2) {
+            if (!this.touch.bottom ||
+                (this.touch.bottom.npos.y - this.touch.bottom.dim.h / 2 > that.npos.y - that.dim.h / 2) ||
+                (this.touch.bottom.npos.y - this.touch.bottom.dim.h / 2 === that.npos.y - that.dim.h / 2 &&
+                    Math.abs(this.touch.bottom.npos.x - this.npos.x) > Math.abs(that.npos.x - this.npos.x))) {
                 this.touch.bottom = that;
             }
-            y = true;
         }
-        if (this.vel.y <= that.nvel.y && this.pos.y > that.box.bottom && that.box.bottom >= this.box.top && that.box.bottom < this.box.bottom) {
-            if (!this.touch.top || (this.touch.top.npos.y + this.touch.top.dim.h / 2 > that.npos.y + that.dim.h / 2)) {
+        if (this.pos.y > that.box.bottom && that.box.bottom >= this.box.top && that.box.bottom < this.box.bottom && this.nvel.y <= that.nvel.y &&
+            this.pos.x + this.dim.w / 2 > that.pos.x - that.dim.w / 2 && this.pos.x - this.dim.w / 2 < that.pos.x + that.dim.w / 2) {
+            if (!this.touch.top ||
+                (this.touch.top.npos.y + this.touch.top.dim.h / 2 > that.npos.y + that.dim.h / 2) ||
+                (this.touch.top.npos.y + this.touch.top.dim.h / 2 === that.npos.y + that.dim.h / 2 &&
+                    Math.abs(this.touch.top.npos.x - this.npos.x) > Math.abs(that.npos.x - this.npos.x))) {
                 this.touch.top = that;
             }
-            y = true;
         }
-        if (y) return;
-        if (this.vel.x >= that.nvel.x && this.pos.x < that.box.left && that.box.left > this.box.left && that.box.left <= this.box.right) {
-            if (!this.touch.right || (this.touch.right.npos.x - this.touch.right.dim.h / 2 > that.npos.x - that.dim.w / 2)) {
+        if (this.pos.x < that.box.left && that.box.left > this.box.left && that.box.left <= this.box.right && this.nvel.x >= that.nvel.x &&
+            this.pos.y + this.dim.h / 2 > that.pos.y - that.dim.h / 2 && this.pos.y - this.dim.h / 2 < that.pos.y + that.dim.h / 2) {
+            if (!this.touch.right ||
+                (this.touch.right.npos.x - this.touch.right.dim.h / 2 > that.npos.x - that.dim.w / 2) ||
+                (this.touch.right.npos.x - this.touch.right.dim.h / 2 === that.npos.x - that.dim.w / 2 &&
+                    Math.abs(this.touch.right.npos.y - this.npos.y) > Math.abs(that.npos.y - this.npos.y))) {
                 this.touch.right = that;
             }
         }
-        if (this.vel.x <= that.nvel.x && this.pos.x > that.box.right && that.box.right >= this.box.left && that.box.right < this.box.right) {
-            if (!this.touch.left || (this.touch.left.npos.x + this.touch.left.dim.h / 2 > that.npos.x + that.dim.w / 2)) {
+        if (this.pos.x > that.box.right && that.box.right >= this.box.left && that.box.right < this.box.right && this.nvel.x <= that.nvel.x &&
+            this.pos.y + this.dim.h / 2 > that.pos.y - that.dim.h / 2 && this.pos.y - this.dim.h / 2 < that.pos.y + that.dim.h / 2) {
+            if (!this.touch.left ||
+                (this.touch.left.npos.x + this.touch.left.dim.h / 2 > that.npos.x + that.dim.w / 2) ||
+                (this.touch.left.npos.x + this.touch.left.dim.h / 2 > that.npos.x + that.dim.w / 2 &&
+                    Math.abs(this.touch.left.npos.y - this.npos.y) > Math.abs(that.npos.y - this.npos.y))) {
                 this.touch.left = that;
             }
         }
@@ -88,7 +99,7 @@ class Mover extends Object {
 
         this.ground = this.touch.bottom;
         while (this.ground) {
-            if (!this.ground.touch) break;
+            if (!this.ground.touch || !this.ground.touch.bottom) break;
             this.ground = this.ground.touch.bottom;
         }
 
@@ -99,7 +110,7 @@ class Mover extends Object {
         }
 
         this.vel.x *= this.touch.bottom ? 0.5 : 0.75;
-        this.vel.y *= 0.875;
+        this.vel.y *= 0.9375;
 
         this.vel.y += 0.5;
     }
