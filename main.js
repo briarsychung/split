@@ -90,7 +90,7 @@ function loop() {
 }
 
 function generateLevels() {
-    let players = [new Player(new Sprite('../assets/player/player-blue-')), new Player(new Sprite('../assets/player/player-red-'))];
+    let players = [new Player('../assets/player/player-blue-'), new Player('../assets/player/player-red-')];
 
     GAME.addPlayer(players[0]);
     GAME.addPlayer(players[1]);
@@ -153,8 +153,6 @@ function generateLevels() {
     links.addObject(new Ground({ x: 1176, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
     links.addObject(new Ground({ x: 1176, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
 
-    GAME.addLevel(links);
-
     let belt = new Level();
     belt.setBackground(outside);
 
@@ -185,8 +183,6 @@ function generateLevels() {
     belt.addObject(new Ground({ x: 1176, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
     belt.addObject(new Ground({ x: 1176, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
 
-    GAME.addLevel(belt);
-
     let push = new Level();
     push.setBackground(inside);
 
@@ -215,8 +211,6 @@ function generateLevels() {
     push.addGoal(new Goal({ x: 920, y: 440 }));
     push.addObject(new Ground({ x: 920, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
     push.addObject(new Ground({ x: 920, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
-
-    GAME.addLevel(push);
 
     let telly = new Level();
     telly.setBackground(inside);
@@ -253,8 +247,6 @@ function generateLevels() {
     telly.addObject(new Ground({ x: 984, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
     telly.addObject(new Ground({ x: 984, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
 
-    GAME.addLevel(telly);
-
     let carry = new Level();
     carry.setBackground(inside);
 
@@ -285,8 +277,6 @@ function generateLevels() {
     carry.addObject(new Ground({ x: 984, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
     carry.addObject(new Ground({ x: 984, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
 
-    GAME.addLevel(carry);
-
     let stair = new Level();
     stair.setBackground(outside);
 
@@ -315,8 +305,6 @@ function generateLevels() {
     stair.addGoal(new Goal({ x: 1048, y: 152 }));
     stair.addObject(new Ground({ x: 1016, y: 160 }, { w: 96, h: 16 }, new Sandwich(brick.big, { w: 96, h: 32 }), { x: 0, y: -8 }));
     stair.addObject(new Ground({ x: 1016, y: 152 }, { w: 32, h: 32 }, new Texture(brick.big[1], { w: 32, h: 32 }), { x: 0, y: 0 }));
-
-    GAME.addLevel(stair);
 
     let boss = new Level();
     boss.setBackground(outside);
@@ -356,7 +344,7 @@ function generateLevels() {
     boss.addObject(new Spike({ x: 1016, y: 504 }, { w: 160, h: 32 }, new Texture(spike.big, { w: 160, h: 32 })));
     boss.addObject(new Ground({ x: 1016, y: 536 }, { w: 160, h: 32 }, new Sandwich(brick.big, { w: 160, h: 32 })));
 
-    boss.addObject(new Boss({ x: 1016, y: 364.5 }));
+    boss.addObject(new Boss({ x: 1016, y: 364.5 }, '../assets/wizard/wizard-'));
 
     boss.addGoal(new Goal({ x: 1688, y: 440 }));
     boss.addGoal(new Goal({ x: 1752, y: 440 }));
