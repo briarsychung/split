@@ -18,6 +18,8 @@ class Object {
         this.dead = false;
         this.waiting = false;
         this.fade = 100;
+
+        this.sound = new Audio('../assets/sound/death.wav');
     }
 
     init() {
@@ -57,6 +59,11 @@ class Object {
 
     die(state = true) {
         this.dead = state;
+
+        if (this.dead) {
+            this.sound.currentTime = 0;
+            this.sound.play();
+        }
     }
 
     wait() {

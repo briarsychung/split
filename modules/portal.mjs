@@ -14,6 +14,8 @@ class Portal extends Button {
         this.textures = textures;
         this.destination = range[1];
         this.stage = 0;
+
+        this.sound = new Audio('../assets/sound/portal.wav');
     }
 
     init() {
@@ -29,6 +31,11 @@ class Portal extends Button {
             this.pressed[i].pos.x += this.destination.x - this.pos.x;
             this.pressed[i].pos.y += this.destination.y - this.pos.y;
             this.stage = 15;
+
+            if (i === 0) {
+                this.sound.currentTime = 0;
+                this.sound.play();
+            }
         }
         
         this.texture = this.textures[Math.floor(this.stage / 4)];
