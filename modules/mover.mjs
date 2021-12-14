@@ -10,15 +10,6 @@ class Mover extends Object {
 
     update() {
         this.nvel = { ...this.vel };
-
-        this.ground = this.touch.bottom;
-        while (this.ground) {
-            if (!this.ground.touch || !this.ground.touch.bottom) break;
-            this.ground = this.ground.touch.bottom;
-        }
-
-        if (this.ground) this.nvel.x += this.ground.vel.x;
-
         this.touch = { top: null, bottom: null, left: null, right: null };
 
         super.update();
@@ -100,8 +91,8 @@ class Mover extends Object {
                 if (!obj.touch || !obj.touch[dir]) break;
                 obj = obj.touch[dir];
             }
-            this.cvel[axis] = m === 1 ? Math.min(obj.nvel[axis], this.nvel[axis]) : Math.max(obj.nvel[axis], this.nvel[axis]);
             this.cpos[axis] = obj.npos[axis] + m * (obj.dim[da] / 2 - this.dim[da] / 2 - xt);
+            this.cvel[axis] = m === 1 ? Math.min(obj.nvel[axis], this.nvel[axis]) : Math.max(obj.nvel[axis], this.nvel[axis]);
         }
     }
 
@@ -113,19 +104,19 @@ class Mover extends Object {
 
         super.move();
 
+        this.vel.x *= this.touch.bottom ? 0.5 : 0.75;
+        this.vel.y *= 0.9375;
+        this.vel.y += 0.5;
+    }
+
+    influence() {
         this.ground = this.touch.bottom;
+        if (this.ground) this.vel.x += this.ground.vel.x / 2;
         if (this.ground && this.ground.press) this.ground.press(this);
         while (this.ground) {
             if (!this.ground.touch || !this.ground.touch.bottom) break;
             this.ground = this.ground.touch.bottom;
         }
-
-        if (this.ground) this.vel.x -= this.ground.vel.x;
-
-        this.vel.x *= this.touch.bottom ? 0.5 : 0.75;
-        this.vel.y *= 0.9375;
-
-        this.vel.y += 0.5;
     }
 }
 
