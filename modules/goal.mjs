@@ -9,6 +9,12 @@ class Goal extends Interactive {
         this.player = false;
     }
 
+    init() {
+        this.player = false;
+
+        super.init();
+    }
+
     update() {
         this.player = false;
 
