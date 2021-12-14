@@ -16,6 +16,8 @@ class Game {
         this.animate = 15;
 
         this.debug = false;
+
+        this.sound = new Audio('../assets/sound/portal.wav');
     }
 
     start() {
@@ -56,6 +58,11 @@ class Game {
 
         this.resetLevel();
         this.camera.snap(this.players);
+
+        if (this.level > 0) {
+            this.sound.currentTime = 0;
+            this.sound.play();
+        }
     }
 
     addPlayer(player) {
