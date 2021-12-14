@@ -4,6 +4,10 @@ class Level {
         this.spawns = [];
         this.goals = [];
         this.background = null;
+        this.dialogues = [];
+        this.boss = null;
+        this.combine = false;
+        this.combiner = null;
     }
 
     addObject(object) {
@@ -21,6 +25,24 @@ class Level {
 
     setBackground(background) {
         this.background = background;
+    }
+
+    addDialogue(dialogue) {
+        this.dialogues.push(dialogue);
+    }
+
+    addBoss(boss) {
+        this.boss = boss;
+        this.objects.push(boss);
+    }
+
+    setCombine(combine) {
+        this.combine = combine;
+    }
+
+    addCombiner(combiner) {
+        this.combiner = combiner;
+        this.objects.push(combiner);
     }
 }
 

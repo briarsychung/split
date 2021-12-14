@@ -24,14 +24,18 @@ class Camera {
     }
 
     position(players) {
-        return {
-            pos: {
-                x: (players[0].pos.x + players[1].pos.x) / 2,
-                y: (players[0].pos.y + players[1].pos.y) / 2
-            },
-            zoom: Math.min(375 / Math.abs(players[0].pos.x - players[1].pos.x),
-                375 / Math.abs(players[0].pos.y - players[1].pos.y), this.limit)
-        };
+        if (players.length > 1) {
+            return {
+                pos: {
+                    x: (players[0].pos.x + players[1].pos.x) / 2,
+                    y: (players[0].pos.y + players[1].pos.y) / 2
+                },
+                zoom: Math.min(375 / Math.abs(players[0].pos.x - players[1].pos.x),
+                    375 / Math.abs(players[0].pos.y - players[1].pos.y), this.limit)
+            };
+        } else {
+            return { pos: { ...players[0].pos }, zoom: this.limit };
+        }
     }
 }
 

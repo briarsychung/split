@@ -1,6 +1,6 @@
-import { Button } from './button.mjs';
+import { Interactive } from './interactive.mjs';
 
-class Door extends Button {
+class Door extends Interactive {
     constructor(pos, dim, textures, offset, platform) {
         super(pos, dim, textures[0], offset);
 

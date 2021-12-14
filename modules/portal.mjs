@@ -1,7 +1,7 @@
-import { Button } from './button.mjs';
+import { Interactive } from './interactive.mjs';
 import { Texture } from './texture.mjs';
 
-class Portal extends Button {
+class Portal extends Interactive {
     constructor(range) {
         let textures =
             [new Texture('../assets/interactive/portal-inactive.png', { w: 32, h: 32 }),
