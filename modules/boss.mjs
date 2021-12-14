@@ -18,8 +18,7 @@ class Boss extends Mover {
         this.dir = 1;
         this.state = 'idle';
         this.nstate = 'idle';
-
-
+        this.bye = 0;
         this.boss = true;
     }
 
@@ -45,7 +44,7 @@ class Boss extends Mover {
                 break;
             case 'bye':
                 this.texture = this.data.transform;
-                this.vel.x += 4;
+                this.bye += 0.25;
                 break;
             default:
                 this.texture = this.data.idle;
@@ -57,6 +56,8 @@ class Boss extends Mover {
         this.state = this.nstate;
 
         super.move();
+
+        if (this.nstate === 'bye') this.vel.x += this.bye;
     }
 
     die() {
