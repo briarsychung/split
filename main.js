@@ -3,7 +3,6 @@ import { Canvas } from './modules/canvas.mjs';
 import { Texture } from './modules/texture.mjs';
 import { Sandwich } from './modules/sandwich.mjs';
 import { Player } from './modules/player.mjs';
-import { Sprite } from './modules/sprite.mjs';
 import { Input } from './modules/input.mjs';
 import { Level } from './modules/level.mjs';
 import { Background } from './modules/background.mjs';
@@ -350,6 +349,12 @@ function generateLevels() {
     boss.addGoal(new Goal({ x: 1752, y: 440 }));
     boss.addObject(new Ground({ x: 1720, y: 448 }, { w: 96, h: 16 }, new Sandwich(brick.big, { w: 96, h: 32 }), { x: 0, y: -8 }));
     boss.addObject(new Ground({ x: 1720, y: 440 }, { w: 32, h: 32 }, new Texture(brick.big[1], { w: 32, h: 32 }), { x: 0, y: 0 }));
-    
+
+    /*GAME.addLevel(links);
+    GAME.addLevel(belt);
+    GAME.addLevel(push);
+    GAME.addLevel(telly);
+    GAME.addLevel(carry);
+    GAME.addLevel(stair);*/
     GAME.addLevel(boss);
 }
