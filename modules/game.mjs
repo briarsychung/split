@@ -131,10 +131,13 @@ class Game {
 
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.inputs[0].check();
-        this.inputs[1].check();
-        this.inputs[2].check();
-        this.inputs[3].check();
+        if (!this.combine) {
+            this.inputs[0].check();
+            this.inputs[1].check();
+        } else {
+            this.inputs[2].check();
+            this.inputs[3].check();
+        }
 
         for (let i = 0; i < objects.length; i++) {
             objects[i].update();
