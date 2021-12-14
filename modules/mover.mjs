@@ -17,10 +17,7 @@ class Mover extends Object {
             this.ground = this.ground.touch.bottom;
         }
 
-        if (this.ground) {
-            this.nvel.x += this.ground.vel.x;
-            //this.nvel.y += this.ground.vel.y;
-        }
+        if (this.ground) this.nvel.x += this.ground.vel.x;
 
         this.touch = { top: null, bottom: null, left: null, right: null };
 
@@ -44,7 +41,6 @@ class Mover extends Object {
                 (this.touch.bottom.npos.y - this.touch.bottom.dim.h / 2 > that.npos.y - that.dim.h / 2) ||
                 (this.touch.bottom.npos.y - this.touch.bottom.dim.h / 2 === that.npos.y - that.dim.h / 2 &&
                     Math.abs(this.touch.bottom.npos.x - this.npos.x) > Math.abs(that.npos.x - this.npos.x))) {
-                //this.touch.bottom = that;
                 collide[1] = true;
             }
         }
@@ -54,7 +50,6 @@ class Mover extends Object {
                 (this.touch.top.npos.y + this.touch.top.dim.h / 2 > that.npos.y + that.dim.h / 2) ||
                 (this.touch.top.npos.y + this.touch.top.dim.h / 2 === that.npos.y + that.dim.h / 2 &&
                     Math.abs(this.touch.top.npos.x - this.npos.x) > Math.abs(that.npos.x - this.npos.x))) {
-                //this.touch.top = that;
                 collide[0] = true;
             }
         }
@@ -65,7 +60,6 @@ class Mover extends Object {
                 (this.touch.right.npos.x - this.touch.right.dim.h / 2 > that.npos.x - that.dim.w / 2) ||
                 (this.touch.right.npos.x - this.touch.right.dim.h / 2 === that.npos.x - that.dim.w / 2 &&
                     Math.abs(this.touch.right.npos.y - this.npos.y) > Math.abs(that.npos.y - this.npos.y))) {
-                //this.touch.right = that;
                 collide[3] = true;
             }
         }
@@ -75,7 +69,6 @@ class Mover extends Object {
                 (this.touch.left.npos.x + this.touch.left.dim.h / 2 > that.npos.x + that.dim.w / 2) ||
                 (this.touch.left.npos.x + this.touch.left.dim.h / 2 > that.npos.x + that.dim.w / 2 &&
                     Math.abs(this.touch.left.npos.y - this.npos.y) > Math.abs(that.npos.y - this.npos.y))) {
-                //this.touch.left = that;
                 collide[2] = true;
             }
         }
@@ -127,10 +120,7 @@ class Mover extends Object {
             this.ground = this.ground.touch.bottom;
         }
 
-        if (this.ground) {
-            this.vel.x -= this.ground.vel.x;
-            //this.nvel.y += this.ground.vel.y;
-        }
+        if (this.ground) this.vel.x -= this.ground.vel.x;
 
         this.vel.x *= this.touch.bottom ? 0.5 : 0.75;
         this.vel.y *= 0.9375;
