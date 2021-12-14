@@ -17,6 +17,7 @@ import { Link } from './modules/link.mjs';
 import { Portal } from './modules/portal.mjs';
 import { Box } from './modules/box.mjs';
 import { Boss } from './modules/boss.mjs';
+import { Combiner } from './modules/combiner.mjs';
 import { Dialogue } from './modules/dialogue.mjs';
 import { Goal } from './modules/goal.mjs';
 
@@ -125,6 +126,37 @@ function generateLevels() {
         big: ['../assets/ground/brick-big-side.png', '../assets/ground/brick-big-middle.png'],
         small: ['../assets/ground/brick-small-side.png', '../assets/ground/brick-small-middle.png']
     };
+
+    let intro = new Level();
+    intro.setBackground(outside);
+    intro.setCombine(true);
+
+    intro.addSpawn(new Spawn({ x: 400, y: 400 }, players[2]));
+    intro.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+
+    let introB = new Boss({ x: 1016, y: 360 });
+    intro.addBoss(introB);
+
+    let introD = new Dialogue(introB,
+        [new Texture('../assets/dialogue/hahaha.png', { w: 64, h: 32 }),
+        new Texture('../assets/dialogue/catch-me.png', { w: 64, h: 32 })], ['hostile', 'bye']);
+    intro.addDialogue(introD);
+    
+    intro.addObject(new Ground({ x: 632, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+    intro.addObject(new Trigger({ x: 824, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 }), { x: 0, y: 0 }, introD));
+    intro.addObject(new Ground({ x: 1016, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+
+    intro.addObject(new Ground({ x: 1208, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+    intro.addObject(new Ground({ x: 1176, y: 376 }, { w: 32, h: 32 }, new Sandwich(brick.small, { w: 32, h: 32 })));
+    intro.addObject(new Ground({ x: 1240, y: 312 }, { w: 32, h: 32 }, new Sandwich(brick.small, { w: 32, h: 32 })));
+
+    intro.addObject(new Ground({ x: 1400, y: 280 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+    intro.addObject(new Ground({ x: 1400, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
+
+    intro.addGoal(new Goal({ x: 1496, y: 280 }));
+    intro.addGoal(new Goal({ x: 1496, y: 440 }));
+    intro.addObject(new Ground({ x: 1496, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
+    intro.addObject(new Ground({ x: 1496, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
 
     let links = new Level();
     links.setBackground(outside);
@@ -318,8 +350,11 @@ function generateLevels() {
     boss.addSpawn(new Spawn({ x: 440, y: 400 }, players[1]));
     boss.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
 
-    let bossB = new Boss({ x: 1016, y: 360 }, '../assets/wizard/wizard-');
+    let bossB = new Boss({ x: 1016, y: 360 });
     boss.addBoss(bossB);
+
+    let bossC = new Combiner({ x: 1016, y: 408 });
+    boss.addCombiner(bossC);
 
     let bossD = new Dialogue(bossB,
         [new Texture('../assets/dialogue/you-found-me.png', { w: 64, h: 32 }),
@@ -359,43 +394,12 @@ function generateLevels() {
     boss.addGoal(new Goal({ x: 1496, y: 440 }));
     boss.addObject(new Ground({ x: 1496, y: 440 }, { w: 32, h: 32 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: 0 }));
 
-    let intro = new Level();
-    intro.setBackground(outside);
-    intro.setCombine(true);
-
-    intro.addSpawn(new Spawn({ x: 400, y: 400 }, players[2]));
-    intro.addObject(new Ground({ x: 440, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
-
-    let introB = new Boss({ x: 1016, y: 360 }, '../assets/wizard/wizard-');
-    intro.addBoss(introB);
-
-    let introD = new Dialogue(introB,
-        [new Texture('../assets/dialogue/hahaha.png', { w: 64, h: 32 }),
-        new Texture('../assets/dialogue/catch-me.png', { w: 64, h: 32 })], ['hostile', 'bye']);
-    intro.addDialogue(introD);
-    
-    intro.addObject(new Ground({ x: 632, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
-    intro.addObject(new Trigger({ x: 824, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 }), { x: 0, y: 0 }, introD));
-    intro.addObject(new Ground({ x: 1016, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
-
-    intro.addObject(new Ground({ x: 1208, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
-    intro.addObject(new Ground({ x: 1176, y: 376 }, { w: 32, h: 32 }, new Sandwich(brick.small, { w: 32, h: 32 })));
-    intro.addObject(new Ground({ x: 1240, y: 312 }, { w: 32, h: 32 }, new Sandwich(brick.small, { w: 32, h: 32 })));
-
-    intro.addObject(new Ground({ x: 1400, y: 280 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
-    intro.addObject(new Ground({ x: 1400, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
-
-    intro.addGoal(new Goal({ x: 1496, y: 280 }));
-    intro.addGoal(new Goal({ x: 1496, y: 440 }));
-    intro.addObject(new Ground({ x: 1496, y: 288 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
-    intro.addObject(new Ground({ x: 1496, y: 448 }, { w: 32, h: 16 }, new Sandwich(brick.small, { w: 32, h: 32 }), { x: 0, y: -8 }));
-
     GAME.addLevel(intro);
-    /*GAME.addLevel(links);
+    GAME.addLevel(links);
     GAME.addLevel(belt);
     GAME.addLevel(push);
     GAME.addLevel(telly);
     GAME.addLevel(carry);
-    GAME.addLevel(stair);*/
+    GAME.addLevel(stair);
     GAME.addLevel(boss);
 }

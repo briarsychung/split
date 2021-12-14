@@ -3,7 +3,8 @@ import { Texture } from "./texture.mjs";
 import { Animated } from "./animated.mjs";
 
 class Boss extends Mover {
-    constructor(pos, url) {
+    constructor(pos) {
+        let url = '../assets/wizard/wizard-';
         let data = {
             idle: new Animated([url + 'idle1.png', url + 'idle2.png'], { w: 94, h: 119 }),
             attack: new Animated([url + 'attack1.png', url + 'attack2.png'], { w: 94, h: 119 }),

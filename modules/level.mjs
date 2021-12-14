@@ -7,6 +7,7 @@ class Level {
         this.dialogues = [];
         this.boss = null;
         this.combine = false;
+        this.combiner = null;
     }
 
     addObject(object) {
@@ -37,6 +38,11 @@ class Level {
 
     setCombine(combine) {
         this.combine = combine;
+    }
+
+    addCombiner(combiner) {
+        this.combiner = combiner;
+        this.objects.push(combiner);
     }
 }
 

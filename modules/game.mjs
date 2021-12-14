@@ -113,6 +113,12 @@ class Game {
                 y: this.player.pos.y
             };
             this.players[1].vel = { x: 2, y: -16 };
+        } else if (level.boss && level.boss.fade === 49 && !this.combine) {
+            level.combiner.die(false);
+        } else if (level.combiner && level.combiner.player && !this.combine) {
+            this.combine = true;
+            this.player.pos = { x: 1016, y: 400 };
+            this.player.vel = { x: 0, y: 0 };
         }
 
         let objects = level.objects.concat(!this.combine ? this.players : [this.player]).filter(o => !o.dead);
