@@ -4,6 +4,7 @@ class Level {
         this.spawns = [];
         this.goals = [];
         this.background = null;
+        this.dialogues = [];
     }
 
     addObject(object) {
@@ -21,6 +22,10 @@ class Level {
 
     setBackground(background) {
         this.background = background;
+    }
+
+    addDialogue(dialogue) {
+        this.dialogues.push(dialogue);
     }
 }
 

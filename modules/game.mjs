@@ -170,6 +170,7 @@ class Game {
         let level = this.levels[this.level];
         let objects = level.objects.concat(this.players).filter(o => !o.dead);
         let ghosts = level.objects.concat(this.players).filter(o => o.dead);
+        let dialogues = level.dialogues.filter(d => d.active);
 
         this.background(level);
 
@@ -179,6 +180,11 @@ class Game {
 
         for (let i = 0; i < ghosts.length; i++) {
             this.draw(ghosts[i], ghosts[i].dying());
+        }
+
+        for (let i = 0; i < dialogues.length; i++) {
+            dialogues[i].draw();
+            this.draw(dialogues[i]);
         }
 
         if (screen) {
