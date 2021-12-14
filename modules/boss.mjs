@@ -58,6 +58,7 @@ class Boss extends Mover {
         super.move();
 
         if (this.nstate === 'bye') this.vel.x += this.bye;
+        if (this.nstate === 'bye') this.vel.y -= this.bye;
     }
 
     die() {

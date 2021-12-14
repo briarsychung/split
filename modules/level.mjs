@@ -5,6 +5,8 @@ class Level {
         this.goals = [];
         this.background = null;
         this.dialogues = [];
+        this.boss = null;
+        this.combine = false;
     }
 
     addObject(object) {
@@ -26,6 +28,15 @@ class Level {
 
     addDialogue(dialogue) {
         this.dialogues.push(dialogue);
+    }
+
+    addBoss(boss) {
+        this.boss = boss;
+        this.objects.push(boss);
+    }
+
+    setCombine(combine) {
+        this.combine = combine;
     }
 }
 
