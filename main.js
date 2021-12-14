@@ -319,7 +319,7 @@ function generateLevels() {
 
     let bossD = new Dialogue(bossB,
         [new Texture('../assets/dialogue/you-found-me.png', { w: 64, h: 32 }),
-        new Texture('../assets/dialogue/this-ends-here.png', { w: 64, h: 32 })]);
+        new Texture('../assets/dialogue/this-ends-here.png', { w: 64, h: 32 })], ['hostile', 'attack']);
     boss.addDialogue(bossD);
 
     boss.addObject(new Ground({ x: 632, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));

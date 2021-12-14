@@ -1,7 +1,8 @@
 class Dialogue {
-    constructor(boss, lines) {
+    constructor(boss, lines, states) {
         this.boss = boss;
         this.lines = lines;
+        this.states = states;
 
         this.texture = null;
         
@@ -19,6 +20,7 @@ class Dialogue {
     start() {
         this.frame = 0;
         this.active = true;
+        this.boss.newState(this.states[0]);
     }
 
     draw() {
@@ -32,6 +34,7 @@ class Dialogue {
         this.frame++;
         if (this.frame === this.lines.length * 120) {
             this.active = false;
+            this.boss.newState(this.states[1]);
         }
     }
 }

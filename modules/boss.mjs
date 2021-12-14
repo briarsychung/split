@@ -17,6 +17,8 @@ class Boss extends Mover {
         this.data = data;
         this.dir = 1;
         this.state = 'idle';
+        this.nstate = 'idle';
+
 
         this.boss = true;
     }
@@ -24,22 +26,35 @@ class Boss extends Mover {
     init() {
         this.dir = 1;
         this.state = 'idle';
+        this.nstate = 'idle';
 
         super.init();
     }
 
-    move() {
-        let nstate = 'idle';
+    newState(state) {
+        this.nstate = state;
+    }
 
-        if (false) {
-        } else {
-            this.texture = this.data.idle;
+    move() {
+        switch (this.nstate) {
+            case 'attack':
+                this.texture = this.data.attack;
+                break;
+            case 'hostile':
+                this.texture = this.data.hostile;
+                break;
+            case 'bye':
+                this.texture = this.data.transform;
+                this.vel.x += 4;
+                break;
+            default:
+                this.texture = this.data.idle;
         }
 
-        if (this.state !== nstate && this.texture.start) {
+        if (this.state !== this.nstate && this.texture.start) {
             this.texture.start();
         }
-        this.state = nstate;
+        this.state = this.nstate;
 
         super.move();
     }
