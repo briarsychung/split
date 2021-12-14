@@ -156,6 +156,10 @@ class Game {
         }
 
         for (let i = 0; i < objects.length; i++) {
+            if (objects[i].influence) objects[i].influence();
+        }
+
+        for (let i = 0; i < objects.length; i++) {
             if (objects[i].trigger) objects[i].trigger();
         }
 
@@ -197,7 +201,7 @@ class Game {
                 `    vel: ${f(this.players[0].vel.x)}, ${f(this.players[0].vel.y)}`,
                 `    touch`,
                 `        top: ${this.players[0].touch.top ? 'true' : 'false'}`,
-                `        bottom: ${this.players[0].touch.bottom ? 'true' : 'false'}`,
+                `        bottom: ${this.players[0].touch.bottom  ? this.players[0].touch.bottom.constructor.name : 'false'}`,
                 `        left: ${this.players[0].touch.left ? 'true' : 'false'}`,
                 `        right: ${this.players[0].touch.right ? 'true' : 'false'}`,
                 `    state: ${this.players[0].state}`,
