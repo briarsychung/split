@@ -8,6 +8,8 @@ class Link extends Interactive {
 
         this.object.wait();
         this.played = false;
+
+        this.sound = new Audio('../assets/sound/button.wav');
     }
 
     init() {
@@ -20,6 +22,9 @@ class Link extends Interactive {
         if (this.pressed.length && !this.played) {
             this.object.die(false);
             this.played = true;
+
+            this.sound.currentTime = 0;
+            this.sound.play();
         }
 
         super.trigger();

@@ -1,7 +1,7 @@
-import { Button } from './button.mjs';
+import { Interactive } from './interactive.mjs';
 import { Texture } from './texture.mjs';
 
-class Portal extends Button {
+class Portal extends Interactive {
     constructor(range) {
         let textures =
             [new Texture('../assets/interactive/portal-inactive.png', { w: 32, h: 32 }),
@@ -14,6 +14,8 @@ class Portal extends Button {
         this.textures = textures;
         this.destination = range[1];
         this.stage = 0;
+
+        this.sound = new Audio('../assets/sound/portal.wav');
     }
 
     init() {
@@ -29,8 +31,13 @@ class Portal extends Button {
             this.pressed[i].pos.x += this.destination.x - this.pos.x;
             this.pressed[i].pos.y += this.destination.y - this.pos.y;
             this.stage = 15;
+
+            if (i === 0) {
+                this.sound.currentTime = 0;
+                this.sound.play();
+            }
         }
-        
+
         this.texture = this.textures[Math.floor(this.stage / 4)];
 
         super.trigger();

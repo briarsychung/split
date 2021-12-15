@@ -10,24 +10,14 @@ class Mover extends Object {
 
     update() {
         this.nvel = { ...this.vel };
-
-        this.ground = this.touch.bottom;
-        while (this.ground) {
-            if (!this.ground.touch || !this.ground.touch.bottom) break;
-            this.ground = this.ground.touch.bottom;
-        }
-
-        if (this.ground) {
-            this.nvel.x += this.ground.vel.x;
-            //this.nvel.y += this.ground.vel.y;
-        }
-
         this.touch = { top: null, bottom: null, left: null, right: null };
 
         super.update();
     }
 
     detectObject(that) {
+        let collide = [false, false, false, false];
+
         if (!(this.box.top <= that.box.bottom && this.box.bottom >= that.box.top &&
             this.box.left <= that.box.right && this.box.right >= that.box.left)) return;
 
@@ -42,7 +32,7 @@ class Mover extends Object {
                 (this.touch.bottom.npos.y - this.touch.bottom.dim.h / 2 > that.npos.y - that.dim.h / 2) ||
                 (this.touch.bottom.npos.y - this.touch.bottom.dim.h / 2 === that.npos.y - that.dim.h / 2 &&
                     Math.abs(this.touch.bottom.npos.x - this.npos.x) > Math.abs(that.npos.x - this.npos.x))) {
-                this.touch.bottom = that;
+                collide[1] = true;
             }
         }
         if (this.pos.y > that.box.bottom && that.box.bottom >= this.box.top && that.box.bottom < this.box.bottom && this.nvel.y <= that.nvel.y &&
@@ -51,16 +41,17 @@ class Mover extends Object {
                 (this.touch.top.npos.y + this.touch.top.dim.h / 2 > that.npos.y + that.dim.h / 2) ||
                 (this.touch.top.npos.y + this.touch.top.dim.h / 2 === that.npos.y + that.dim.h / 2 &&
                     Math.abs(this.touch.top.npos.x - this.npos.x) > Math.abs(that.npos.x - this.npos.x))) {
-                this.touch.top = that;
+                collide[0] = true;
             }
         }
+
         if (this.pos.x < that.box.left && that.box.left > this.box.left && that.box.left <= this.box.right && this.nvel.x >= that.nvel.x &&
             this.pos.y + this.dim.h / 2 > that.pos.y - that.dim.h / 2 && this.pos.y - this.dim.h / 2 < that.pos.y + that.dim.h / 2) {
             if (!this.touch.right ||
                 (this.touch.right.npos.x - this.touch.right.dim.h / 2 > that.npos.x - that.dim.w / 2) ||
                 (this.touch.right.npos.x - this.touch.right.dim.h / 2 === that.npos.x - that.dim.w / 2 &&
                     Math.abs(this.touch.right.npos.y - this.npos.y) > Math.abs(that.npos.y - this.npos.y))) {
-                this.touch.right = that;
+                collide[3] = true;
             }
         }
         if (this.pos.x > that.box.right && that.box.right >= this.box.left && that.box.right < this.box.right && this.nvel.x <= that.nvel.x &&
@@ -69,9 +60,24 @@ class Mover extends Object {
                 (this.touch.left.npos.x + this.touch.left.dim.h / 2 > that.npos.x + that.dim.w / 2) ||
                 (this.touch.left.npos.x + this.touch.left.dim.h / 2 > that.npos.x + that.dim.w / 2 &&
                     Math.abs(this.touch.left.npos.y - this.npos.y) > Math.abs(that.npos.y - this.npos.y))) {
-                this.touch.left = that;
+                collide[2] = true;
             }
         }
+
+        if ((collide[0] || collide[1]) && (collide[2] || collide[3])) {
+            if (this.pos.y + this.dim.h / 2 > that.pos.y - that.dim.h / 2 || this.pos.y - this.dim.h / 2 < that.pos.y + that.dim.h / 2) {
+                collide[0] = false;
+                collide[1] = false;
+            } else {
+                collide[2] = false;
+                collide[3] = false;
+            }
+        }
+
+        if (collide[0]) this.touch.top = that;
+        if (collide[1]) this.touch.bottom = that;
+        if (collide[2]) this.touch.left = that;
+        if (collide[3]) this.touch.right = that;
     }
 
     correct(dir, axis, m) {
@@ -85,8 +91,8 @@ class Mover extends Object {
                 if (!obj.touch || !obj.touch[dir]) break;
                 obj = obj.touch[dir];
             }
-            this.cvel[axis] = m === 1 ? Math.min(obj.nvel[axis], this.nvel[axis]) : Math.max(obj.nvel[axis], this.nvel[axis]);
             this.cpos[axis] = obj.npos[axis] + m * (obj.dim[da] / 2 - this.dim[da] / 2 - xt);
+            this.cvel[axis] = m === 1 ? Math.min(obj.nvel[axis], this.nvel[axis]) : Math.max(obj.nvel[axis], this.nvel[axis]);
         }
     }
 
@@ -98,22 +104,19 @@ class Mover extends Object {
 
         super.move();
 
+        this.vel.x *= this.touch.bottom ? 0.5 : 0.75;
+        this.vel.y *= 0.9375;
+        this.vel.y += 0.5;
+    }
+
+    influence() {
         this.ground = this.touch.bottom;
+        if (this.ground) this.vel.x += this.ground.vel.x / 2;
+        if (this.ground && this.ground.press) this.ground.press(this);
         while (this.ground) {
             if (!this.ground.touch || !this.ground.touch.bottom) break;
             this.ground = this.ground.touch.bottom;
         }
-
-        if (this.ground) {
-            this.vel.x -= this.ground.vel.x;
-            //this.nvel.y += this.ground.vel.y;
-            if (this.ground.press) this.ground.press(this);
-        }
-
-        this.vel.x *= this.touch.bottom ? 0.5 : 0.75;
-        this.vel.y *= 0.9375;
-
-        this.vel.y += 0.5;
     }
 }
 
