@@ -1,6 +1,6 @@
-import { Mover } from "./mover.mjs";
-import { Texture } from "./texture.mjs";
-import { Animated } from "./animated.mjs";
+import { Mover } from './mover.mjs';
+import { Texture } from './texture.mjs';
+import { Animated } from './animated.mjs';
 
 class Boss extends Mover {
     constructor(pos) {

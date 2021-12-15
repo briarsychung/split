@@ -1,6 +1,6 @@
-import { Interactive } from "./interactive.mjs";
-import { Texture } from "./texture.mjs";
-import { Player } from "./player.mjs";
+import { Interactive } from './interactive.mjs';
+import { Texture } from './texture.mjs';
+import { Player } from './player.mjs';
 
 class Combiner extends Interactive {
     constructor(pos) {
