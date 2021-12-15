@@ -1,10 +1,10 @@
-import { Interactive } from "./interactive.mjs";
-import { Texture } from "./texture.mjs";
-import { Player } from "./player.mjs";
+import { Interactive } from './interactive.mjs';
+import { Texture } from './texture.mjs';
+import { Player } from './player.mjs';
 
 class Combiner extends Interactive {
     constructor(pos) {
-        super(pos, { w: 32, h: 32 }, new Texture('../assets/effects/magic-big.png', { w: 32, h: 32 }), { x: 0, y: 0 });
+        super(pos, { w: 32, h: 32 }, new Texture('./assets/effects/magic-big.png', { w: 32, h: 32 }), { x: 0, y: 0 });
 
         this.player = false;
 

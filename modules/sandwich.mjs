@@ -1,4 +1,4 @@
-import { Texture } from "./texture.mjs";
+import { Texture } from './texture.mjs';
 
 class Sandwich extends Texture {
     constructor(urls, dim) {

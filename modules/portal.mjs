@@ -4,10 +4,10 @@ import { Texture } from './texture.mjs';
 class Portal extends Interactive {
     constructor(range) {
         let textures =
-            [new Texture('../assets/interactive/portal-inactive.png', { w: 32, h: 32 }),
-            new Texture('../assets/interactive/portal-active1.png', { w: 32, h: 32 }),
-            new Texture('../assets/interactive/portal-active2.png', { w: 32, h: 32 }),
-            new Texture('../assets/interactive/portal-active1.png', { w: 32, h: 32 })];
+            [new Texture('./assets/interactive/portal-inactive.png', { w: 32, h: 32 }),
+            new Texture('./assets/interactive/portal-active1.png', { w: 32, h: 32 }),
+            new Texture('./assets/interactive/portal-active2.png', { w: 32, h: 32 }),
+            new Texture('./assets/interactive/portal-active1.png', { w: 32, h: 32 })];
 
         super(range[0], { w: 32, h: 32 }, textures[0], { x: 0, y: -32 });
 
@@ -15,7 +15,7 @@ class Portal extends Interactive {
         this.destination = range[1];
         this.stage = 0;
 
-        this.sound = new Audio('../assets/sound/portal.wav');
+        this.sound = new Audio('./assets/sound/portal.wav');
     }
 
     init() {
