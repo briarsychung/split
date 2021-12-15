@@ -85,7 +85,8 @@ function loop() {
             return ((t + '').length === 1 ? '0' : '') + t;
         };
         document.getElementById('time').innerHTML = 'Total Time: ' +
-            f(Math.floor(Math.floor(time / 1000) / 60)) + ':' + f((Math.floor(time / 1000) % 60)) + '.' + f(Math.floor((time % 1000) / 100));
+            f(Math.floor(Math.floor(time / 1000) / 60)) + ':' + f((Math.floor(time / 1000) % 60)) + '.' + f(Math.floor((time % 1000) / 100)) +
+            '<br>Deaths: ' + GAME.deaths;
     } else {
         setTimeout(() => { window.requestAnimationFrame(loop) }, delay);
     }

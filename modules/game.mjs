@@ -18,6 +18,8 @@ class Game {
         this.debug = false;
         this.combine = true;
 
+        this.deaths = 0;
+
         this.sound = new Audio('../assets/sound/level.ogg');
     }
 
@@ -169,12 +171,14 @@ class Game {
 
         if (!this.combine) {
             if (this.players[0].fade === 0 || this.players[1].fade === 0) {
+                this.deaths++;
                 this.resetLevel();
             } else if (level.goals[0].player && level.goals[1].player) {
                 this.queueLevel();
             }
         } else {
             if (this.player.fade === 0) {
+                this.deaths++;
                 this.resetLevel();
             } else if (level.goals[0].player) {
                 this.queueLevel();
@@ -189,7 +193,7 @@ class Game {
         }
 
         let debugInfo = [
-            `SpLit Version 0.5`,
+            `SpLit Version 0.6`,
             ``,
             `Canvas Dimensions: ${f(this.canvas.width)}, ${f(this.canvas.height)}`,
             `Level: ${this.level + 1} / ${this.levels.length}`
@@ -201,7 +205,7 @@ class Game {
                 `    vel: ${f(this.players[0].vel.x)}, ${f(this.players[0].vel.y)}`,
                 `    touch`,
                 `        top: ${this.players[0].touch.top ? 'true' : 'false'}`,
-                `        bottom: ${this.players[0].touch.bottom  ? this.players[0].touch.bottom.constructor.name : 'false'}`,
+                `        bottom: ${this.players[0].touch.bottom ? 'true' : 'false'}`,
                 `        left: ${this.players[0].touch.left ? 'true' : 'false'}`,
                 `        right: ${this.players[0].touch.right ? 'true' : 'false'}`,
                 `    state: ${this.players[0].state}`,
@@ -214,6 +218,18 @@ class Game {
                 `        left: ${this.players[1].touch.left ? 'true' : 'false'}`,
                 `        right: ${this.players[1].touch.right ? 'true' : 'false'}`,
                 `    state: ${this.players[1].state}`
+            ]);
+        } else {
+            debugInfo = debugInfo.concat([
+                `Player`,
+                `    pos: ${f(this.player.pos.x)}, ${f(this.player.pos.y)}`,
+                `    vel: ${f(this.player.vel.x)}, ${f(this.player.vel.y)}`,
+                `    touch`,
+                `        top: ${this.player.touch.top ? 'true' : 'false'}`,
+                `        bottom: ${this.player.touch.bottom ? 'true' : 'false'}`,
+                `        left: ${this.player.touch.left ? 'true' : 'false'}`,
+                `        right: ${this.player.touch.right ? 'true' : 'false'}`,
+                `    state: ${this.player.state}`
             ]);
         }
         debugInfo = debugInfo.concat([
