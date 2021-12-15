@@ -105,8 +105,8 @@ function generateLevels() {
     GAME.addInput(new Input(players[2]));
     GAME.addInput(new Input(players[2], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
 
-    let outside = new Background(new Texture('../assets/background/outside.png', { w: 1024, h: 1024 }), ['#89c9e4', '#477553']);
-    let inside = new Background(new Texture('../assets/background/inside.png', { w: 1024, h: 1024 }), ['#89c9e4', '#252b2d']);
+    let outside = new Background(new Texture('./assets/background/outside.png', { w: 1024, h: 1024 }), ['#89c9e4', '#477553']);
+    let inside = new Background(new Texture('./assets/background/inside.png', { w: 1024, h: 1024 }), ['#252b2d', '#252b2d']);
 
     let buttonTextures = {
         up: new Texture('../assets/interactive/button-up.png', { w: 16, h: 6 }),
