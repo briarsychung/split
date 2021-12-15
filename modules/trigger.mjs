@@ -5,7 +5,7 @@ class Trigger extends Interactive {
         super(pos, dim, texture, offset);
 
         this.dialogue = dialogue;
-        
+
         this.played = false;
     }
 

@@ -85,7 +85,8 @@ function loop() {
             return ((t + '').length === 1 ? '0' : '') + t;
         };
         document.getElementById('time').innerHTML = 'Total Time: ' +
-            f(Math.floor(Math.floor(time / 1000) / 60)) + ':' + f((Math.floor(time / 1000) % 60)) + '.' + f(Math.floor((time % 1000) / 100));
+            f(Math.floor(Math.floor(time / 1000) / 60)) + ':' + f((Math.floor(time / 1000) % 60)) + '.' + f(Math.floor((time % 1000) / 100)) +
+            '<br>Deaths: ' + GAME.deaths;
     } else {
         setTimeout(() => { window.requestAnimationFrame(loop) }, delay);
     }
@@ -141,7 +142,7 @@ function generateLevels() {
         [new Texture('../assets/dialogue/hahaha.png', { w: 64, h: 32 }),
         new Texture('../assets/dialogue/catch-me.png', { w: 64, h: 32 })], ['hostile', 'bye']);
     intro.addDialogue(introD);
-    
+
     intro.addObject(new Ground({ x: 632, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
     intro.addObject(new Trigger({ x: 824, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 }), { x: 0, y: 0 }, introD));
     intro.addObject(new Ground({ x: 1016, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
