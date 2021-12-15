@@ -1,5 +1,4 @@
 import { Camera } from './camera.mjs';
-import { Player } from './player.mjs';
 
 class Game {
     constructor(canvas) {
@@ -349,4 +348,4 @@ class Game {
     }
 }
 
-export { Game, Camera, Player };
+export { Game };
