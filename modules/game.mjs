@@ -66,11 +66,10 @@ class Game {
 
         if (this.level === this.levels.length) {
             this.stage = 'win';
-            return;
+        } else {
+            this.resetLevel();
+            this.camera.snap(!this.combine ? this.players : [this.player]);
         }
-
-        this.resetLevel();
-        this.camera.snap(this.players);
 
         if (this.level > 0) {
             this.sound.currentTime = 0;

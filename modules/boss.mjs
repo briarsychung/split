@@ -27,6 +27,7 @@ class Boss extends Mover {
         this.dir = 1;
         this.state = 'idle';
         this.nstate = 'idle';
+        this.bye = 0;
 
         super.init();
     }
