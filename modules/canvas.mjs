@@ -7,7 +7,7 @@ class Canvas {
         this.height = 0;
 
         let resize = () => {
-            const DPR = window.devicePixelRatio;
+            let dpr = window.devicePixelRatio;
 
             let max = {
                 w: window.innerWidth - margin * 2,
@@ -24,11 +24,11 @@ class Canvas {
 
             this.element.style.width = this.width + 'px';
             this.element.style.height = this.height + 'px';
-            this.element.width = Math.floor(this.width * DPR);
-            this.element.height = Math.floor(this.height * DPR);
+            this.element.width = Math.floor(this.width * dpr);
+            this.element.height = Math.floor(this.height * dpr);
 
             this.element.getContext('2d').imageSmoothingEnabled = false;
-            this.element.getContext('2d').scale(DPR, DPR);
+            this.element.getContext('2d').scale(dpr, dpr);
         };
 
         window.addEventListener('resize', resize);
