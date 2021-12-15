@@ -52,9 +52,7 @@ class Boss extends Mover {
                 this.texture = this.data.idle;
         }
 
-        if (this.state !== this.nstate && this.texture.start) {
-            this.texture.start();
-        }
+        if (this.state !== this.nstate && this.texture.start) this.texture.start();
         this.state = this.nstate;
 
         super.move();

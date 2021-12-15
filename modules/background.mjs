@@ -1,5 +1,5 @@
 class Background {
-    constructor (texture, colors) {
+    constructor(texture, colors) {
         this.texture = texture;
         this.colors = colors;
     }

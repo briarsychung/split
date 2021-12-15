@@ -11,26 +11,22 @@ class Input {
         this.events[keys.left] = {
             down: false, event: () => {
                 this.player.vel.x += -1;
-                
-                if (this.player.touch.bottom) {
-                    this.soundWalk.play();
-                }
+
+                if (this.player.touch.bottom) this.soundWalk.play();
             }
         };
         this.events[keys.right] = {
             down: false, event: () => {
                 this.player.vel.x += 1;
-                
-                if (this.player.touch.bottom) {
-                    this.soundWalk.play();
-                }
+
+                if (this.player.touch.bottom) this.soundWalk.play();
             }
         };
         this.events[keys.up] = {
             down: false, event: () => {
                 if (this.player.touch.bottom) this.player.vel.y = -12;
-                
-                if (this.player.touch.bottom)  {
+
+                if (this.player.touch.bottom) {
                     this.sound.currentTime = 0;
                     this.sound.play();
                 }
