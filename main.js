@@ -21,7 +21,6 @@ import { Combiner } from './modules/combiner.mjs';
 import { Dialogue } from './modules/dialogue.mjs';
 import { Goal } from './modules/goal.mjs';
 
-let start;
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
 generateLevels();
 
@@ -30,7 +29,6 @@ document.getElementById('start').addEventListener('click', () => {
     document.getElementById('menu').style.opacity = 0;
     document.getElementById('game').style.visibility = 'visible';
     document.getElementById('game').style.opacity = 1;
-    start = Date.now();
     GAME.start();
     loop();
 });
@@ -81,6 +79,7 @@ function loop() {
         document.getElementById('end').style.visibility = 'visible';
         document.getElementById('end').style.opacity = 1;
         let time = Date.now() - start;
+        let time = Date.now() - GAME.time;
         let f = t => {
             return ((t + '').length === 1 ? '0' : '') + t;
         };

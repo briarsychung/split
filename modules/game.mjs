@@ -16,8 +16,8 @@ class Game {
         this.animate = 15;
 
         this.debug = false;
-        this.combine = true;
 
+        this.time = Date.now();
         this.deaths = 0;
 
         this.sound = new Audio('./assets/sound/level.ogg');
@@ -26,6 +26,12 @@ class Game {
     start() {
         this.stage = 'game';
         this.level = -1;
+        
+        this.debug = false;
+        
+        this.time = Date.now();
+        this.deaths = 0;
+
         this.nextLevel();
     }
 
