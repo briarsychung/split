@@ -5,8 +5,8 @@ class Input {
 
         this.events = {};
 
-        this.sound = new Audio('../assets/sound/jump.wav');
-        this.soundWalk = new Audio('../assets/sound/walk.wav');
+        this.sound = new Audio('./assets/sound/jump.wav');
+        this.soundWalk = new Audio('./assets/sound/walk.wav');
 
         this.events[keys.left] = {
             down: false, event: () => {

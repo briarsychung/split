@@ -7,7 +7,7 @@ class Door extends Interactive {
         this.textures = textures;
         this.platform = platform;
 
-        this.sound = new Audio('../assets/sound/button.wav');
+        this.sound = new Audio('./assets/sound/button.wav');
         this.ps = false;
     }
 

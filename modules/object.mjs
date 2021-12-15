@@ -19,7 +19,7 @@ class Object {
         this.waiting = false;
         this.fade = 50;
 
-        this.sound = new Audio('../assets/sound/death.wav');
+        this.sound = new Audio('./assets/sound/death.wav');
     }
 
     init() {

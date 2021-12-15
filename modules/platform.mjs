@@ -1,4 +1,4 @@
-import { Rectangle } from './Rectangle.mjs';
+import { Rectangle } from './rectangle.mjs';
 
 class Platform extends Rectangle {
     constructor(range, dim, texture, offset, mode = 'pause', speed = 2) {

@@ -1,4 +1,4 @@
-import { Interactive } from "./interactive.mjs";
+import { Interactive } from './interactive.mjs';
 
 class Trigger extends Interactive {
     constructor(pos, dim, texture, offset, dialogue) {

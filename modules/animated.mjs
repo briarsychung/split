@@ -1,4 +1,4 @@
-import { Texture } from "./texture.mjs";
+import { Texture } from './texture.mjs';
 
 class Animated extends Texture {
     constructor(urls, dim, reverse = false, length = 20) {
