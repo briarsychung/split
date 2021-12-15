@@ -44,9 +44,7 @@ class Player extends Mover {
             this.texture = this.data.idle[this.dir];
         }
 
-        if (this.state !== nstate && this.texture.start) {
-            this.texture.start();
-        }
+        if (this.state !== nstate && this.texture.start) this.texture.start();
         this.state = nstate;
 
         super.move();

@@ -112,6 +112,8 @@ class Mover extends Object {
             bottom: this.correct('bottom', 'y', 1)
         };
 
+        if ((adjust.left.force === 2 && adjust.right.force === 2) || (adjust.top.force === 2 && adjust.bottom.force === 2)) this.die();
+
         this.cpos = {
             x: adjust.left.force > adjust.right.force ? adjust.left.pos : adjust.right.pos,
             y: adjust.top.force > adjust.bottom.force ? adjust.top.pos : adjust.bottom.pos

@@ -12,18 +12,14 @@ class Input {
             down: false, event: () => {
                 this.player.vel.x += -1;
                 
-                if (this.player.touch.bottom) {
-                    this.soundWalk.play();
-                }
+                if (this.player.touch.bottom) this.soundWalk.play();
             }
         };
         this.events[keys.right] = {
             down: false, event: () => {
                 this.player.vel.x += 1;
                 
-                if (this.player.touch.bottom) {
-                    this.soundWalk.play();
-                }
+                if (this.player.touch.bottom) this.soundWalk.play();
             }
         };
         this.events[keys.up] = {
