@@ -91,16 +91,37 @@ class Mover extends Object {
                 if (!obj.touch || !obj.touch[dir]) break;
                 obj = obj.touch[dir];
             }
-            this.cpos[axis] = obj.npos[axis] + m * (obj.dim[da] / 2 - this.dim[da] / 2 - xt);
-            this.cvel[axis] = m === 1 ? Math.min(obj.nvel[axis], this.nvel[axis]) : Math.max(obj.nvel[axis], this.nvel[axis]);
+            return {
+                pos: obj.npos[axis] + m * (obj.dim[da] / 2 - this.dim[da] / 2 - xt),
+                vel: m === 1 ? Math.min(obj.nvel[axis], this.nvel[axis]) : Math.max(obj.nvel[axis], this.nvel[axis]),
+                force: obj instanceof Mover ? 1 : 2
+            };
         }
+        return {
+            pos: this.npos[axis],
+            vel: this.nvel[axis],
+            force: 0
+        };
     }
 
     move() {
-        this.correct('left', 'x', -1);
-        this.correct('right', 'x', 1);
-        this.correct('top', 'y', -1);
-        this.correct('bottom', 'y', 1);
+        let adjust = {
+            left: this.correct('left', 'x', -1),
+            right: this.correct('right', 'x', 1),
+            top: this.correct('top', 'y', -1),
+            bottom: this.correct('bottom', 'y', 1)
+        };
+
+        if ((adjust.left.force === 2 && adjust.right.force === 2) || (adjust.top.force === 2 && adjust.bottom.force === 2)) this.die();
+
+        this.cpos = {
+            x: adjust.left.force > adjust.right.force ? adjust.left.pos : adjust.right.pos,
+            y: adjust.top.force > adjust.bottom.force ? adjust.top.pos : adjust.bottom.pos
+        };
+        this.cvel = {
+            x: adjust.left.force > adjust.right.force ? adjust.left.vel : adjust.right.vel,
+            y: adjust.top.force > adjust.bottom.force ? adjust.top.vel : adjust.bottom.vel
+        };
 
         super.move();
 

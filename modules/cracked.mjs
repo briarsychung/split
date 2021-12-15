@@ -16,9 +16,7 @@ class Cracked extends Interactive {
 
     trigger() {
         if (this.pressed.length) this.life--;
-        if (this.life === 0) {
-            this.die();
-        }
+        if (this.life === 0) this.die();
 
         super.trigger();
     }
