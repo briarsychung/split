@@ -286,7 +286,7 @@ class Generator {
         let bossB = new Boss({ x: 1016, y: 360 });
         boss.addBoss(bossB);
 
-        let bossC = new Combiner({ x: 1016, y: 408 });
+        let bossC = new Combiner({ x: 1016, y: 440 });
         boss.addCombiner(bossC);
 
         let bossD = new Dialogue(bossB,

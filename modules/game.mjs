@@ -177,7 +177,7 @@ class Game {
             if (this.players[0].fade === 0 || this.players[1].fade === 0) {
                 this.deaths++;
                 this.resetLevel();
-            } else if (level.goals[0].player && level.goals[1].player) {
+            } else if (level.goals.length > 1 && level.goals[0].player && level.goals[1].player) {
                 this.queueLevel();
             }
         } else {
