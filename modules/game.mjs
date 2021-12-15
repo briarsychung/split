@@ -26,9 +26,9 @@ class Game {
     start() {
         this.stage = 'game';
         this.level = -1;
-        
+
         this.debug = false;
-        
+
         this.time = Date.now();
         this.deaths = 0;
 
@@ -197,6 +197,19 @@ class Game {
             return n.toPrecision(4);
         }
 
+        let p = p => {
+            return [
+                `    pos: ${f(p.pos.x)}, ${f(p.pos.y)}`,
+                `    vel: ${f(p.vel.x)}, ${f(p.vel.y)}`,
+                `    touch`,
+                `        top: ${p.touch.top ? 'true' : 'false'}`,
+                `        bottom: ${p.touch.bottom ? 'true' : 'false'}`,
+                `        left: ${p.touch.left ? 'true' : 'false'}`,
+                `        right: ${p.touch.right ? 'true' : 'false'}`,
+                `    state: ${p.state}`
+            ];
+        };
+
         let debugInfo = [
             `SpLit Version 0.7`,
             ``,
@@ -204,38 +217,13 @@ class Game {
             `Level: ${this.level + 1} / ${this.levels.length}`
         ];
         if (!this.combine) {
-            debugInfo = debugInfo.concat([
-                `Player 1`,
-                `    pos: ${f(this.players[0].pos.x)}, ${f(this.players[0].pos.y)}`,
-                `    vel: ${f(this.players[0].vel.x)}, ${f(this.players[0].vel.y)}`,
-                `    touch`,
-                `        top: ${this.players[0].touch.top ? 'true' : 'false'}`,
-                `        bottom: ${this.players[0].touch.bottom ? 'true' : 'false'}`,
-                `        left: ${this.players[0].touch.left ? 'true' : 'false'}`,
-                `        right: ${this.players[0].touch.right ? 'true' : 'false'}`,
-                `    state: ${this.players[0].state}`,
-                `Player 2`,
-                `    pos: ${f(this.players[1].pos.x)}, ${f(this.players[1].pos.y)}`,
-                `    vel: ${f(this.players[1].vel.x)}, ${f(this.players[1].vel.y)}`,
-                `    touch`,
-                `        top: ${this.players[1].touch.top ? 'true' : 'false'}`,
-                `        bottom: ${this.players[1].touch.bottom ? 'true' : 'false'}`,
-                `        left: ${this.players[1].touch.left ? 'true' : 'false'}`,
-                `        right: ${this.players[1].touch.right ? 'true' : 'false'}`,
-                `    state: ${this.players[1].state}`
-            ]);
+            debugInfo.push(`Player 1`);
+            debugInfo = debugInfo.concat(p(this.players[0]));
+            debugInfo.push(`Player 2`);
+            debugInfo = debugInfo.concat(p(this.players[1]));
         } else {
-            debugInfo = debugInfo.concat([
-                `Player`,
-                `    pos: ${f(this.player.pos.x)}, ${f(this.player.pos.y)}`,
-                `    vel: ${f(this.player.vel.x)}, ${f(this.player.vel.y)}`,
-                `    touch`,
-                `        top: ${this.player.touch.top ? 'true' : 'false'}`,
-                `        bottom: ${this.player.touch.bottom ? 'true' : 'false'}`,
-                `        left: ${this.player.touch.left ? 'true' : 'false'}`,
-                `        right: ${this.player.touch.right ? 'true' : 'false'}`,
-                `    state: ${this.player.state}`
-            ]);
+            debugInfo.push(`Player`);
+            debugInfo = debugInfo.concat(p(this.player));
         }
         debugInfo = debugInfo.concat([
             `Camera`,
@@ -302,9 +290,12 @@ class Game {
         } else {
             range = { min: this.player.pos.x, max: this.player.pos.x };
         }
+        let spread = {
+            min: 1024 * Math.floor(range.min / 1024 - 1),
+            max: 1024 * Math.ceil(range.max / 1024 + 1)
+        };
 
-        for (let x = 1024 * Math.floor(range.min / 1024 - 1);
-            x < 1024 * Math.ceil(range.max / 1024 + 1); x += 1024) {
+        for (let x = spread.min; x < spread.max; x += 1024) {
             this.context.drawImage(level.background.texture.draw(),
                 this.canvas.width / 2 - this.camera.pos.x * real + x * real,
                 this.canvas.height / 2 - this.camera.pos.y * real,
@@ -314,15 +305,15 @@ class Game {
 
         this.context.fillStyle = level.background.colors[0];
         this.context.fillRect(
-            this.canvas.width / 2 - this.camera.pos.x * real + 1024 * Math.floor(range.min / 1024 - 1) * real - 1,
+            this.canvas.width / 2 - this.camera.pos.x * real + spread.min * real - 1,
             this.canvas.height / 2 - this.camera.pos.y * real - 2048 * real - 1,
-            (1024 * Math.ceil(range.max / 1024 + 1) - 1024 * Math.floor(range.min / 1024 - 1)) * real + 3,
+            (spread.max - spread.min) * real + 3,
             2048 * real + 3);
         this.context.fillStyle = level.background.colors[1];
         this.context.fillRect(
-            this.canvas.width / 2 - this.camera.pos.x * real + 1024 * Math.floor(range.min / 1024 - 1) * real - 1,
+            this.canvas.width / 2 - this.camera.pos.x * real + spread.min * real - 1,
             this.canvas.height / 2 - this.camera.pos.y * real + 1024 * real - 1,
-            (1024 * Math.ceil(range.max / 1024 + 1) - 1024 * Math.floor(range.min / 1024 - 1)) * real + 3,
+            (spread.max - spread.min) * real + 3,
             2048 * real + 3);
     }
 
