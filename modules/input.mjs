@@ -47,8 +47,8 @@ class Input {
     }
 
     check() {
-        for (const KEY in this.events) {
-            if (this.events[KEY].down) this.events[KEY].event();
+        for (let key in this.events) {
+            if (this.events[key].down) this.events[key].event();
         }
     }
 }
