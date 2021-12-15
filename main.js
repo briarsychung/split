@@ -24,20 +24,22 @@ import { Goal } from './modules/goal.mjs';
 const GAME = new Game(new Canvas(document.getElementById('canvas')));
 generateLevels();
 
+function swap(contains) {
+    document.getElementById(contains[0]).style.visibility = 'hidden';
+    document.getElementById(contains[0]).style.opacity = 0;
+    document.getElementById(contains[1]).style.visibility = 'visible';
+    document.getElementById(contains[1]).style.opacity = 1;
+}
+
 document.getElementById('start').addEventListener('click', () => {
-    document.getElementById('menu').style.visibility = 'hidden';
-    document.getElementById('menu').style.opacity = 0;
-    document.getElementById('game').style.visibility = 'visible';
-    document.getElementById('game').style.opacity = 1;
+    swap(['menu', 'game']);
+
     GAME.start();
     loop();
 });
 
 document.getElementById('reset').addEventListener('click', () => {
-    document.getElementById('end').style.visibility = 'hidden';
-    document.getElementById('end').style.opacity = 0;
-    document.getElementById('menu').style.visibility = 'visible';
-    document.getElementById('menu').style.opacity = 1;
+    swap(['end', 'menu']);
 });
 
 let delay = 0;
@@ -74,11 +76,8 @@ function loop() {
         GAME.update();
     }
     if (GAME.stage === 'win') {
-        document.getElementById('game').style.visibility = 'hidden';
-        document.getElementById('game').style.opacity = 0;
-        document.getElementById('end').style.visibility = 'visible';
-        document.getElementById('end').style.opacity = 1;
-        let time = Date.now() - start;
+        swap(['game', 'end']);
+
         let time = Date.now() - GAME.time;
         let f = t => {
             return ((t + '').length === 1 ? '0' : '') + t;
