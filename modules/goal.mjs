@@ -4,7 +4,7 @@ import { Texture } from './texture.mjs';
 
 class Goal extends Interactive {
     constructor(pos) {
-        super(pos, { w: 32, h: 32 }, new Texture('../assets/ground/brick-door.png', { w: 32, h: 32 }), { x: 0, y: -32 });
+        super(pos, { w: 32, h: 32 }, new Texture('./assets/ground/brick-door.png', { w: 32, h: 32 }), { x: 0, y: -32 });
 
         this.player = false;
     }

@@ -93,7 +93,7 @@ function loop() {
 }
 
 function generateLevels() {
-    let players = [new Player('../assets/player/player-blue-'), new Player('../assets/player/player-red-'), new Player('../assets/player/player-main-')];
+    let players = [new Player('./assets/player/player-blue-'), new Player('./assets/player/player-red-'), new Player('./assets/player/player-main-')];
 
     GAME.addPlayer(players[0]);
     GAME.addPlayer(players[1]);
@@ -105,27 +105,27 @@ function generateLevels() {
     GAME.addInput(new Input(players[2]));
     GAME.addInput(new Input(players[2], { left: 'arrowleft', right: 'arrowright', up: 'arrowup' }));
 
-    let outside = new Background(new Texture('../assets/background/outside.png', { w: 1024, h: 1024 }), ['#89c9e4', '#477553']);
-    let inside = new Background(new Texture('../assets/background/inside.png', { w: 1024, h: 1024 }), ['#89c9e4', '#252b2d']);
+    let outside = new Background(new Texture('./assets/background/outside.png', { w: 1024, h: 1024 }), ['#89c9e4', '#477553']);
+    let inside = new Background(new Texture('./assets/background/inside.png', { w: 1024, h: 1024 }), ['#89c9e4', '#252b2d']);
 
     let buttonTextures = {
-        up: new Texture('../assets/interactive/button-up.png', { w: 16, h: 6 }),
-        down: new Texture('../assets/interactive/button-down.png', { w: 16, h: 6 })
+        up: new Texture('./assets/interactive/button-up.png', { w: 16, h: 6 }),
+        down: new Texture('./assets/interactive/button-down.png', { w: 16, h: 6 })
     };
 
-    let ground = ['../assets/ground/ground-side.png', '../assets/ground/ground-middle.png'];
-    let cracked = ['../assets/ground/brick-cracked-side.png', '../assets/ground/brick-cracked-middle.png'];
+    let ground = ['./assets/ground/ground-side.png', './assets/ground/ground-middle.png'];
+    let cracked = ['./assets/ground/brick-cracked-side.png', './assets/ground/brick-cracked-middle.png'];
     let spike = {
-        big: '../assets/interactive/spike-big.png',
-        small: '../assets/interactive/spike-small.png'
+        big: './assets/interactive/spike-big.png',
+        small: './assets/interactive/spike-small.png'
     };
     let box = {
-        big: '../assets/interactive/box-small.png',
-        small: '../assets/interactive/box-small.png'
+        big: './assets/interactive/box-small.png',
+        small: './assets/interactive/box-small.png'
     };
     let brick = {
-        big: ['../assets/ground/brick-big-side.png', '../assets/ground/brick-big-middle.png'],
-        small: ['../assets/ground/brick-small-side.png', '../assets/ground/brick-small-middle.png']
+        big: ['./assets/ground/brick-big-side.png', './assets/ground/brick-big-middle.png'],
+        small: ['./assets/ground/brick-small-side.png', './assets/ground/brick-small-middle.png']
     };
 
     let intro = new Level();
@@ -139,8 +139,8 @@ function generateLevels() {
     intro.addBoss(introB);
 
     let introD = new Dialogue(introB,
-        [new Texture('../assets/dialogue/hahaha.png', { w: 64, h: 32 }),
-        new Texture('../assets/dialogue/catch-me.png', { w: 64, h: 32 })], ['hostile', 'bye']);
+        [new Texture('./assets/dialogue/hahaha.png', { w: 64, h: 32 }),
+        new Texture('./assets/dialogue/catch-me.png', { w: 64, h: 32 })], ['hostile', 'bye']);
     intro.addDialogue(introD);
 
     intro.addObject(new Ground({ x: 632, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));
@@ -358,8 +358,8 @@ function generateLevels() {
     boss.addCombiner(bossC);
 
     let bossD = new Dialogue(bossB,
-        [new Texture('../assets/dialogue/you-found-me.png', { w: 64, h: 32 }),
-        new Texture('../assets/dialogue/this-ends-here.png', { w: 64, h: 32 })], ['hostile', 'attack']);
+        [new Texture('./assets/dialogue/you-found-me.png', { w: 64, h: 32 }),
+        new Texture('./assets/dialogue/this-ends-here.png', { w: 64, h: 32 })], ['hostile', 'attack']);
     boss.addDialogue(bossD);
 
     boss.addObject(new Ground({ x: 632, y: 440 }, { w: 160, h: 32 }, new Sandwich(ground, { w: 160, h: 32 })));

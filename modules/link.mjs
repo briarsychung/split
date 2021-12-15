@@ -9,7 +9,7 @@ class Link extends Interactive {
         this.object.wait();
         this.played = false;
 
-        this.sound = new Audio('../assets/sound/button.wav');
+        this.sound = new Audio('./assets/sound/button.wav');
     }
 
     init() {

@@ -20,7 +20,7 @@ class Game {
 
         this.deaths = 0;
 
-        this.sound = new Audio('../assets/sound/level.ogg');
+        this.sound = new Audio('./assets/sound/level.ogg');
     }
 
     start() {
