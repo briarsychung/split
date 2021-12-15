@@ -32,7 +32,7 @@ class Dialogue {
         };
 
         this.frame++;
-        
+
         if (this.frame === this.lines.length * 120) {
             this.active = false;
             this.boss.newState(this.states[1]);
