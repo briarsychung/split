@@ -18,7 +18,7 @@ class Game {
         this.debug = false;
         this.combine = true;
 
-        this.sound = new Audio('../assets/sound/portal.wav');
+        this.sound = new Audio('../assets/sound/level.ogg');
     }
 
     start() {
