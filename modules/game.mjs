@@ -192,7 +192,7 @@ class Game {
         }
 
         let debugInfo = [
-            `SpLit Version 0.6`,
+            `SpLit Version 0.7`,
             ``,
             `Canvas Dimensions: ${f(this.canvas.width)}, ${f(this.canvas.height)}`,
             `Level: ${this.level + 1} / ${this.levels.length}`
@@ -290,8 +290,8 @@ class Game {
         let range = {};
         if (!this.combine) {
             range = {
-                min: Math.min(this.players[0].pos.x, this.players[1].pos.x),
-                max: Math.max(this.players[0].pos.x, this.players[1].pos.x)
+                min: Math.min(2 * this.players[0].pos.x - this.players[1].pos.x, 2 * this.players[1].pos.x - this.players[0].pos.x),
+                max: Math.max(2 * this.players[0].pos.x - this.players[1].pos.x, 2 * this.players[1].pos.x - this.players[0].pos.x)
             };
         } else {
             range = { min: this.player.pos.x, max: this.player.pos.x };
@@ -304,19 +304,20 @@ class Game {
                 this.canvas.height / 2 - this.camera.pos.y * real,
                 1024 * real,
                 1024 * real);
-            this.context.fillStyle = level.background.colors[0];
-            this.context.fillRect(
-                this.canvas.width / 2 - this.camera.pos.x * real + x * real - 1,
-                this.canvas.height / 2 - this.camera.pos.y * real - 1024 * real - 1,
-                1024 * real + 3,
-                1024 * real + 3);
-            this.context.fillStyle = level.background.colors[1];
-            this.context.fillRect(
-                this.canvas.width / 2 - this.camera.pos.x * real + x * real - 1,
-                this.canvas.height / 2 - this.camera.pos.y * real + 1024 * real - 1,
-                1024 * real + 3,
-                1024 * real + 3);
         }
+
+        this.context.fillStyle = level.background.colors[0];
+        this.context.fillRect(
+            this.canvas.width / 2 - this.camera.pos.x * real + 1024 * Math.floor(range.min / 1024 - 1) * real - 1,
+            this.canvas.height / 2 - this.camera.pos.y * real - 2048 * real - 1,
+            (1024 * Math.ceil(range.max / 1024 + 1) - 1024 * Math.floor(range.min / 1024 - 1)) * real + 3,
+            2048 * real + 3);
+        this.context.fillStyle = level.background.colors[1];
+        this.context.fillRect(
+            this.canvas.width / 2 - this.camera.pos.x * real + 1024 * Math.floor(range.min / 1024 - 1) * real - 1,
+            this.canvas.height / 2 - this.camera.pos.y * real + 1024 * real - 1,
+            (1024 * Math.ceil(range.max / 1024 + 1) - 1024 * Math.floor(range.min / 1024 - 1)) * real + 3,
+            2048 * real + 3);
     }
 
     draw(object, opacity = 1) {
