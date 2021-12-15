@@ -37,7 +37,7 @@ class Portal extends Interactive {
                 this.sound.play();
             }
         }
-        
+
         this.texture = this.textures[Math.floor(this.stage / 4)];
 
         super.trigger();

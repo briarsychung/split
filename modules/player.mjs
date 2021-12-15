@@ -14,7 +14,7 @@ class Player extends Mover {
             jump: [new Texture(url + 'jump.png', { w: 26, h: 33 }, true), new Texture(url + 'jump.png', { w: 26, h: 33 })],
             dead: [new Texture(url + 'dead.png', { w: 26, h: 33 }, true), new Texture(url + 'dead.png', { w: 26, h: 33 })]
         };
-        
+
         super({ x: 0, y: 0 }, { w: 22, h: 30 }, data.idle[1], { x: 0, y: -1.5 });
 
         this.data = data;

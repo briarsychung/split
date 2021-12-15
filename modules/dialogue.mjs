@@ -5,7 +5,7 @@ class Dialogue {
         this.states = states;
 
         this.texture = null;
-        
+
         this.pos = { x: 0, y: 0 };
         this.offset = { x: 0, y: 0 };
         this.frame = 0;
@@ -25,7 +25,7 @@ class Dialogue {
 
     draw() {
         this.texture = this.lines[Math.floor(this.frame / 120)];
-        
+
         this.pos = {
             x: this.boss.pos.x - 72,
             y: this.boss.pos.y - 48 - 2 * (Math.floor(this.frame / 20) % 2)
